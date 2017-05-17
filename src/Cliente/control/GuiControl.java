@@ -210,6 +210,8 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 		frameManager.setOnCommunEventListener(this);
 		this.frameManager.setVisible(true);
 	}
+
+	//teste
 	
 	/**
 	 * centre login gui
