@@ -26,6 +26,7 @@ public class LoginModel {
 	public boolean validateLogin(String user, String pass){
 		boolean login = false;
 		/*
+		 * 
 		boolean login = false;
 		Document doc = pro.writeLogin(user, pass);
 		String msg = pro.getStringFromDocument(doc);
