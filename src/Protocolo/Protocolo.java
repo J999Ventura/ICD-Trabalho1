@@ -413,7 +413,7 @@ public class Protocolo {
     }
 
     //method to convert Document to String
-    public String getStringFromDocument(Document doc)
+    public static String getStringFromDocument(Document doc)
     {
         try
         {
