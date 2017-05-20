@@ -1,30 +1,32 @@
 package commun;
 
-
 import java.awt.*;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
-/**
- * Created by Mónica on 26/04/2017.
- */
 public class Cliente {
 
+    private String userName;
     private String nomeCliente;
-    private int idCliente;
-    private int nif;
-    protected String morada;
-    protected int numTelefone;
-    protected int numConta;
+    private String idCliente;
+    private String nif;
+    private String morada;
+    private String numTelefone;
     private Image foto;
     private Image assinatura;
-	private String userName;
-	private String age, birthday;
-	private boolean isAdmin;
+    private LocalDate dateOfBirth;
+    private List<Conta> contas;
 
-    public Cliente(String userName, String nomeCliente, int nif, boolean isAdmin) {
+    public Cliente(String userName, String nomeCliente, String nif, Image assinatura, Image foto) {
+
+        //gera um Universal Unique ID para cada cliente
+        this.idCliente = UUID.randomUUID().toString();
+        this.userName = userName;
         this.nomeCliente = nomeCliente;
         this.nif = nif;
-        this.userName = userName;
-        this.isAdmin = isAdmin;
+        this.assinatura = assinatura;
+        this.foto = foto;
     }
 
     public String getNomeCliente() {
@@ -35,12 +37,8 @@ public class Cliente {
         this.nomeCliente = nomeCliente;
     }
 
-    public int getNif() {
+    public String getNif() {
         return nif;
-    }
-
-    public void setNif(int nif) {
-        this.nif = nif;
     }
 
     public Image getFoto() {
@@ -67,52 +65,41 @@ public class Cliente {
         this.morada = morada;
     }
 
-    public int getNumTelefone() {
+    public String getNumTelefone() {
         return numTelefone;
     }
 
-    public void setNumTelefone(int numTelefone) {
+    public void setNumTelefone(String numTelefone) {
         this.numTelefone = numTelefone;
     }
 
-    public int getNumConta() {
-        return numConta;
-    }
-
-    public void setNumConta(int numConta) {
-        this.numConta = numConta;
-    }
-
-	public int getIdCliente() {
-		// TODO Auto-generated method stub
-		return 0;
+	public String getIdCliente() {
+        return idCliente;
 	}
 	
 	public String getUserName(){
 		return userName;
 	}
 	
-	public void setAge(String a){
-		age = a;
-	}
-	
-	public String getAge(){
-		return age;
-	}
-	
-	public void setBirthday(String b){
-		birthday = b;
-	}
-	
-	public String getBirthday(){
-		return birthday;
-	}
-	
-	public boolean getIsAdmin(){
-		return isAdmin;
-	}
-	
 	public void setUserName(String name){
 		this.userName = name;
 	}
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public List<Conta> getContas() {
+        return contas;
+    }
+
+    public void setContas(List<Conta> contas) {
+        this.contas = contas;
+    }
 }
+
+

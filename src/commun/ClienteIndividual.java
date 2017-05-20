@@ -3,9 +3,6 @@ package commun;
 import java.awt.*;
 import java.time.LocalDate;
 
-/**
- * Created by Mónica on 26/04/2017.
- */
 public class ClienteIndividual extends Cliente {
 
     private String numCartaoCidadao;

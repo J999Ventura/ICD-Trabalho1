@@ -198,11 +198,11 @@ public class Protocolo {
         Element morada_tag = D.createElement("morada");
         Element numTelefone_tag = D.createElement("numTelefone");
         Element numConta_tag = D.createElement("numConta");
-        //Element foto_tag = D.createElement("foto");
-        //Element assinatura_tag = D.createElement("assinatura");
+        Element foto_tag = D.createElement("foto");
+        Element assinatura_tag = D.createElement("assinatura");
         Element userName_tag = D.createElement("userName");
         Element age_tag = D.createElement("age");
-        Element birthday_tag = D.createElement("birthday");
+        Element dataNascimento_tag = D.createElement("birthday");
         Element isAdmin_tag = D.createElement("isAdmin");
 
         nomeCliente_tag.setTextContent(cliente.getNomeCliente());
@@ -213,11 +213,11 @@ public class Protocolo {
         numConta_tag.setTextContent(Integer.toString(cliente.getNumConta()));
         userName_tag.setTextContent(cliente.getUserName());
         age_tag.setTextContent(cliente.getAge());
-        birthday_tag.setTextContent(cliente.getBirthday());
+        dataNascimento_tag.setTextContent(cliente.getBirthday());
         isAdmin_tag.setTextContent(cliente.getIsAdmin()? "true" : "false");
         
-        //foto_tag.setTextContent(imageToBase64Encode(cliente.getFoto()));
-        //assinatura_tag.setTextContent(imageToBase64Encode(cliente.getAssinatura()));
+        foto_tag.setTextContent(imageToBase64Encode(cliente.getFoto()));
+        assinatura_tag.setTextContent(imageToBase64Encode(cliente.getAssinatura()));
 
         protocol_tag.appendChild(cliente_tag);
         cliente_tag.appendChild(nomeCliente_tag);
@@ -229,9 +229,9 @@ public class Protocolo {
         cliente_tag.appendChild(numTelefone_tag);
         cliente_tag.appendChild(numConta_tag);
         cliente_tag.appendChild(age_tag);
-        cliente_tag.appendChild(birthday_tag);
-        //cliente_tag.appendChild(foto_tag);
-        //cliente_tag.appendChild(assinatura_tag);
+        cliente_tag.appendChild(dataNascimento_tag);
+        cliente_tag.appendChild(foto_tag);
+        cliente_tag.appendChild(assinatura_tag);
 
         return D;
     }

@@ -1,14 +1,10 @@
 package Cliente.model;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.StringReader;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
+import XML.XMLDoc;
+import commun.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -21,33 +17,17 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import XML.XMLDoc;
-import commun.Cliente;
-import commun.Conta;
-import commun.Emprestimo;
-import commun.Movimento;
-import commun.TipoMovimento;
+import java.io.*;
+import java.util.ArrayList;
 
 public class XMLInteration {
 	
-	/* exemplo de validação com xsd de um protocolo */
+	/* exemplo de validaï¿½ï¿½o com xsd de um protocolo */
 	public boolean validarXML(String xml) {
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = null;
-		Document document = null;
+		DocumentBuilder builder;
+		Document document;
 
 		try {
 			builder = factory.newDocumentBuilder();
@@ -57,18 +37,13 @@ public class XMLInteration {
 		}
 		try {
 			document = builder.parse(new InputSource(new StringReader(xml)));
-		} catch (SAXException e) {
+		} catch (SAXException | IOException e) {
 			e.printStackTrace();
-			System.out.println("Não foi possivel analisar a mensagem!");
-			return false;
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("Não foi possivel analisar a mensagem!");
+			System.out.println("Nï¿½o foi possivel analisar a mensagem!");
 			return false;
 		}
 		if (!Validar(document, "Protocolo\\protocolo.xsd")){
-			System.out.println("A mensagem não respeita o protocolo!");
+			System.out.println("A mensagem nï¿½o respeita o protocolo!");
 			return false;
 		}else{
 			System.out.println("A mensagem respeita o protocolo!");
@@ -77,21 +52,21 @@ public class XMLInteration {
 	}
 	
 	public boolean Validar(Document document, String xsdFile) {
-		Schema schema = null;
+		Schema schema;
 		try {
 			String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
 			SchemaFactory factory = SchemaFactory.newInstance(language);
 			schema = factory.newSchema(new File(xsdFile));
 			Validator validator = schema.newValidator();
 			validator.validate(new DOMSource(document)); // se falhar existe
-															// excepção
+															// excepï¿½ï¿½o
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
 	}
 	
-	/* lê um dom do de um stream de input */
+	/* lï¿½ um dom do de um stream de input */
 	public Document readDocument(InputStream input) {
 		// create a new DocumentBuilderFactory
 	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -107,7 +82,7 @@ public class XMLInteration {
 	}
 	
 	/* escreve um dom para um stream de output */
-	public static final void writeDocument(Document input, OutputStream output) {
+	public static void writeDocument(Document input, OutputStream output) {
         try {
         	DOMSource domSource = new DOMSource(input);
         	StreamResult resultStream = new StreamResult(output);
@@ -116,6 +91,7 @@ public class XMLInteration {
         	try {
         		transformer.transform(domSource, resultStream);
         	} catch (javax.xml.transform.TransformerException e) {
+        		e.printStackTrace();
         	}
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -1,11 +1,7 @@
 package commun;
 
-
 import java.awt.*;
 
-/**
- * Created by Mónica on 26/04/2017.
- */
 public class ClienteEmpresarial extends Cliente {
 
     protected String nomeGerente;
