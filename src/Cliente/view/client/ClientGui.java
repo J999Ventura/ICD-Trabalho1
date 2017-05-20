@@ -1075,18 +1075,8 @@ public class ClientGui extends JFrame{
 	private void fillResumePanelAttributes() {
 			fillBalance(listResumeAcountBalance);
 			fillAllAccountsMovements(listResumeMovementsAccount);			
-			fillAllAccountsLoans(listResumeLoans);
+			fillLoans(listResumeLoans);
 			fillAccounts(listResumeAccounts);	
-	}
-	
-	private void fillAllAccountsLoans(JTextArea area) {
-		if(clientActionListener != null){
-			ArrayList<Emprestimo> accountLoansList = clientActionListener.onGetAllAccountsLoans();
-			area.setText(null);
-			for(Emprestimo loan : accountLoansList){
-				area.append(loan.toString() + "\n");
-			}
-		}
 	}
 
 	private void fillAllAccountsMovements(JTextArea area) {

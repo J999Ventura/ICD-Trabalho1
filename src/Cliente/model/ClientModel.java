@@ -13,6 +13,7 @@ public class ClientModel {
 	private ArrayList<Conta> accountList;
 	private ArrayList<String> balanceList;
 	private ArrayList<Movimento> movementsList;
+	private ArrayList<Emprestimo> emprestimos;
 	
 	public ClientModel(User user){
 		this.user = user;
@@ -22,14 +23,16 @@ public class ClientModel {
 		
 		accountList = new ArrayList<Conta>();
 		accountList.add(new Conta("teste1", "3215648948", 1234578, 1.0, ""+111111, ""+111111));
-		accountList.get(0).setEmprestimo(new Emprestimo("teste1", 10.0, 5.0, 1.0, 5));
-		accountList.get(0).setEmprestimo(new Emprestimo("teste1", 725.0, 5.0, 2.0, 6));
-		accountList.get(0).setEmprestimo(new Emprestimo("teste1", 45.0, 5.0, 3.0, 7));
+		
+		emprestimos = new ArrayList<Emprestimo>();
+		
+		emprestimos.add(new Emprestimo("teste1", 725.0, 5.0, 2.0, 6));
+		emprestimos.add(new Emprestimo("teste1", 45.0, 5.0, 3.0, 7));
 		
 		accountList.add(new Conta("teste2", "5165616516", 6516515, 2.0, ""+222222, ""+222222));
-		accountList.get(1).setEmprestimo(new Emprestimo("teste2", 85.0, 10.0, 2.0, 10));
-		accountList.get(1).setEmprestimo(new Emprestimo("teste2", 25.0, 10.0, 4.0, 450));
-		accountList.get(1).setEmprestimo(new Emprestimo("teste2", 76.0, 10.0, 5.0, 480));
+		emprestimos.add(new Emprestimo("teste2", 85.0, 10.0, 2.0, 10));
+		emprestimos.add(new Emprestimo("teste2", 25.0, 10.0, 4.0, 450));
+		emprestimos.add(new Emprestimo("teste2", 76.0, 10.0, 5.0, 480));
 	}
 	
 	public boolean logout(){
@@ -57,20 +60,13 @@ public class ClientModel {
 
 	
 	public void setLoansList(ArrayList<Emprestimo> list){
-		currentAccount.setEmprestimos(list);
+		emprestimos = list;
 	}
 	
 	public ArrayList<Emprestimo> getAccountsLoansList() {
-		ArrayList<Emprestimo> emprestimos= new ArrayList<Emprestimo>();
-		for(Conta conta : accountList){
-			emprestimos.addAll(conta.getEmprestimos());
-		}
 		return emprestimos;
 	}
-	
-	public ArrayList<Emprestimo> getCurrentAccountLoansList(){
-		return currentAccount.getEmprestimos();
-	}
+
 	
 	public void setBalanceList(ArrayList<String> list){
 		balanceList = list;

@@ -21,6 +21,7 @@ import java.awt.image.RenderedImage;
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Base64;
 
 
@@ -224,14 +225,13 @@ public class Protocolo {
         Element saldoDisponivel_tag = D.createElement("saldoDisponivel");
         Element saldoAutorizado_tag = D.createElement("saldoAutorizado");
         Element movimentos_tag = D.createElement("movimentos");
-        Element emprestimos_tag = D.createElement("emprestimos");
 
         numConta_tag.setTextContent(conta.getNumConta());
         nomeConta_tag.setTextContent(conta.getNomeConta());
         nib_tag.setTextContent(conta.getNib());
         iban_tag.setTextContent(conta.getIban());
-        //idCliente_tag.setTextContent(Integer.toString(conta.getIdCliente()));
-        saldoContabilistico_tag.setTextContent(Double.toString(conta.getSaldoContabilistico()));
+        idCliente_tag.setTextContent(conta.getIdCliente()+"");
+        saldoContabilistico_tag.setTextContent(conta.getSaldoContabilistico()+"");
         saldoDisponivel_tag.setTextContent(Double.toString(conta.getSaldoDisponivel()));
         saldoAutorizado_tag.setTextContent(Double.toString(conta.getSaldoAutorizado()));
 
@@ -240,6 +240,7 @@ public class Protocolo {
         conta_tag.appendChild(nomeConta_tag);
         conta_tag.appendChild(nib_tag);
         conta_tag.appendChild(iban_tag);
+       
         conta_tag.appendChild(idCliente_tag);
         conta_tag.appendChild(saldoContabilistico_tag);
         conta_tag.appendChild(saldoDisponivel_tag);
@@ -247,7 +248,6 @@ public class Protocolo {
         conta_tag.appendChild(movimentos_tag);
 
         if (conta.getMovimentos() != null) {
-
             for (int i = 0; i < conta.getMovimentos().size(); i++) {
 
                 Element movimento_tag = D.createElement("movimento");
@@ -256,14 +256,21 @@ public class Protocolo {
                 Element dataLancamento_tag = D.createElement("dataLancamento");
                 Element valor_tag = D.createElement("valor");
                 Element tipo_tag = D.createElement("tipo");
-
+                Element contaDestino_tag = D.createElement("contaDestino");
+                Element contaRemetente_tag = D.createElement("contaRemetente");
+   
                 descricao_tag.setTextContent(conta.getMovimentos().get(i).getDescricao());
-                dataValor_tag.setTextContent(conta.getMovimentos().get(i).getDataValor().toString());
-                dataLancamento_tag.setTextContent(conta.getMovimentos().get(i).getDataLancamento().toString());
+                dataValor_tag.setTextContent("");//conta.getMovimentos().get(i).getDataValor().toString());
+                dataLancamento_tag.setTextContent("");//conta.getMovimentos().get(i).getDataLancamento().toString());
                 valor_tag.setTextContent(Double.toString(conta.getMovimentos().get(i).getValor()));
                 tipo_tag.setTextContent(conta.getMovimentos().get(i).getTipo().toString());
+                contaDestino_tag.setTextContent(conta.getMovimentos().get(i).getContaDestino());
+                contaRemetente_tag.setTextContent(conta.getMovimentos().get(i).getContaRemetente());
 
                 movimentos_tag.appendChild(movimento_tag);
+                
+                movimento_tag.appendChild(contaRemetente_tag);
+                movimento_tag.appendChild(contaDestino_tag);
                 movimento_tag.appendChild(descricao_tag);
                 movimento_tag.appendChild(dataValor_tag);
                 movimento_tag.appendChild(dataLancamento_tag);
@@ -272,11 +279,20 @@ public class Protocolo {
             }
 
         }
-        
-        conta_tag.appendChild(emprestimos_tag);
-        if (conta.getEmprestimos() != null) {
 
-            for (int i = 0; i < conta.getEmprestimos().size(); i++) {
+        return D;
+    }
+    
+    
+    public Document enviarEmprestimo(ArrayList<Emprestimo> list){
+    	
+    	Element emprestimos_tag = D.createElement("emprestimos");
+
+        protocol_tag.appendChild(emprestimos_tag);
+       
+        if (list != null) {
+
+            for (int i = 0; i < list.size(); i++) {
 
                 Element emprestimo_tag = D.createElement("emprestimo");
                 Element valorTotal_tag = D.createElement("valorTotal");
@@ -286,14 +302,16 @@ public class Protocolo {
                 Element mensal = D.createElement("mensal");
                 Element timeToPay = D.createElement("timeToPay");
 
-                valorTotal_tag.setTextContent(""+conta.getEmprestimos().get(i).getValorTotal());
-                emFalta.setTextContent(""+conta.getEmprestimos().get(i).getEmFalta());
-                juros.setTextContent(""+conta.getEmprestimos().get(i).getJuros());
-                timeToPay.setTextContent(conta.getEmprestimos().get(i).getTempoRestante().toString());
-                mensal.setTextContent(""+conta.getEmprestimos().get(i).getValorMensal());
-                nomeConta.setTextContent(conta.getNomeConta());
+                valorTotal_tag.setTextContent(""+list.get(i).getValorTotal());
+                emFalta.setTextContent(""+list.get(i).getEmFalta());
+                juros.setTextContent(""+list.get(i).getJuros());
+                timeToPay.setTextContent(list.get(i).getTempoRestante().toString());
+                mensal.setTextContent(""+list.get(i).getValorMensal());
+                nomeConta.setTextContent(list.get(i).getNomeConta()); 
 
+                
                 emprestimos_tag.appendChild(emprestimo_tag);
+                
                 emprestimo_tag.appendChild(nomeConta);
                 emprestimo_tag.appendChild(valorTotal_tag);
                 emprestimo_tag.appendChild(emFalta);
@@ -303,8 +321,8 @@ public class Protocolo {
             }
 
         }
-
-        return D;
+    	
+    	return D;	
     }
 
     /**

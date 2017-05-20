@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -25,6 +27,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -32,6 +35,7 @@ import org.xml.sax.SAXException;
 import commun.Cliente;
 import commun.Conta;
 import commun.Movimento;
+import commun.TipoMovimento;
 
 public class XMLInteration {
 	
@@ -114,11 +118,10 @@ public class XMLInteration {
             throw new RuntimeException(e);
         }
     }
-
 	
-	private String getString(String element, Document doc){
+	private NodeList getAllSameElements(String element, Document doc){
 		try{
-			return doc.getElementsByTagName(element).item(0).getTextContent();
+			return doc.getElementsByTagName(element);
 		}catch(Exception e){
 			System.out.println("WARNING: Element " + element + " was not found on the xml tree!");
 		}
@@ -127,30 +130,126 @@ public class XMLInteration {
 	
 	public Cliente getClient(Document doc){
 
-		Cliente cliente = new Cliente(getString("nomeCliente", doc), Integer.parseInt(getString("nif", doc)), null, null);
-		cliente.setMorada(getString("morada", doc));
-		cliente.setNumConta(Integer.parseInt(getString("numConta", doc)));
-		cliente.setNumTelefone(Integer.parseInt(getString("numTelefone", doc)));
-		//cliente.setAssinatura(assinatura);
-		//cliente.setFoto(foto);
-		
+		Cliente cliente = new Cliente(getXPathV("//cliente/nomeCliente", doc), Integer.parseInt(getXPathV("//cliente/nif", doc)), null, null);
+		cliente.setMorada(getXPathV("//cliente/morada", doc));
+		cliente.setNumConta(Integer.parseInt(getXPathV("//cliente/numConta", doc)));
+		cliente.setNumTelefone(Integer.parseInt(getXPathV("//cliente/numTelefone", doc)));
+
 		return cliente;
 	}
 	
-	public Conta getAccount(Document doc){
-		Conta conta = new Conta(getString("nomeConta", doc),
-				getString("numConta", doc),
-				Integer.parseInt(getString("idCliente", doc)),
-				Double.parseDouble(getString("saldoContabilistico", doc)),
-				getString("nib", doc),
-				getString("iban", doc));
+	public ArrayList<Conta> getAccount(Document doc){
+		ArrayList<Conta> contasList = new ArrayList<Conta>();
+		NodeList contas = getXPath("//conta", doc);
 		
-		conta.setSaldoAutorizado(Double.parseDouble(getString("saldoAutorizado", doc)));
-		conta.setSaldoDisponivel(Double.parseDouble(getString("saldoDisponivel", doc)));
+		for(int i = 0; i < contas.getLength(); i++){			
+			Conta conta = new Conta(getXPathV("//conta/nomeConta", doc),
+					getXPathV("//conta/numConta", doc),
+					Integer.parseInt(getXPathV("//conta/idCliente", doc)),
+					Double.parseDouble(getXPathV("//conta/saldoContabilistico", doc)),
+					getXPathV("//conta/nib", doc),
+					getXPathV("//conta/iban", doc));
+			
+			conta.setSaldoAutorizado(Double.parseDouble(getXPathV("//conta/saldoAutorizado", doc)));
+			conta.setSaldoDisponivel(Double.parseDouble(getXPathV("//conta/saldoDisponivel", doc)));
+			
+			ArrayList<Movimento> movimentos = new ArrayList<Movimento>();
+		    String descricao = "";
+		    LocalDate dataValor = null;
+		    LocalDate dataLancamento = null;
+		    double valor = 0.0;
+		    TipoMovimento tipo = null;
+		    String contaRemetente = "";
+		    String contaDestino = "";
+		    
+			NodeList list = getXPath("//conta["+(i+1)+"]/movimentos/movimento", doc);
+			
+			System.out.println("++++ " + list.getLength());
+			
+			for(int y = 0; y < list.getLength(); y++){
+				NodeList attributes = list.item(y).getChildNodes();
+				for(int x = 0; x < attributes.getLength(); x++ ){
+					Node node = attributes.item(x);
+					
+					switch(node.getNodeName()){
+					case "descricao":
+						descricao = node.getTextContent();
+						break;
+					case "dataValor":
+						dataValor = LocalDate.parse(node.getTextContent());
+						break;
+					case "dataLancamento":
+						dataLancamento = LocalDate.parse(node.getTextContent());
+						break;
+					case "valor":
+						valor = Double.parseDouble(node.getTextContent());
+						break;
+					case "tipo":
+						tipo = (node.getTextContent().equals("CREDITO")? TipoMovimento.CREDITO : TipoMovimento.DEBITO);
+						break;
+					case "contaDestino":
+						contaDestino = node.getTextContent();
+						break;
+					case "contaRemetente":
+						contaRemetente = node.getTextContent();
+						break;	
+					}	
+				}			
+				movimentos.add(new Movimento(descricao, dataValor, dataLancamento, valor, tipo, contaDestino, contaRemetente));	
+			}
+			
+			conta.setMovimentos(movimentos);
+			contasList.add(conta);
+		}
 		
-		//conta.setMovimentos(movimentos);
-		
-		return conta;
+		return contasList;
 	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+     * Devolve lista de n�s gerada pela express�o xPath indicada
+     *
+     * @param expression
+     *            xpath
+     * @param doc
+     *            raiz do documento XML
+     * @return
+     * 			lista de n�s
+     */
 
+    public static final NodeList getXPath(final String expression, final Document doc) {
+        XPath xpath = XPathFactory.newInstance().newXPath();
+        NodeList nodes;
+        try {
+            nodes = (NodeList) xpath.evaluate(expression, doc,
+                    XPathConstants.NODESET);
+            return nodes;
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Executa uma express�o XPath numa arvore DOM e devolve o 1� string (valor)
+     *
+     * @param expression
+     * @param doc
+     * @return string que � o valor do n� encontrado
+     *
+     */
+    public static final String getXPathV(final String expression, final Document doc) {
+        NodeList aux = getXPath(expression, doc);
+        if (aux == null)
+            return null;
+        else if (aux.item(0) == null)
+            return null;
+        else
+            return aux.item(0).getTextContent();
+    }
 }

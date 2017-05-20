@@ -2,6 +2,7 @@ package Cliente.control;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -26,6 +27,7 @@ import commun.Cliente;
 import commun.Conta;
 import commun.Emprestimo;
 import commun.Movimento;
+import commun.TipoMovimento;
 
 
 public class GuiControl implements OnLoginEventListener, OnClientEventListener, OnCommunEventListener, OnManagerEventListener{
@@ -57,6 +59,16 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 		System.out.println(cli.getNomeCliente() + " " + cli.getNif());
 		
 		
+		
+		//xmlInt = new XMLInteration();
+		Conta c = new Conta("teste1", "3215648948", 1234578, 1.0, ""+111111, ""+111111);
+		c.setMovimento(new Movimento("mov", null, null, 1.1, TipoMovimento.DEBITO, "qwe", "asd"));
+		c.setMovimento(new Movimento("mov", null, null, 1.1, TipoMovimento.DEBITO, "qwe", "asd"));
+		c.setMovimento(new Movimento("mov", null, null, 1.1, TipoMovimento.DEBITO, "qwe", "asd"));
+		c.setMovimento(new Movimento("mov", null, null, 1.1, TipoMovimento.DEBITO, "qwe", "asd"));
+		c.setMovimento(new Movimento("mov", null, null, 1.1, TipoMovimento.DEBITO, "qwe", "asd"));
+		Conta conta = xmlInt.getAccount(pro.infoConta(c)).get(0);
+		System.out.println(conta.getNomeConta() + " " + conta.getIdCliente());// + " " + conta.getMovimentos().get(0).getContaDestino());
 		return null;
 	}
 	
@@ -143,12 +155,6 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 		// TODO Auto-generated method stub
 		return clientM.getAccountMovementsList();
 	}
-
-	@Override
-	public ArrayList<Emprestimo> onGetAllAccountsLoans() {
-		// TODO Auto-generated method stub
-		return clientM.getAccountsLoansList();
-	}
 	
 	@Override
 	public ArrayList<String> onGetAccountBalance() {
@@ -162,7 +168,7 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	
 	@Override
 	public ArrayList<Emprestimo> onGetAccountLoans() {
-		return clientM.getCurrentAccountLoansList();
+		return clientM.getAccountsLoansList();
 	}
 	
 	@Override
@@ -211,8 +217,6 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 		this.frameManager.setVisible(true);
 	}
 
-	//teste
-	
 	/**
 	 * centre login gui
 	 * @param frame

@@ -15,7 +15,6 @@ public interface OnClientEventListener {
 	public ArrayList<Movimento> onGetAccountMovements();
 	public ArrayList<Emprestimo> onGetAccountLoans();
 	public ArrayList<Movimento> onGetAllAccountsMovements();
-	public ArrayList<Emprestimo> onGetAllAccountsLoans();
 	public ArrayList<Conta> onGetAccounts();
 	public Conta onGetCurrentAccount();
 }
