@@ -58,7 +58,7 @@ public class Protocolo {
         Element pass_tag = D.createElement("pass");
 
         tipo_pedido.setTextContent("login");
-        user_tag.setTextContent(md5Hash(user));
+        user_tag.setTextContent(user);
         pass_tag.setTextContent(md5Hash(pass));
 
         protocol_tag.appendChild(tipo_pedido);
@@ -291,7 +291,7 @@ public class Protocolo {
      */
     public static void main(String[] args) {
         //user e pass para teste
-        String u = "zeto";
+        String u = "joaofilipevaz";
         String pass = "asdwf23425";
 
         Protocolo log = new Protocolo();
@@ -319,7 +319,7 @@ public class Protocolo {
             e.printStackTrace();
         }
 
-        //Cliente clt = new Cliente("Joao Filipe Vaz", 207905835, foto, assinatura);
+        Cliente clt = new Cliente("joaofilipevaz","Joao Filipe Vaz", 207905835, false);
 
         d = log.infoCliente(clt);
         XMLDoc.writeDocument(d, "cliente.xml");

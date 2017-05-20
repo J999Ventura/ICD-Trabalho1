@@ -1,10 +1,7 @@
 package Cliente;
 
 import Protocolo.Protocolo;
-import XML.XMLDoc;
 import org.w3c.dom.Document;
-
-import Cliente.control.ClienteSimplesTCP;
 
 public class ControllerCliente {
 
@@ -27,13 +24,14 @@ public class ControllerCliente {
 
         Document d = log.writeLogin(u, pass);
 
-        clienteTCP.writeSocket(log.getStringFromDocument(d));
+        clienteTCP.writeSocket(d);
 
-        clienteTCP.closeSocket();
+        while(true){
+            clienteTCP.readSocket();
+        }
+        //clienteTCP.closeSocket();
 
         //log.removeChilds(d.getDocumentElement());
 
     } // end main
-    
-    
 }
