@@ -10,8 +10,9 @@ public class ClienteEmpresarial extends Cliente {
 
     protected String nomeGerente;
 
-    public ClienteEmpresarial(String nomeCliente, int nif, Image foto, Image assinatura, String nomeGerente) {
-        super(nomeCliente, nif, foto, assinatura);
+    public ClienteEmpresarial(String userName, String nomeCliente, int nif, Image foto, Image assinatura,
+                              String nomeGerente, boolean isAdmin) {
+        super(userName, nomeCliente, nif, isAdmin);
         this.nomeGerente = nomeGerente;
     }
 

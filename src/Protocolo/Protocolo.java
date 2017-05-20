@@ -6,6 +6,8 @@ import commun.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -54,16 +56,17 @@ public class Protocolo {
 
     public Document writeLogin(String user, String pass){
 
-        Element login_tag = D.createElement("login");
+        Element tipo_pedido = D.createElement("tipo");
         Element user_tag = D.createElement("user");
         Element pass_tag = D.createElement("pass");
 
-        user_tag.setTextContent(md5Hash(user));
+        tipo_pedido.setTextContent("login");
+        user_tag.setTextContent(user);
         pass_tag.setTextContent(md5Hash(pass));
 
-        protocol_tag.appendChild(login_tag);
-        login_tag.appendChild(user_tag);
-        login_tag.appendChild(pass_tag);
+        protocol_tag.appendChild(tipo_pedido);
+        protocol_tag.appendChild(user_tag);
+        protocol_tag.appendChild(pass_tag);
 
         return D;
     }
@@ -72,7 +75,7 @@ public class Protocolo {
         Element logout_tag = D.createElement("logout");
         Element user_tag = D.createElement("user");
 
-        user_tag.setTextContent(md5Hash(user));
+        user_tag.setTextContent(user);
 
         protocol_tag.appendChild(logout_tag);
         logout_tag.appendChild(user_tag);
@@ -126,15 +129,15 @@ public class Protocolo {
      *  Metodos do Servidor
      */
 
-    public Document loginOk(boolean validation){
+    public Document loginReply(boolean validation){
 
-        Element login_tag = D.createElement("login");
+        Element tipo_pedido = D.createElement("tipo");
         Element ok_tag = D.createElement("OK");
 
         ok_tag.setTextContent(validation ? "true" : "false");
 
-        protocol_tag.appendChild(login_tag);
-        login_tag.appendChild(ok_tag);
+        protocol_tag.appendChild(tipo_pedido);
+        protocol_tag.appendChild(ok_tag);
 
         return D;
     }
@@ -428,4 +431,68 @@ public class Protocolo {
             return null;
         }
     }
+
+    public static Document convertStringToDocument(String xmlStr) {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder;
+        try
+        {
+            builder = factory.newDocumentBuilder();
+            Document doc = builder.parse( new InputSource( new StringReader( xmlStr ) ) );
+            return doc;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
+     *  script de teste
+     */
+    public static void main(String[] args) {
+        //user e pass para teste
+        String u = "zeto";
+        String pass = "asdwf23425";
+
+        Protocolo log = new Protocolo();
+
+        Document d = log.writeLogin(u, pass);
+        XMLDoc.writeDocument(d, "teste.xml");
+
+        removeChilds(d.getDocumentElement());
+
+        d = log.loginReply(true);
+        XMLDoc.writeDocument(d, "resposta.xml");
+
+        removeChilds(d.getDocumentElement());
+
+        d = log.queryServidor("1");
+        XMLDoc.writeDocument(d, "queryServidor.xml");
+
+        removeChilds(d.getDocumentElement());
+        Image assinatura = null;
+        Image foto = null;
+        try {
+            foto = ImageIO.read(new File("foto.jpg"));
+            assinatura = ImageIO.read(new File("assinatura.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Cliente clt = new Cliente("Joao Filipe Vaz", 207905835, foto, assinatura);
+
+        //d = log.infoCliente(clt);
+        XMLDoc.writeDocument(d, "cliente.xml");
+
+        removeChilds(d.getDocumentElement());
+        Conta conta = new Conta("contaaordem", "276214522", 103256221,
+                0.0, "321568432513215346",
+                "PT50321568432513215346");
+
+        d = log.infoConta(conta);
+        XMLDoc.writeDocument(d, "conta.xml");
+    }
+
+
 }
