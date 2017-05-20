@@ -238,7 +238,7 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 
 	        Document d = log.writeLogin(u, pass);
 
-	        clienteTCP.writeSocket(log.getStringFromDocument(d));
+	        clienteTCP.writeSocket(d);
 
 	        clienteTCP.closeSocket();
 
