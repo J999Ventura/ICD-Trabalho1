@@ -189,7 +189,6 @@ public class Protocolo {
     	return D;
     }
     
-
     public Document infoCliente(Cliente cliente){
 
         Element cliente_tag = D.createElement("cliente");
