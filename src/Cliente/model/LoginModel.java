@@ -25,7 +25,6 @@ public class LoginModel {
 	
 	public boolean validateLogin(String user, String pass){
 		boolean login = false;
-		
 		/*
 		boolean login = false;
 		Document doc = pro.writeLogin(user, pass);
@@ -51,13 +50,10 @@ public class LoginModel {
 	}
 	
 	public Cliente getCliente(){
-		//enviar mensagem para o servidor com o user name
-		//receber alguma coisa do servidor
 		return cli;
 	}
 	
 	public boolean isAdmin(){
-		
 		return cli.getIsAdmin();
 	}
 	
