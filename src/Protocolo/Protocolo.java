@@ -2,10 +2,10 @@ package Protocolo;
 
 import XML.XMLDoc;
 import commun.*;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,7 +21,6 @@ import java.awt.image.RenderedImage;
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Base64;
 
 
@@ -54,142 +53,52 @@ public class Protocolo {
 
     public Document writeLogin(String user, String pass){
 
-        Element login_tag = D.createElement("login");
+        Element tipo_pedido = D.createElement("tipo");
         Element user_tag = D.createElement("user");
         Element pass_tag = D.createElement("pass");
 
+        tipo_pedido.setTextContent("login");
         user_tag.setTextContent(md5Hash(user));
         pass_tag.setTextContent(md5Hash(pass));
 
-        protocol_tag.appendChild(login_tag);
-        login_tag.appendChild(user_tag);
-        login_tag.appendChild(pass_tag);
-
-        return D;
-    }
-    
-    public Document writeLogout(String user){
-        Element logout_tag = D.createElement("logout");
-        Element user_tag = D.createElement("user");
-
-        user_tag.setTextContent(md5Hash(user));
-
-        protocol_tag.appendChild(logout_tag);
-        logout_tag.appendChild(user_tag);
-        return D;
-    }
-    
-    public Document getUserInfo(){
-        Element user_tag = D.createElement("userInfo");
-        
-        user_tag.setTextContent("getUserInfo");
-        
+        protocol_tag.appendChild(tipo_pedido);
         protocol_tag.appendChild(user_tag);
+        protocol_tag.appendChild(pass_tag);
+
         return D;
     }
 
-    /* ? */
+
     public Document queryServidor(String modelo){
-        Element query_tag = D.createElement("query");
-        
-        query_tag.setTextContent(modelo);
-        
-        protocol_tag.appendChild(query_tag);
-        return D;
-    }
-    
-    public Document makeTransfer(String nib, double value){
-        Element transfer_tag = D.createElement("transfer");
-        Element nib_tag = D.createElement("nib");
-        Element value_tag = D.createElement("value");
-        
-        nib_tag.setTextContent(nib);
-        value_tag.setTextContent(""+value);
-        
-        protocol_tag.appendChild(transfer_tag);
-        transfer_tag.appendChild(nib_tag);
-        transfer_tag.appendChild(value_tag);
-        return D;
-    }
-    
-    public Document changeUserName(String name){
-        Element userName_tag = D.createElement("changeUserName");
-        
-        userName_tag.setTextContent(name);
-        
-        protocol_tag.appendChild(userName_tag);
-        return D;
-    }
 
+        Element query_tag = D.createElement("query");
+
+        query_tag.setTextContent(modelo);
+
+        protocol_tag.appendChild(query_tag);
+
+        return D;
+    }
 
     /**
      *  Metodos do Servidor
      */
 
-    public Document loginOk(boolean validation){
+    public Document loginReply(boolean validation){
 
-        Element login_tag = D.createElement("login");
+        Element tipo_pedido = D.createElement("tipo");
         Element ok_tag = D.createElement("OK");
 
         ok_tag.setTextContent(validation ? "true" : "false");
 
-        protocol_tag.appendChild(login_tag);
-        login_tag.appendChild(ok_tag);
+        protocol_tag.appendChild(tipo_pedido);
+        protocol_tag.appendChild(ok_tag);
 
         return D;
     }
-    
-    public Document logout(boolean validation){
 
-        Element logout_tag = D.createElement("logout");
-        Element ok_tag = D.createElement("OK");
-
-        ok_tag.setTextContent(validation ? "true" : "false");
-
-        protocol_tag.appendChild(logout_tag);
-        logout_tag.appendChild(ok_tag);
-
-        return D;
-    }
-    
-    public Document nameChanged(boolean validation){
-
-        Element name_tag = D.createElement("nameChanged");
-        Element ok_tag = D.createElement("OK");
-
-        ok_tag.setTextContent(validation ? "true" : "false");
-
-        protocol_tag.appendChild(name_tag);
-        name_tag.appendChild(ok_tag);
-
-        return D;
-    }
-    
-    public Document transferMade(boolean validation){
-
-        Element transfer_tag = D.createElement("transferMade");
-        Element ok_tag = D.createElement("OK");
-
-        ok_tag.setTextContent(validation ? "true" : "false");
-
-        protocol_tag.appendChild(transfer_tag);
-        transfer_tag.appendChild(ok_tag);
-
-        return D;
-    }
-    
-    public Document pedirCliente(String user){
-        Element clientePedido_tag = D.createElement("clientePedido");
-        Element actual_tag = D.createElement("actual");
-
-        actual_tag.setTextContent(user);
-
-        protocol_tag.appendChild(clientePedido_tag);
-        clientePedido_tag.appendChild(actual_tag);
-    	return D;
-    }
-    
     public Document infoCliente(Cliente cliente){
+
         Element cliente_tag = D.createElement("cliente");
         Element nomeCliente_tag = D.createElement("nomeCliente");
         Element idCliente_tag = D.createElement("idCliente");
@@ -197,40 +106,25 @@ public class Protocolo {
         Element morada_tag = D.createElement("morada");
         Element numTelefone_tag = D.createElement("numTelefone");
         Element numConta_tag = D.createElement("numConta");
-        //Element foto_tag = D.createElement("foto");
-        //Element assinatura_tag = D.createElement("assinatura");
-        Element userName_tag = D.createElement("userName");
-        Element age_tag = D.createElement("age");
-        Element birthday_tag = D.createElement("birthday");
-        Element isAdmin_tag = D.createElement("isAdmin");
+        Element foto_tag = D.createElement("foto");
+        Element assinatura_tag = D.createElement("assinatura");
 
         nomeCliente_tag.setTextContent(cliente.getNomeCliente());
         nif_tag.setTextContent(Integer.toString(cliente.getNif()));
-        idCliente_tag.setTextContent(Integer.toString(cliente.getIdCliente()));
         morada_tag.setTextContent(cliente.getMorada());
         numTelefone_tag.setTextContent(Integer.toString(cliente.getNumTelefone()));
         numConta_tag.setTextContent(Integer.toString(cliente.getNumConta()));
-        userName_tag.setTextContent(cliente.getUserName());
-        age_tag.setTextContent(cliente.getAge());
-        birthday_tag.setTextContent(cliente.getBirthday());
-        isAdmin_tag.setTextContent(cliente.getIsAdmin()? "true" : "false");
-        
-        //foto_tag.setTextContent(imageToBase64Encode(cliente.getFoto()));
-        //assinatura_tag.setTextContent(imageToBase64Encode(cliente.getAssinatura()));
+        foto_tag.setTextContent(imageToBase64Encode(cliente.getFoto()));
+        assinatura_tag.setTextContent(imageToBase64Encode(cliente.getAssinatura()));
 
         protocol_tag.appendChild(cliente_tag);
         cliente_tag.appendChild(nomeCliente_tag);
-        cliente_tag.appendChild(userName_tag);
-        cliente_tag.appendChild(idCliente_tag);
         cliente_tag.appendChild(nif_tag);
-        cliente_tag.appendChild(isAdmin_tag);
         cliente_tag.appendChild(morada_tag);
         cliente_tag.appendChild(numTelefone_tag);
         cliente_tag.appendChild(numConta_tag);
-        cliente_tag.appendChild(age_tag);
-        cliente_tag.appendChild(birthday_tag);
-        //cliente_tag.appendChild(foto_tag);
-        //cliente_tag.appendChild(assinatura_tag);
+        cliente_tag.appendChild(foto_tag);
+        cliente_tag.appendChild(assinatura_tag);
 
         return D;
     }
@@ -239,7 +133,6 @@ public class Protocolo {
 
         Element conta_tag = D.createElement("conta");
         Element numConta_tag = D.createElement("numConta");
-        Element nomeConta_tag = D.createElement("nomeConta");
         Element nib_tag = D.createElement("nib");
         Element iban_tag = D.createElement("iban");
         Element idCliente_tag = D.createElement("idCliente");
@@ -249,20 +142,17 @@ public class Protocolo {
         Element movimentos_tag = D.createElement("movimentos");
 
         numConta_tag.setTextContent(conta.getNumConta());
-        nomeConta_tag.setTextContent(conta.getNomeConta());
         nib_tag.setTextContent(conta.getNib());
         iban_tag.setTextContent(conta.getIban());
-        idCliente_tag.setTextContent(conta.getIdCliente()+"");
-        saldoContabilistico_tag.setTextContent(conta.getSaldoContabilistico()+"");
+        //idCliente_tag.setTextContent(Integer.toString(conta.getIdCliente()));
+        saldoContabilistico_tag.setTextContent(Double.toString(conta.getSaldoContabilistico()));
         saldoDisponivel_tag.setTextContent(Double.toString(conta.getSaldoDisponivel()));
         saldoAutorizado_tag.setTextContent(Double.toString(conta.getSaldoAutorizado()));
 
         protocol_tag.appendChild(conta_tag);
         conta_tag.appendChild(numConta_tag);
-        conta_tag.appendChild(nomeConta_tag);
         conta_tag.appendChild(nib_tag);
         conta_tag.appendChild(iban_tag);
-       
         conta_tag.appendChild(idCliente_tag);
         conta_tag.appendChild(saldoContabilistico_tag);
         conta_tag.appendChild(saldoDisponivel_tag);
@@ -270,6 +160,7 @@ public class Protocolo {
         conta_tag.appendChild(movimentos_tag);
 
         if (conta.getMovimentos() != null) {
+
             for (int i = 0; i < conta.getMovimentos().size(); i++) {
 
                 Element movimento_tag = D.createElement("movimento");
@@ -278,21 +169,14 @@ public class Protocolo {
                 Element dataLancamento_tag = D.createElement("dataLancamento");
                 Element valor_tag = D.createElement("valor");
                 Element tipo_tag = D.createElement("tipo");
-                Element contaDestino_tag = D.createElement("contaDestino");
-                Element contaRemetente_tag = D.createElement("contaRemetente");
-   
+
                 descricao_tag.setTextContent(conta.getMovimentos().get(i).getDescricao());
-                dataValor_tag.setTextContent(conta.getMovimentos().get(i).getDataValor());
-                dataLancamento_tag.setTextContent(conta.getMovimentos().get(i).getDataLancamento());
+                dataValor_tag.setTextContent(conta.getMovimentos().get(i).getDataValor().toString());
+                dataLancamento_tag.setTextContent(conta.getMovimentos().get(i).getDataLancamento().toString());
                 valor_tag.setTextContent(Double.toString(conta.getMovimentos().get(i).getValor()));
                 tipo_tag.setTextContent(conta.getMovimentos().get(i).getTipo().toString());
-                contaDestino_tag.setTextContent(conta.getMovimentos().get(i).getContaDestino());
-                contaRemetente_tag.setTextContent(conta.getMovimentos().get(i).getContaRemetente());
 
                 movimentos_tag.appendChild(movimento_tag);
-                
-                movimento_tag.appendChild(contaRemetente_tag);
-                movimento_tag.appendChild(contaDestino_tag);
                 movimento_tag.appendChild(descricao_tag);
                 movimento_tag.appendChild(dataValor_tag);
                 movimento_tag.appendChild(dataLancamento_tag);
@@ -303,48 +187,6 @@ public class Protocolo {
         }
 
         return D;
-    }
-    
-    
-    public Document enviarEmprestimo(ArrayList<Emprestimo> list){
-    	
-    	Element emprestimos_tag = D.createElement("emprestimos");
-
-        protocol_tag.appendChild(emprestimos_tag);
-       
-        if (list != null) {
-
-            for (int i = 0; i < list.size(); i++) {
-
-                Element emprestimo_tag = D.createElement("emprestimo");
-                Element valorTotal_tag = D.createElement("valorTotal");
-                Element nomeConta = D.createElement("nomeDeConta");
-                Element emFalta = D.createElement("emFalta");
-                Element juros = D.createElement("juros");
-                Element mensal = D.createElement("mensal");
-                Element timeToPay = D.createElement("timeToPay");
-
-                valorTotal_tag.setTextContent(""+list.get(i).getValorTotal());
-                emFalta.setTextContent(""+list.get(i).getEmFalta());
-                juros.setTextContent(""+list.get(i).getJuros());
-                timeToPay.setTextContent(list.get(i).getTempoRestante());
-                mensal.setTextContent(""+list.get(i).getValorMensal());
-                nomeConta.setTextContent(list.get(i).getNomeConta()); 
-
-                
-                emprestimos_tag.appendChild(emprestimo_tag);
-                
-                emprestimo_tag.appendChild(nomeConta);
-                emprestimo_tag.appendChild(valorTotal_tag);
-                emprestimo_tag.appendChild(emFalta);
-                emprestimo_tag.appendChild(juros);
-                emprestimo_tag.appendChild(mensal);
-                emprestimo_tag.appendChild(timeToPay);
-            }
-
-        }
-    	
-    	return D;	
     }
 
     /**
@@ -410,7 +252,7 @@ public class Protocolo {
     }
 
     //method to convert Document to String
-    public String getStringFromDocument(Document doc)
+    public static String getStringFromDocument(Document doc)
     {
         try
         {
@@ -427,5 +269,67 @@ public class Protocolo {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    public static Document convertStringToDocument(String xmlStr) {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder;
+        try
+        {
+            builder = factory.newDocumentBuilder();
+            Document doc = builder.parse( new InputSource( new StringReader( xmlStr ) ) );
+            return doc;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
+     *  script de teste
+     */
+    public static void main(String[] args) {
+        //user e pass para teste
+        String u = "zeto";
+        String pass = "asdwf23425";
+
+        Protocolo log = new Protocolo();
+
+        Document d = log.writeLogin(u, pass);
+        XMLDoc.writeDocument(d, "teste.xml");
+
+        removeChilds(d.getDocumentElement());
+
+        d = log.loginReply(true);
+        XMLDoc.writeDocument(d, "resposta.xml");
+
+        removeChilds(d.getDocumentElement());
+
+        d = log.queryServidor("1");
+        XMLDoc.writeDocument(d, "queryServidor.xml");
+
+        removeChilds(d.getDocumentElement());
+        Image assinatura = null;
+        Image foto = null;
+        try {
+            foto = ImageIO.read(new File("foto.jpg"));
+            assinatura = ImageIO.read(new File("assinatura.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Cliente clt = new Cliente("Joao Filipe Vaz", 207905835, foto, assinatura);
+
+        d = log.infoCliente(clt);
+        XMLDoc.writeDocument(d, "cliente.xml");
+
+        removeChilds(d.getDocumentElement());
+        Conta conta = new Conta("contaaordem", "276214522", 103256221,
+                0.0, "321568432513215346",
+                "PT50321568432513215346");
+
+        d = log.infoConta(conta);
+        XMLDoc.writeDocument(d, "conta.xml");
     }
 }
