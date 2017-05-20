@@ -197,8 +197,8 @@ public class Protocolo {
         Element morada_tag = D.createElement("morada");
         Element numTelefone_tag = D.createElement("numTelefone");
         Element numConta_tag = D.createElement("numConta");
-        Element foto_tag = D.createElement("foto");
-        Element assinatura_tag = D.createElement("assinatura");
+        //Element foto_tag = D.createElement("foto");
+        //Element assinatura_tag = D.createElement("assinatura");
         Element userName_tag = D.createElement("userName");
         Element age_tag = D.createElement("age");
         Element birthday_tag = D.createElement("birthday");
