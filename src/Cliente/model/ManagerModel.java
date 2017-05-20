@@ -1,8 +1,10 @@
 package Cliente.model;
 
+import commun.Cliente;
+
 public class ManagerModel {
 	
-	public ManagerModel(User user){
+	public ManagerModel(Cliente user){
 		
 	}
 

@@ -27,13 +27,16 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import XML.XMLDoc;
 import commun.Cliente;
 import commun.Conta;
+import commun.Emprestimo;
 import commun.Movimento;
 import commun.TipoMovimento;
 
@@ -119,85 +122,49 @@ public class XMLInteration {
         }
     }
 	
-	private NodeList getAllSameElements(String element, Document doc){
-		try{
-			return doc.getElementsByTagName(element);
-		}catch(Exception e){
-			System.out.println("WARNING: Element " + element + " was not found on the xml tree!");
-		}
-		return null;
-	}
-	
 	public Cliente getClient(Document doc){
 
-		Cliente cliente = new Cliente(getXPathV("//cliente/nomeCliente", doc), Integer.parseInt(getXPathV("//cliente/nif", doc)), null, null);
-		cliente.setMorada(getXPathV("//cliente/morada", doc));
-		cliente.setNumConta(Integer.parseInt(getXPathV("//cliente/numConta", doc)));
-		cliente.setNumTelefone(Integer.parseInt(getXPathV("//cliente/numTelefone", doc)));
+		Cliente cliente = new Cliente(XMLDoc.getXPathV("//cliente/userName", doc),
+				XMLDoc.getXPathV("//cliente/nomeCliente", doc),
+				Integer.parseInt(XMLDoc.getXPathV("//cliente/nif", doc)),
+				(XMLDoc.getXPathV("//cliente/nomeCliente", doc).equals("true")));
+		
+		cliente.setMorada(XMLDoc.getXPathV("//cliente/morada", doc));
+		cliente.setNumConta(Integer.parseInt(XMLDoc.getXPathV("//cliente/numConta", doc)));
+		cliente.setNumTelefone(Integer.parseInt(XMLDoc.getXPathV("//cliente/numTelefone", doc)));
+		cliente.setAge(XMLDoc.getXPathV("//cliente/age", doc));
+		cliente.setBirthday(XMLDoc.getXPathV("//cliente/birthday", doc));		
 
 		return cliente;
 	}
 	
-	public ArrayList<Conta> getAccount(Document doc){
+	public ArrayList<Conta> getAccounts(Document doc){
 		ArrayList<Conta> contasList = new ArrayList<Conta>();
-		NodeList contas = getXPath("//conta", doc);
+		NodeList contas = XMLDoc.getXPath("//conta", doc);
 		
 		for(int i = 0; i < contas.getLength(); i++){			
-			Conta conta = new Conta(getXPathV("//conta/nomeConta", doc),
-					getXPathV("//conta/numConta", doc),
-					Integer.parseInt(getXPathV("//conta/idCliente", doc)),
-					Double.parseDouble(getXPathV("//conta/saldoContabilistico", doc)),
-					getXPathV("//conta/nib", doc),
-					getXPathV("//conta/iban", doc));
+			Conta conta = new Conta(XMLDoc.getXPathV("//conta/nomeConta", doc),
+					XMLDoc.getXPathV("//conta/numConta", doc),
+					Integer.parseInt(XMLDoc.getXPathV("//conta/idCliente", doc)),
+					Double.parseDouble(XMLDoc.getXPathV("//conta/saldoContabilistico", doc)),
+					XMLDoc.getXPathV("//conta/nib", doc),
+					XMLDoc.getXPathV("//conta/iban", doc));
 			
-			conta.setSaldoAutorizado(Double.parseDouble(getXPathV("//conta/saldoAutorizado", doc)));
-			conta.setSaldoDisponivel(Double.parseDouble(getXPathV("//conta/saldoDisponivel", doc)));
+			conta.setSaldoAutorizado(Double.parseDouble(XMLDoc.getXPathV("//conta/saldoAutorizado", doc)));
+			conta.setSaldoDisponivel(Double.parseDouble(XMLDoc.getXPathV("//conta/saldoDisponivel", doc)));
 			
 			ArrayList<Movimento> movimentos = new ArrayList<Movimento>();
-		    String descricao = "";
-		    LocalDate dataValor = null;
-		    LocalDate dataLancamento = null;
-		    double valor = 0.0;
-		    TipoMovimento tipo = null;
-		    String contaRemetente = "";
-		    String contaDestino = "";
 		    
-			NodeList list = getXPath("//conta["+(i+1)+"]/movimentos/movimento", doc);
-			
-			System.out.println("++++ " + list.getLength());
-			
-			for(int y = 0; y < list.getLength(); y++){
-				NodeList attributes = list.item(y).getChildNodes();
-				for(int x = 0; x < attributes.getLength(); x++ ){
-					Node node = attributes.item(x);
-					
-					switch(node.getNodeName()){
-					case "descricao":
-						descricao = node.getTextContent();
-						break;
-					case "dataValor":
-						dataValor = LocalDate.parse(node.getTextContent());
-						break;
-					case "dataLancamento":
-						dataLancamento = LocalDate.parse(node.getTextContent());
-						break;
-					case "valor":
-						valor = Double.parseDouble(node.getTextContent());
-						break;
-					case "tipo":
-						tipo = (node.getTextContent().equals("CREDITO")? TipoMovimento.CREDITO : TipoMovimento.DEBITO);
-						break;
-					case "contaDestino":
-						contaDestino = node.getTextContent();
-						break;
-					case "contaRemetente":
-						contaRemetente = node.getTextContent();
-						break;	
-					}	
-				}			
-				movimentos.add(new Movimento(descricao, dataValor, dataLancamento, valor, tipo, contaDestino, contaRemetente));	
-			}
-			
+			int list_size = XMLDoc.getXPath("//conta["+(i+1)+"]/movimentos/movimento", doc).getLength();	
+			for(int x = 1; x <= list_size; x++){
+				movimentos.add(new Movimento(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/descricao", doc),
+						XMLDoc.getXPathV("//conta["+(x)+"]/movimentos/movimento/dataValor", doc),
+						 XMLDoc.getXPathV("//conta["+(x)+"]/movimentos/movimento/dataLancamento", doc),
+						 Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/valor", doc)),
+						 (XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/tipo", doc).equals("CREDITO")? TipoMovimento.CREDITO : TipoMovimento.DEBITO),
+						 XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/contaDestino", doc),
+						 XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/contaRemetente", doc)));			
+			}			
 			conta.setMovimentos(movimentos);
 			contasList.add(conta);
 		}
@@ -205,51 +172,24 @@ public class XMLInteration {
 		return contasList;
 	}
 	
-	
-	
-	
-	
-	
-	
-	/**
-     * Devolve lista de n�s gerada pela express�o xPath indicada
-     *
-     * @param expression
-     *            xpath
-     * @param doc
-     *            raiz do documento XML
-     * @return
-     * 			lista de n�s
-     */
+	public ArrayList<Emprestimo> getLoans(Document doc){
+		ArrayList<Emprestimo> emprestimoList = new ArrayList<Emprestimo>();
+		
+		int list_size = XMLDoc.getXPath("//emprestimos/emprestimo", doc).getLength();	
+		for(int i = 1; i <= list_size; i++){
+			Emprestimo emp = new Emprestimo(XMLDoc.getXPathV("//emprestimos/emprestimo["+i+"]/nomeDeConta", doc),
+					Double.parseDouble(XMLDoc.getXPathV("//emprestimos/emprestimo["+i+"]/valorTotal", doc)),
+					Double.parseDouble(XMLDoc.getXPathV("//emprestimos/emprestimo["+i+"]/emFalta", doc)),
+					Double.parseDouble(XMLDoc.getXPathV("//emprestimos/emprestimo["+i+"]/juros", doc)),
+					Double.parseDouble(XMLDoc.getXPathV("//emprestimos/emprestimo["+i+"]/mensal", doc)));
+			emp.setTimeToPay(XMLDoc.getXPathV("//emprestimos/emprestimo["+i+"]/timeToPay", doc));
+			emprestimoList.add(emp);
+		}
+		
+		return emprestimoList;
+	}
 
-    public static final NodeList getXPath(final String expression, final Document doc) {
-        XPath xpath = XPathFactory.newInstance().newXPath();
-        NodeList nodes;
-        try {
-            nodes = (NodeList) xpath.evaluate(expression, doc,
-                    XPathConstants.NODESET);
-            return nodes;
-        } catch (XPathExpressionException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Executa uma express�o XPath numa arvore DOM e devolve o 1� string (valor)
-     *
-     * @param expression
-     * @param doc
-     * @return string que � o valor do n� encontrado
-     *
-     */
-    public static final String getXPathV(final String expression, final Document doc) {
-        NodeList aux = getXPath(expression, doc);
-        if (aux == null)
-            return null;
-        else if (aux.item(0) == null)
-            return null;
-        else
-            return aux.item(0).getTextContent();
-    }
+	public boolean getLoginAnswer(Document doc) {
+		return (XMLDoc.getXPathV("//OK",doc).equals("true"));
+	}
 }

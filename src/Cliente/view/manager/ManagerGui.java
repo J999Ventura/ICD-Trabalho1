@@ -20,7 +20,7 @@ import java.awt.CardLayout;
 import javax.swing.border.LineBorder;
 
 import Cliente.OnCommunEventListener;
-import Cliente.model.User;
+import commun.Cliente;
 
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
@@ -69,7 +69,7 @@ public class ManagerGui extends JFrame{
 	private JLabel nibLabel;
 	private JLabel ibanLabel;
 	
-	public ManagerGui(User user) {
+	public ManagerGui(Cliente user) {
 		createMenuPanel();
 		createGui();
 	}

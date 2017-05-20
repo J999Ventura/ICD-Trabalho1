@@ -2,6 +2,7 @@ package Cliente.model;
 
 import java.util.ArrayList;
 
+import commun.Cliente;
 import commun.Conta;
 import commun.Emprestimo;
 import commun.Movimento;
@@ -9,31 +10,15 @@ import commun.Movimento;
 public class ClientModel {
 
 	private Conta currentAccount;
-	private User user;
+	private Cliente user;
 	private ArrayList<Conta> accountList;
 	private ArrayList<String> balanceList;
-	private ArrayList<Movimento> movementsList;
 	private ArrayList<Emprestimo> emprestimos;
 	
-	public ClientModel(User user){
+	public ClientModel(Cliente user){
 		this.user = user;
-		currentAccount = new Conta("teste0", "3215648948", 1234578, 1.0, "000000", "000000"); //a minha conta inicial sera a primeira da lista de contas recebida;
-		
-		
-		
-		accountList = new ArrayList<Conta>();
-		accountList.add(new Conta("teste1", "3215648948", 1234578, 1.0, ""+111111, ""+111111));
-		
-		emprestimos = new ArrayList<Emprestimo>();
-		
-		emprestimos.add(new Emprestimo("teste1", 725.0, 5.0, 2.0, 6));
-		emprestimos.add(new Emprestimo("teste1", 45.0, 5.0, 3.0, 7));
-		
-		accountList.add(new Conta("teste2", "5165616516", 6516515, 2.0, ""+222222, ""+222222));
-		emprestimos.add(new Emprestimo("teste2", 85.0, 10.0, 2.0, 10));
-		emprestimos.add(new Emprestimo("teste2", 25.0, 10.0, 4.0, 450));
-		emprestimos.add(new Emprestimo("teste2", 76.0, 10.0, 5.0, 480));
 	}
+	
 	
 	public boolean logout(){
 		// TODO Auto-generated method stub
@@ -43,6 +28,18 @@ public class ClientModel {
 	
 	public void setAccountList(ArrayList<Conta> list){
 		accountList = list;
+		setBalanceList();
+	}
+	
+	private void setBalanceList(){
+		balanceList = new ArrayList<String>();
+		for(Conta conta : accountList){
+			balanceList.add(conta.getSaldoContabilistico()+"");
+		}
+	}
+	
+	public void setLoanList(ArrayList<Emprestimo> list){
+		emprestimos = list;
 	}
 
 	public ArrayList<Conta> getAccountList() {
@@ -65,11 +62,6 @@ public class ClientModel {
 	
 	public ArrayList<Emprestimo> getAccountsLoansList() {
 		return emprestimos;
-	}
-
-	
-	public void setBalanceList(ArrayList<String> list){
-		balanceList = list;
 	}
 	
 	public ArrayList<String> getAccountBalanceList() {

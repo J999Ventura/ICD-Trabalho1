@@ -6,8 +6,8 @@ import java.time.LocalDate;
 public class Movimento {
 
     private String descricao;
-    private LocalDate dataValor;
-    private LocalDate dataLancamento;
+    private String dataValor;
+    private String dataLancamento;
     private double valor;
     private TipoMovimento tipo;
     private String contaRemetente;
@@ -29,19 +29,19 @@ public class Movimento {
         this.descricao = descricao;
     }
 
-    public LocalDate getDataValor() {
+    public String getDataValor() {
         return dataValor;
     }
 
-    public void setDataValor(LocalDate dataValor) {
+    public void setDataValor(String dataValor) {
         this.dataValor = dataValor;
     }
 
-    public LocalDate getDataLancamento() {
+    public String getDataLancamento() {
         return dataLancamento;
     }
 
-    public void setDataLancamento(LocalDate dataLancamento) {
+    public void setDataLancamento(String dataLancamento) {
         this.dataLancamento = dataLancamento;
     }
 
@@ -65,7 +65,7 @@ public class Movimento {
     	return "| From: " + this.getContaRemetente() + " | To: " + this.getContaDestino() + " | Type: " + this.getTipo() + " | Value: " + this.getValor() + "€ | Date: " + this.getDataLancamento() + " |";
     }
 
-    public Movimento(String descricao, LocalDate dataValor, LocalDate dataLancamento, double valor, TipoMovimento tipo, String contaD, String contaR) {
+    public Movimento(String descricao, String dataValor, String dataLancamento, double valor, TipoMovimento tipo, String contaD, String contaR) {
         this.descricao = descricao;
         this.dataValor = dataValor;
         this.dataLancamento = dataLancamento;

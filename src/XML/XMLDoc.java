@@ -81,7 +81,7 @@ final public class XMLDoc {
         else if (aux.item(0) == null)
             return null;
         else
-            return aux.item(0).getNodeValue();
+            return aux.item(0).getTextContent();
     }
 
     /** Parses XML file and returns XML document.

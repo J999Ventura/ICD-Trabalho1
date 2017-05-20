@@ -19,7 +19,7 @@ import java.awt.CardLayout;
 import javax.swing.border.LineBorder;
 
 import Cliente.OnCommunEventListener;
-import Cliente.model.User;
+import commun.Cliente;
 import commun.Conta;
 import commun.Emprestimo;
 import commun.Movimento;
@@ -71,7 +71,7 @@ public class ClientGui extends JFrame{
 	private JLabel nibLabel;
 	private JLabel ibanLabel;
 	
-	public ClientGui(User user) {
+	public ClientGui(Cliente user) {
 		createMenuPanel();
 		createGui();
 		initUserFillds(user);
@@ -1143,12 +1143,12 @@ public class ClientGui extends JFrame{
 	/*
 	 * quando se abre a aplicacao, este metodo preenche os atributos visiveis com as informaçoes do utilizador.
 	 */
-	private void initUserFillds(User user) {
+	private void initUserFillds(Cliente user) {
 		userNameLabel.setText(user.getUserName());
-		aNameLabel.setText(user.getName());
+		aNameLabel.setText(user.getNomeCliente());
 		aAgeLabel.setText(user.getAge());
 		aBirthdayLabel.setText(user.getBirthday());
-		aMoradaLabel.setText(user.getAddress());
+		aMoradaLabel.setText(user.getMorada());
 	}
 	
 	/* ************************************************ */

@@ -178,6 +178,17 @@ public class Protocolo {
         return D;
     }
     
+    public Document pedirCliente(String user){
+        Element clientePedido_tag = D.createElement("clientePedido");
+        Element actual_tag = D.createElement("actual");
+
+        actual_tag.setTextContent(user);
+
+        protocol_tag.appendChild(clientePedido_tag);
+        clientePedido_tag.appendChild(actual_tag);
+    	return D;
+    }
+    
 
     public Document infoCliente(Cliente cliente){
 
@@ -188,8 +199,12 @@ public class Protocolo {
         Element morada_tag = D.createElement("morada");
         Element numTelefone_tag = D.createElement("numTelefone");
         Element numConta_tag = D.createElement("numConta");
-       // Element foto_tag = D.createElement("foto");
-        //Element assinatura_tag = D.createElement("assinatura");
+        Element foto_tag = D.createElement("foto");
+        Element assinatura_tag = D.createElement("assinatura");
+        Element userName_tag = D.createElement("userName");
+        Element age_tag = D.createElement("age");
+        Element birthday_tag = D.createElement("birthday");
+        Element isAdmin_tag = D.createElement("isAdmin");
 
         nomeCliente_tag.setTextContent(cliente.getNomeCliente());
         nif_tag.setTextContent(Integer.toString(cliente.getNif()));
@@ -197,16 +212,25 @@ public class Protocolo {
         morada_tag.setTextContent(cliente.getMorada());
         numTelefone_tag.setTextContent(Integer.toString(cliente.getNumTelefone()));
         numConta_tag.setTextContent(Integer.toString(cliente.getNumConta()));
+        userName_tag.setTextContent(cliente.getUserName());
+        age_tag.setTextContent(cliente.getAge());
+        birthday_tag.setTextContent(cliente.getBirthday());
+        isAdmin_tag.setTextContent(cliente.getIsAdmin()? "true" : "false");
+        
         //foto_tag.setTextContent(imageToBase64Encode(cliente.getFoto()));
         //assinatura_tag.setTextContent(imageToBase64Encode(cliente.getAssinatura()));
 
         protocol_tag.appendChild(cliente_tag);
         cliente_tag.appendChild(nomeCliente_tag);
+        cliente_tag.appendChild(userName_tag);
         cliente_tag.appendChild(idCliente_tag);
         cliente_tag.appendChild(nif_tag);
+        cliente_tag.appendChild(isAdmin_tag);
         cliente_tag.appendChild(morada_tag);
         cliente_tag.appendChild(numTelefone_tag);
         cliente_tag.appendChild(numConta_tag);
+        cliente_tag.appendChild(age_tag);
+        cliente_tag.appendChild(birthday_tag);
         //cliente_tag.appendChild(foto_tag);
         //cliente_tag.appendChild(assinatura_tag);
 
@@ -260,8 +284,8 @@ public class Protocolo {
                 Element contaRemetente_tag = D.createElement("contaRemetente");
    
                 descricao_tag.setTextContent(conta.getMovimentos().get(i).getDescricao());
-                dataValor_tag.setTextContent("");//conta.getMovimentos().get(i).getDataValor().toString());
-                dataLancamento_tag.setTextContent("");//conta.getMovimentos().get(i).getDataLancamento().toString());
+                dataValor_tag.setTextContent(conta.getMovimentos().get(i).getDataValor());
+                dataLancamento_tag.setTextContent(conta.getMovimentos().get(i).getDataLancamento());
                 valor_tag.setTextContent(Double.toString(conta.getMovimentos().get(i).getValor()));
                 tipo_tag.setTextContent(conta.getMovimentos().get(i).getTipo().toString());
                 contaDestino_tag.setTextContent(conta.getMovimentos().get(i).getContaDestino());
@@ -305,7 +329,7 @@ public class Protocolo {
                 valorTotal_tag.setTextContent(""+list.get(i).getValorTotal());
                 emFalta.setTextContent(""+list.get(i).getEmFalta());
                 juros.setTextContent(""+list.get(i).getJuros());
-                timeToPay.setTextContent(list.get(i).getTempoRestante().toString());
+                timeToPay.setTextContent(list.get(i).getTempoRestante());
                 mensal.setTextContent(""+list.get(i).getValorMensal());
                 nomeConta.setTextContent(list.get(i).getNomeConta()); 
 

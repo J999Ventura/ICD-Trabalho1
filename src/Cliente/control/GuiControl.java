@@ -2,9 +2,7 @@ package Cliente.control;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -14,7 +12,6 @@ import org.w3c.dom.Document;
 import Cliente.OnCommunEventListener;
 import Cliente.model.ClientModel;
 import Cliente.model.LoginModel;
-import Cliente.model.User;
 import Cliente.model.XMLInteration;
 import Cliente.view.client.ClientGui;
 import Cliente.view.client.OnClientEventListener;
@@ -45,31 +42,27 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	public final static int DEFAULT_PORT = 5025;
 	
 	public GuiControl(/* irei receber tambem um servidor e um cliente */ ){
-		fillClientObj();
 		createLoginGui();
 	}
 	
 	/* ########################## BODY METHODS #########################  */	
-	public Cliente fillClientObj(){
+	public void fillClientObj(){
 		Protocolo pro = new Protocolo();
-		
 		xmlInt = new XMLInteration();
-		Cliente cli =  xmlInt.getClient(pro.infoCliente(new Cliente("Joao Filipe Vaz", 207905835, null, null)));
-		
-		System.out.println(cli.getNomeCliente() + " " + cli.getNif());
-		
-		
-		
-		//xmlInt = new XMLInteration();
 		Conta c = new Conta("teste1", "3215648948", 1234578, 1.0, ""+111111, ""+111111);
-		c.setMovimento(new Movimento("mov", null, null, 1.1, TipoMovimento.DEBITO, "qwe", "asd"));
-		c.setMovimento(new Movimento("mov", null, null, 1.1, TipoMovimento.DEBITO, "qwe", "asd"));
-		c.setMovimento(new Movimento("mov", null, null, 1.1, TipoMovimento.DEBITO, "qwe", "asd"));
-		c.setMovimento(new Movimento("mov", null, null, 1.1, TipoMovimento.DEBITO, "qwe", "asd"));
-		c.setMovimento(new Movimento("mov", null, null, 1.1, TipoMovimento.DEBITO, "qwe", "asd"));
-		Conta conta = xmlInt.getAccount(pro.infoConta(c)).get(0);
-		System.out.println(conta.getNomeConta() + " " + conta.getIdCliente());// + " " + conta.getMovimentos().get(0).getContaDestino());
-		return null;
+		c.setMovimento(new Movimento("mov1", "dsfdsf", "sdfdf", 1.1, TipoMovimento.DEBITO, "qwe1", "asd1"));
+		c.setMovimento(new Movimento("mov2", null, null, 2.2, TipoMovimento.CREDITO, "qwe2", "asd2"));
+		c.setMovimento(new Movimento("mov3", null, null, 3.3, TipoMovimento.DEBITO, "qwe3", "asd3"));
+		c.setMovimento(new Movimento("mov4", null, null, 4.4, TipoMovimento.CREDITO, "qwe4", "asd4"));
+		c.setMovimento(new Movimento("mov5", null, null, 5.5, TipoMovimento.DEBITO, "qwe5", "asd5"));
+
+		
+		ArrayList<Emprestimo> e = new ArrayList<Emprestimo>();
+		e.add(new Emprestimo("teste1", 725.0, 5.0, 2.0, 6));
+		e.add(new Emprestimo("teste1", 45.0, 5.0, 3.0, 7));
+
+		clientM.setAccountList(xmlInt.getAccounts(pro.infoConta(c)));
+		clientM.setLoansList(xmlInt.getLoans(pro.enviarEmprestimo(e)));
 	}
 	
 	
@@ -83,10 +76,10 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 		if(loginModel.validateLogin(user, pass)){
 			this.frameLogin.dispose();//close login window;
 			if(loginModel.isAdmin()){
-				createManagerGui(loginModel.getUser());
+				createManagerGui(loginModel.getCliente());
 			}else{
 				
-				createClientGui(loginModel.getUser());
+				createClientGui(loginModel.getCliente());
 			}
 		}else{
 			JOptionPane.showMessageDialog(frameLogin, "Invalid username or password!");
@@ -152,7 +145,6 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	
 	@Override
 	public ArrayList<Movimento> onGetAllAccountsMovements() {
-		// TODO Auto-generated method stub
 		return clientM.getAccountMovementsList();
 	}
 	
@@ -197,17 +189,18 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	}
 
 	
-	private void createClientGui(User user){
+	private void createClientGui(Cliente user){
 		frameClient = new ClientGui(user);
 		
 		centreWindow(frameClient);
 		clientM = new ClientModel(user);
+		fillClientObj();
 		frameClient.setOnClientEventListener(this);
 		frameClient.setOnCommunEventListener(this);
 		this.frameClient.setVisible(true);
 	}
 	
-	private void createManagerGui(User user){
+	private void createManagerGui(Cliente user){
 		frameManager = new ManagerGui(user);
 		
 		centreWindow(frameManager);
@@ -228,8 +221,6 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	    frame.setLocation(x, y);
 	}
 	/* #################################################################  */
-	
-	
 	
 	/* ####################### SOCKET CONNECTION #######################  */
 	private void setUpConnection(){

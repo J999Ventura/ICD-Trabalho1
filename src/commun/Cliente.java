@@ -16,12 +16,15 @@ public class Cliente {
     protected int numConta;
     private Image foto;
     private Image assinatura;
+	private String userName;
+	private String age, birthday;
+	private boolean isAdmin;
 
-    public Cliente(String nomeCliente, int nif, Image foto, Image assinatura) {
+    public Cliente(String userName, String nomeCliente, int nif, boolean isAdmin) {
         this.nomeCliente = nomeCliente;
         this.nif = nif;
-        this.foto = foto;
-        this.assinatura = assinatura;
+        this.userName = userName;
+        this.isAdmin = isAdmin;
     }
 
     public String getNomeCliente() {
@@ -83,5 +86,33 @@ public class Cliente {
 	public int getIdCliente() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public String getUserName(){
+		return userName;
+	}
+	
+	public void setAge(String a){
+		age = a;
+	}
+	
+	public String getAge(){
+		return age;
+	}
+	
+	public void setBirthday(String b){
+		birthday = b;
+	}
+	
+	public String getBirthday(){
+		return birthday;
+	}
+	
+	public boolean getIsAdmin(){
+		return isAdmin;
+	}
+	
+	public void setUserName(String name){
+		this.userName = name;
 	}
 }

@@ -7,7 +7,7 @@ public class Emprestimo {
 	private double valorTotal;
 	private double emFalta;
 	private double juros;
-	private Date timeToPay;
+	private String timeToPay;
 	private double valorMensal;
 	private String accountName;
 	
@@ -35,7 +35,7 @@ public class Emprestimo {
 		return emFalta;
 	}
 	
-	public Date getTempoRestante(){
+	public String getTempoRestante(){
 		return timeToPay;
 	}
 	
@@ -49,6 +49,10 @@ public class Emprestimo {
 	
 	public String getNomeConta(){
 		return accountName;
+	}
+	
+	public void setTimeToPay(String timeToPay){
+		this.timeToPay = timeToPay;
 	}
 	
 	public String toString(){
