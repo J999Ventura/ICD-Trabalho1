@@ -1,30 +1,33 @@
 package commun;
 
 import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by Mónica on 26/04/2017.
- */
 public class Conta {
 
     private String numConta;
     private String nib;
     private String iban;
-    private int idCliente;
+    private String titular;
     private double saldoContabilistico;
     private double saldoDisponivel;
     private double saldoAutorizado;
-    private ArrayList<Movimento> movimentos = new ArrayList<Movimento>();
+    private List<Movimento> movimentos;
     private String nomeConta;
+    private TipoContaEnum tipoConta;
 
 
-    public Conta(String nomeConta, String numConta, int idCliente, double saldoContabilistico, String nib, String iban) {
+    public Conta(String numConta, String nib, String iban, String titular, double saldoContabilistico, double saldoDisponivel,
+                  String nomeConta, TipoContaEnum tipoConta) {
         this.numConta = numConta;
-        this.idCliente = idCliente;
-        this.saldoContabilistico = saldoContabilistico;
-        this.nomeConta = nomeConta;
         this.nib = nib;
         this.iban = iban;
+        this.titular = titular;
+        this.saldoContabilistico = saldoContabilistico;
+        this.saldoDisponivel = saldoDisponivel;
+        this.nomeConta = nomeConta;
+        this.tipoConta = tipoConta;
+        movimentos = new ArrayList<>();
     }
     
     public String getNomeConta() {
@@ -79,15 +82,15 @@ public class Conta {
         this.numConta = numConta;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public String getTitular() {
+        return titular;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setTitular(String titular) {
+        this.titular = titular;
     }
 
-    public ArrayList<Movimento> getMovimentos() {
+    public List<Movimento> getMovimentos() {
         return movimentos;
     }
 

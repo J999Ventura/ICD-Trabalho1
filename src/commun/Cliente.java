@@ -2,6 +2,7 @@ package commun;
 
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,6 +31,7 @@ public class Cliente {
         this.assinatura = assinatura;
         this.foto = foto;
         this.tipoCliente = tipoCliente;
+        contas = new ArrayList<>();
     }
 
     public String getNomeCliente() {
@@ -90,10 +92,6 @@ public class Cliente {
 
     public List<Conta> getContas() {
         return contas;
-    }
-
-    public void setContas(List<Conta> contas) {
-        this.contas = contas;
     }
 
     public TipoClienteEnum getTipoCliente() {

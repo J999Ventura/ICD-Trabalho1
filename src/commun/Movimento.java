@@ -11,6 +11,16 @@ public class Movimento {
     private String contaRemetente;
     private String contaDestino;
 
+    public Movimento(String descricao, String dataValor, String dataLancamento, double valor, TipoMovimentoEnum tipo, String contaD, String contaR) {
+        this.descricao = descricao;
+        this.dataValor = dataValor;
+        this.dataLancamento = dataLancamento;
+        this.valor = valor;
+        this.tipoMovimento = tipo;
+        this.contaDestino = contaD;
+        this.contaRemetente = contaR;
+    }
+
     public String getDescricao() {
         return descricao;
     }
@@ -58,15 +68,4 @@ public class Movimento {
     public String toString(){
     	return "| From: " + this.getContaRemetente() + " | To: " + this.getContaDestino() + " | Type: " + this.getTipoMovimento() + " | Value: " + this.getValor() + "� | Date: " + this.getDataLancamento() + " |";
     }
-
-    public Movimento(String descricao, String dataValor, String dataLancamento, double valor, TipoMovimentoEnum tipo, String contaD, String contaR) {
-        this.descricao = descricao;
-        this.dataValor = dataValor;
-        this.dataLancamento = dataLancamento;
-        this.valor = valor;
-        this.tipoMovimento = tipo;
-        this.contaDestino = contaD;
-        this.contaRemetente = contaR;
-    }
-
 }

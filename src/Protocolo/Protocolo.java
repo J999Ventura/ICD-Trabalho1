@@ -276,7 +276,7 @@ public class Protocolo {
         nomeConta_tag.setTextContent(conta.getNomeConta());
         nib_tag.setTextContent(conta.getNib());
         iban_tag.setTextContent(conta.getIban());
-        idCliente_tag.setTextContent(conta.getIdCliente()+"");
+        idCliente_tag.setTextContent(conta.getTitular()+"");
         saldoContabilistico_tag.setTextContent(conta.getSaldoContabilistico()+"");
         saldoDisponivel_tag.setTextContent(Double.toString(conta.getSaldoDisponivel()));
         saldoAutorizado_tag.setTextContent(Double.toString(conta.getSaldoAutorizado()));
