@@ -34,11 +34,11 @@ public class LoginModel {
 		boolean isLogin = xmlInt.getLoginAnswer(doc);
 
 		if(isLogin){
-			
-			doc = pro.pedirCliente(user);
+			doc = pro.queryServidor("getUserInfo");
 			tcp.writeSocket(doc);
 			
 			readedMSG = tcp.readSocket();
+			System.out.println(readedMSG);
 			doc = Protocolo.convertStringToDocument(readedMSG);
 			//cli = xmlInt.getClient(doc);
 			login = true;
