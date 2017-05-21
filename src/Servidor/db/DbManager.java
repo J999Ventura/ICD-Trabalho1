@@ -31,7 +31,6 @@ public class DbManager {
     }
 
     public static synchronized Document getClientDataFromDB(String user, Document db){
-        //cliente[userName/text()='joaofilipevaz']
         NodeList noscliente = XMLDoc.getXPath("//cliente[userName/text()='"+user+"']", db);
         Document cliente = null;
         try {

@@ -33,7 +33,12 @@ public class ControllerServidor {
                     }
 
                 case "getUserInfo":
-                    return Protocolo.getStringFromDocument(DbManager.getClientDataFromDB(user, db));
+                    String resposta = Protocolo.getStringFromDocument(DbManager.getClientDataFromDB(user, db));
+                    if (resposta != null) {
+                        return resposta;
+                    } else{
+                        return Protocolo.getStringFromDocument(log.respostaServidor(false));
+                    }
 
                 case "infoManager":
                     break;
