@@ -73,7 +73,7 @@ class HandleConnectionThread extends Thread {
     private PrintWriter os;
     public boolean session;
 
-    HandleConnectionThread(Socket connection) {
+    HandleConnectionThread(Socket connection){
         this.connection = connection;
         this.is = null;
         this.os = null;

@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -21,6 +22,7 @@ import javax.swing.border.LineBorder;
 
 import Cliente.OnCommunEventListener;
 import commun.Cliente;
+import commun.Conta;
 
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
@@ -41,6 +43,7 @@ public class ManagerGui extends JFrame{
 	private JPanel makeLoansPanel;
 	private JLabel userNameLabel;
 	private JPanel menuPanel;
+	private JComboBox<String> typeAccountCB;
 	
 	public ManagerGui(Cliente user) {
 		createMenuPanel();
@@ -112,7 +115,7 @@ public class ManagerGui extends JFrame{
 		
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setForeground(Color.WHITE);
-		separator_2.setBounds(10, 120, 633, 2);
+		separator_2.setBounds(32, 119, 589, 3);
 		makeLoansPanel.add(separator_2);
 		
 		JLabel lblLoan = new JLabel("Loan");
@@ -135,30 +138,30 @@ public class ManagerGui extends JFrame{
 		amountLabel.setBounds(244, 171, 161, 23);
 		makeLoansPanel.add(amountLabel);
 		
-		JTextArea clientIdLabel = new JTextArea();
-		clientIdLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		clientIdLabel.setEditable(false);
-		clientIdLabel.setBounds(10, 171, 161, 23);
-		makeLoansPanel.add(clientIdLabel);
+		JTextArea clientNibLabel = new JTextArea();
+		clientNibLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		clientNibLabel.setEditable(false);
+		clientNibLabel.setBounds(32, 171, 161, 23);
+		makeLoansPanel.add(clientNibLabel);
 		
-		JLabel label_2 = new JLabel("Client ID");
-		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setForeground(Color.WHITE);
-		label_2.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		label_2.setBounds(10, 146, 155, 14);
-		makeLoansPanel.add(label_2);
+		JLabel lblClientNib_1 = new JLabel("Client Nib");
+		lblClientNib_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblClientNib_1.setForeground(Color.WHITE);
+		lblClientNib_1.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		lblClientNib_1.setBounds(32, 146, 155, 14);
+		makeLoansPanel.add(lblClientNib_1);
 		
 		JLabel lblMonthlyPayment = new JLabel("Monthly Payment");
 		lblMonthlyPayment.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMonthlyPayment.setForeground(Color.WHITE);
 		lblMonthlyPayment.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		lblMonthlyPayment.setBounds(482, 146, 161, 14);
+		lblMonthlyPayment.setBounds(460, 146, 161, 14);
 		makeLoansPanel.add(lblMonthlyPayment);
 		
 		JTextArea paymentLabel = new JTextArea();
 		paymentLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		paymentLabel.setEditable(false);
-		paymentLabel.setBounds(482, 171, 161, 23);
+		paymentLabel.setBounds(460, 171, 161, 23);
 		makeLoansPanel.add(paymentLabel);
 		
 		JTextArea rateLabel = new JTextArea();
@@ -182,8 +185,8 @@ public class ManagerGui extends JFrame{
 		btnAllowLoan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(actionListener != null){
-					actionListener.createLoan(clientIdLabel.getText(), amountLabel.getText(), paymentLabel.getText(), rateLabel.getText());
-					clientIdLabel.setText(null);
+					actionListener.createLoan(clientNibLabel.getText(), amountLabel.getText(), paymentLabel.getText(), rateLabel.getText());
+					clientNibLabel.setText(null);
 					amountLabel.setText(null);
 					paymentLabel.setText(null);
 					rateLabel.setText(null);
@@ -240,18 +243,18 @@ public class ManagerGui extends JFrame{
 		separator_4.setBounds(10, 541, 633, 2);
 		closeOrOpenAccountsPanel.add(separator_4);
 		
-		JTextArea clientIDLabel = new JTextArea();
-		clientIDLabel.setBounds(39, 161, 161, 23);
-		closeOrOpenAccountsPanel.add(clientIDLabel);
-		clientIDLabel.setEditable(false);
-		clientIDLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		JTextArea clientNibLabel = new JTextArea();
+		clientNibLabel.setBounds(39, 161, 161, 23);
+		closeOrOpenAccountsPanel.add(clientNibLabel);
+		clientNibLabel.setEditable(false);
+		clientNibLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		
-		JLabel lblClientId = new JLabel("Client ID");
-		lblClientId.setHorizontalAlignment(SwingConstants.CENTER);
-		lblClientId.setForeground(Color.WHITE);
-		lblClientId.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		lblClientId.setBounds(39, 136, 155, 14);
-		closeOrOpenAccountsPanel.add(lblClientId);
+		JLabel clientNiblbl = new JLabel("Client Nib");
+		clientNiblbl.setHorizontalAlignment(SwingConstants.CENTER);
+		clientNiblbl.setForeground(Color.WHITE);
+		clientNiblbl.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		clientNiblbl.setBounds(39, 136, 155, 14);
+		closeOrOpenAccountsPanel.add(clientNiblbl);
 		
 		JLabel lblNewAccountName = new JLabel("New Account Name");
 		lblNewAccountName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -280,18 +283,18 @@ public class ManagerGui extends JFrame{
 		label.setBounds(39, 204, 155, 14);
 		closeOrOpenAccountsPanel.add(label);
 		
-		JLabel label_1 = new JLabel("Client ID");
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setForeground(Color.WHITE);
-		label_1.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		label_1.setBounds(39, 391, 155, 14);
-		closeOrOpenAccountsPanel.add(label_1);
+		JLabel lblClientNib = new JLabel("Client Nib");
+		lblClientNib.setHorizontalAlignment(SwingConstants.CENTER);
+		lblClientNib.setForeground(Color.WHITE);
+		lblClientNib.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		lblClientNib.setBounds(39, 391, 155, 14);
+		closeOrOpenAccountsPanel.add(lblClientNib);
 		
-		JTextArea closeAclientIDLabel = new JTextArea();
-		closeAclientIDLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		closeAclientIDLabel.setEditable(false);
-		closeAclientIDLabel.setBounds(39, 416, 161, 23);
-		closeOrOpenAccountsPanel.add(closeAclientIDLabel);
+		JTextArea closeAclientNibLabel = new JTextArea();
+		closeAclientNibLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		closeAclientNibLabel.setEditable(false);
+		closeAclientNibLabel.setBounds(39, 416, 161, 23);
+		closeOrOpenAccountsPanel.add(closeAclientNibLabel);
 		
 		JTextArea accountNumberLabel = new JTextArea();
 		accountNumberLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
@@ -326,15 +329,15 @@ public class ManagerGui extends JFrame{
 		btnCloseAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(actionListener != null){
-					actionListener.closeAccount(closeAclientIDLabel.getText(), accountNumberLabel.getText());
-					clientIDLabel.setText(null);
+					actionListener.closeAccount(closeAclientNibLabel.getText(), accountNumberLabel.getText());
+					clientNibLabel.setText(null);
 					accountNumberLabel.setText(null);
 				}
 			}
 		});
 		closeOrOpenAccountsPanel.add(btnCloseAccount);
 		
-		JComboBox<String> typeAccountCB = new JComboBox<String>();
+		typeAccountCB = new JComboBox<String>();
 		typeAccountCB.setFont(new Font("Century Gothic", Font.PLAIN, 12));
 		typeAccountCB.setBounds(455, 159, 161, 28);
 		closeOrOpenAccountsPanel.add(typeAccountCB);
@@ -347,8 +350,8 @@ public class ManagerGui extends JFrame{
 		createAccountbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(actionListener != null){
-					actionListener.createAccount(clientIDLabel.getText(), accountNameLabel.getText(), typeAccountCB.getSelectedItem().toString());
-					clientIDLabel.setText(null);
+					actionListener.createAccount(clientNibLabel.getText(), accountNameLabel.getText(), (String)typeAccountCB.getSelectedItem());
+					clientNibLabel.setText(null);
 					accountNameLabel.setText(null);
 				}
 			}
@@ -463,6 +466,7 @@ public class ManagerGui extends JFrame{
 		openAccounts.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				callNewWindow(closeOrOpenAccountsPanel);
+				resetChoise();
 			}
 		});
 		openAccounts.setBounds(0, 62, 194, 46);
@@ -496,9 +500,28 @@ public class ManagerGui extends JFrame{
 	
 	public void setOnManagerEventListener(OnManagerEventListener listener){
 		actionListener = listener;
+		fillAccountTypesComboBox(typeAccountCB);
+		resetChoise();
 	}
 	
 	public void setOnCommunEventListener(OnCommunEventListener listener){
 		communActionListener = listener;
 	}
+	
+	private void fillAccountTypesComboBox(JComboBox<String> box){
+		if(actionListener != null){
+			List<String> accountList = actionListener.onGetAccountTypes();
+			box.removeAllItems();
+			if(accountList != null){
+				for(String account : accountList){
+					box.addItem(account);
+				}
+			}
+		}
+	}
+	
+	private void resetChoise() {
+		typeAccountCB.setSelectedIndex(0);
+	}
+	
 }

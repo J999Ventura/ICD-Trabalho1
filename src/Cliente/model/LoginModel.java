@@ -6,6 +6,7 @@ import Cliente.control.ClienteSimplesTCP;
 import Protocolo.Protocolo;
 import XML.XMLDoc;
 import commun.Cliente;
+import commun.Funcionario;
 
 public class LoginModel {
 
@@ -19,7 +20,6 @@ public class LoginModel {
 		
 		pro = new Protocolo();
 		xmlInt = new XMLInteration();
-		//cli =  xmlInt.getClient(pro.infoCliente(new Cliente("nigga","Joao Filipe Vaz", 207905835, true)));
 	}
 
 	
@@ -44,6 +44,7 @@ public class LoginModel {
 			login = true;
 		}
 		
+		//boolean login = true; //para teste na manager ui
 		return login;
 	}
 	
@@ -52,7 +53,8 @@ public class LoginModel {
 	}
 	
 	public boolean isAdmin(){
-		return false;
+		//return (cli instanceof Funcionario); //o funcionario ainda não é um cliente;
+		return false; //para teste na manager ui
 	}
 	
 	
