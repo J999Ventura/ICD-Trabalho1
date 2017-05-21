@@ -1,7 +1,5 @@
 package commun;
 
-import java.time.LocalDate;
-
 
 public class Movimento {
 
@@ -9,7 +7,7 @@ public class Movimento {
     private String dataValor;
     private String dataLancamento;
     private double valor;
-    private TipoMovimento tipo;
+    private TipoMovimentoEnum tipoMovimento;
     private String contaRemetente;
     private String contaDestino;
 
@@ -53,24 +51,20 @@ public class Movimento {
         this.valor = valor;
     }
 
-    public TipoMovimento getTipo() {
-        return tipo;
+    public TipoMovimentoEnum getTipoMovimento() {
+        return tipoMovimento;
     }
 
-    public void setTipo(TipoMovimento tipo) {
-        this.tipo = tipo;
-    }
-    
     public String toString(){
-    	return "| From: " + this.getContaRemetente() + " | To: " + this.getContaDestino() + " | Type: " + this.getTipo() + " | Value: " + this.getValor() + "€ | Date: " + this.getDataLancamento() + " |";
+    	return "| From: " + this.getContaRemetente() + " | To: " + this.getContaDestino() + " | Type: " + this.getTipoMovimento() + " | Value: " + this.getValor() + "ï¿½ | Date: " + this.getDataLancamento() + " |";
     }
 
-    public Movimento(String descricao, String dataValor, String dataLancamento, double valor, TipoMovimento tipo, String contaD, String contaR) {
+    public Movimento(String descricao, String dataValor, String dataLancamento, double valor, TipoMovimentoEnum tipo, String contaD, String contaR) {
         this.descricao = descricao;
         this.dataValor = dataValor;
         this.dataLancamento = dataLancamento;
         this.valor = valor;
-        this.tipo = tipo;
+        this.tipoMovimento = tipo;
         this.contaDestino = contaD;
         this.contaRemetente = contaR;
     }

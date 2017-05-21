@@ -14,4 +14,20 @@ public class ClienteEmpresarial extends Cliente {
         this.nomeResponsavel = nomeResponsavel;
         this.cae = cae;
     }
+
+    public String getNomeResponsavel() {
+        return nomeResponsavel;
+    }
+
+    public void setNomeResponsavel(String nomeResponsavel) {
+        this.nomeResponsavel = nomeResponsavel;
+    }
+
+    public String getCae() {
+        return cae;
+    }
+
+    public void setCae(String cae) {
+        this.cae = cae;
+    }
 }

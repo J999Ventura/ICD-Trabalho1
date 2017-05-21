@@ -44,7 +44,6 @@ public class Protocolo {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
             D.appendChild(protocol_tag);
-
         }
     }
 
@@ -213,6 +212,15 @@ public class Protocolo {
         foto_tag.setTextContent(imageToBase64Encode(cliente.getFoto()));
         assinatura_tag.setTextContent(imageToBase64Encode(cliente.getAssinatura()));
 
+        protocol_tag.appendChild(cliente_tag);
+        cliente_tag.appendChild(userName_tag);
+        cliente_tag.appendChild(nomeCliente_tag);
+        cliente_tag.appendChild(idCliente_tag);
+        cliente_tag.appendChild(nif_tag);
+        cliente_tag.appendChild(morada_tag);
+        cliente_tag.appendChild(numTelefone_tag);
+        cliente_tag.appendChild(foto_tag);
+        cliente_tag.appendChild(assinatura_tag);
 
         if (cliente instanceof ClienteIndividual){
 
@@ -225,69 +233,29 @@ public class Protocolo {
             dataDeNascimento_tag.setTextContent(((ClienteIndividual) cliente).getDataDeNascimento().toString());
             tipoCliente_tag.setTextContent(cliente.getTipoCliente().getTipo());
 
-            protocol_tag.appendChild(cliente_tag);
-            cliente_tag.appendChild(userName_tag);
-            cliente_tag.appendChild(nomeCliente_tag);
-            cliente_tag.appendChild(idCliente_tag);
-            cliente_tag.appendChild(nif_tag);
-            cliente_tag.appendChild(morada_tag);
-            cliente_tag.appendChild(numTelefone_tag);
-            cliente_tag.appendChild(foto_tag);
-            cliente_tag.appendChild(assinatura_tag);
             cliente_tag.appendChild(numCartaoCidadao_tag);
             cliente_tag.appendChild(numPassaporte_tag);
             cliente_tag.appendChild(dataDeNascimento_tag);
+            cliente_tag.appendChild(tipoCliente_tag);
             cliente_tag.appendChild(conta_tag);
 
+        } else if (cliente instanceof ClienteEmpresarial) {
 
-            return D;
+            Element nomeResponsavel_tag = D.createElement("nomeResponsavel");
+            Element cae_tag = D.createElement("cae");
 
-        } else {
-            Element cliente_tag = D.createElement("cliente");
-            Element nomeCliente_tag = D.createElement("nomeCliente");
-            Element idCliente_tag = D.createElement("idCliente");
-            Element nif_tag = D.createElement("nif");
-            Element morada_tag = D.createElement("morada");
-            Element numTelefone_tag = D.createElement("numTelefone");
-            Element numConta_tag = D.createElement("numConta");
-            Element foto_tag = D.createElement("foto");
-            Element assinatura_tag = D.createElement("assinatura");
-            Element userName_tag = D.createElement("userName");
-            Element age_tag = D.createElement("age");
-            Element dataNascimento_tag = D.createElement("birthday");
-            Element isAdmin_tag = D.createElement("isAdmin");
+            nomeResponsavel_tag.setTextContent(((ClienteEmpresarial) cliente).getNomeResponsavel());
+            cae_tag.setTextContent(((ClienteEmpresarial) cliente).getCae());
+            tipoCliente_tag.setTextContent(cliente.getTipoCliente().getTipo());
 
-            nomeCliente_tag.setTextContent(cliente.getNomeCliente());
-            nif_tag.setTextContent(Integer.toString(cliente.getNif()));
-            idCliente_tag.setTextContent(Integer.toString(cliente.getIdCliente()));
-            morada_tag.setTextContent(cliente.getMorada());
-            numTelefone_tag.setTextContent(Integer.toString(cliente.getNumTelefone()));
-            numConta_tag.setTextContent(Integer.toString(cliente.getNumConta()));
-            userName_tag.setTextContent(cliente.getUserName());
-            age_tag.setTextContent(cliente.getAge());
-            dataNascimento_tag.setTextContent(cliente.getBirthday());
-            isAdmin_tag.setTextContent(cliente.getIsAdmin()? "true" : "false");
+            cliente_tag.appendChild(nomeResponsavel_tag);
+            cliente_tag.appendChild(cae_tag);
+            cliente_tag.appendChild(tipoCliente_tag);
+            cliente_tag.appendChild(conta_tag);
 
-            foto_tag.setTextContent(imageToBase64Encode(cliente.getFoto()));
-            assinatura_tag.setTextContent(imageToBase64Encode(cliente.getAssinatura()));
-
-            protocol_tag.appendChild(cliente_tag);
-            cliente_tag.appendChild(nomeCliente_tag);
-            cliente_tag.appendChild(userName_tag);
-            cliente_tag.appendChild(idCliente_tag);
-            cliente_tag.appendChild(nif_tag);
-            cliente_tag.appendChild(isAdmin_tag);
-            cliente_tag.appendChild(morada_tag);
-            cliente_tag.appendChild(numTelefone_tag);
-            cliente_tag.appendChild(numConta_tag);
-            cliente_tag.appendChild(age_tag);
-            cliente_tag.appendChild(dataNascimento_tag);
-            cliente_tag.appendChild(foto_tag);
-            cliente_tag.appendChild(assinatura_tag);
-
-            return D;
         }
 
+        return D;
     }
 
     public Document infoConta(Conta conta){
@@ -340,7 +308,7 @@ public class Protocolo {
                 dataValor_tag.setTextContent(conta.getMovimentos().get(i).getDataValor());
                 dataLancamento_tag.setTextContent(conta.getMovimentos().get(i).getDataLancamento());
                 valor_tag.setTextContent(Double.toString(conta.getMovimentos().get(i).getValor()));
-                tipo_tag.setTextContent(conta.getMovimentos().get(i).getTipo().toString());
+                tipo_tag.setTextContent(conta.getMovimentos().get(i).getTipoMovimento().getTipo());
                 contaDestino_tag.setTextContent(conta.getMovimentos().get(i).getContaDestino());
                 contaRemetente_tag.setTextContent(conta.getMovimentos().get(i).getContaRemetente());
 
