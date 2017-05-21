@@ -69,6 +69,55 @@ public class Protocolo {
         return D;
     }
 
+    public Document abrirConta(Conta conta){
+
+        Element tipo_pedido = D.createElement("tipopedido");
+        Element user_tag = D.createElement("user");
+        Element pass_tag = D.createElement("pass");
+
+        tipo_pedido.setTextContent("login");
+
+        protocol_tag.appendChild(tipo_pedido);
+        protocol_tag.appendChild(user_tag);
+        protocol_tag.appendChild(pass_tag);
+
+        return D;
+    }
+
+    public Document fecharConta(String user, String pass){
+
+        Element tipo_pedido = D.createElement("tipopedido");
+        Element user_tag = D.createElement("user");
+        Element pass_tag = D.createElement("pass");
+
+        tipo_pedido.setTextContent("login");
+        user_tag.setTextContent(user);
+        pass_tag.setTextContent(pass);
+
+        protocol_tag.appendChild(tipo_pedido);
+        protocol_tag.appendChild(user_tag);
+        protocol_tag.appendChild(pass_tag);
+
+        return D;
+    }
+
+    public Document atribuirEmprestimo(String user, String pass){
+
+        Element tipo_pedido = D.createElement("tipopedido");
+        Element user_tag = D.createElement("user");
+        Element pass_tag = D.createElement("pass");
+
+        tipo_pedido.setTextContent("login");
+        user_tag.setTextContent(user);
+        pass_tag.setTextContent(pass);
+
+        protocol_tag.appendChild(tipo_pedido);
+        protocol_tag.appendChild(user_tag);
+        protocol_tag.appendChild(pass_tag);
+
+        return D;
+    }
+
     public Document queryServidor(String pedido){
         Element tipo_pedido = D.createElement("tipopedido");
 
