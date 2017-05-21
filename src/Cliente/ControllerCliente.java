@@ -40,7 +40,8 @@ public class ControllerCliente {
         clienteTCP.writeSocket(d2);
 
         String dados = clienteTCP.readSocket();
-        Document infoCliente = Protocolo.convertStringToDocument(dados);
+        System.out.println(dados);
+        Document infoCliente = log.convertStringToDocument(dados);
 
         while(session) {
             clienteTCP.readSocket();

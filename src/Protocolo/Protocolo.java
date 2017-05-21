@@ -530,12 +530,9 @@ public class Protocolo {
         }
     }
 
-    public static Document convertStringToDocument(String xmlStr) {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder;
+    public Document convertStringToDocument(String xmlStr) {
         try
         {
-            builder = factory.newDocumentBuilder();
             Document doc = builder.parse( new InputSource( new StringReader( xmlStr ) ) );
             return doc;
         } catch (Exception e) {

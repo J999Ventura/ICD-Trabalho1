@@ -83,7 +83,7 @@ class HandleConnectionThread extends Thread {
     public void run() {
         openSocket();
         while (session) {
-            writeSocket(ControllerServidor.gestorComunicacao(readSocket()));
+            writeSocket(GestorComunicacao.gestorComunicacao(readSocket()));
         }
         closeSocket();
     } // end run

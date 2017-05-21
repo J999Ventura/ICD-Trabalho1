@@ -36,18 +36,21 @@ public class DbManager {
     }
 
     public static synchronized Document getClientDataFromDB(String user, Document db) {
-        NodeList noscliente = XMLDoc.getXPath("//cliente[userName/text()='" + user + "']", db);
+        NodeList noscliente = XMLDoc.getXPath("//cliente[./userName/text()='" + user + "']", db);
         if (noscliente != null) {
             try {
                 Document cliente = DocumentBuilderFactory.newInstance()
                         .newDocumentBuilder().newDocument();
-                Element root = cliente.createElement("protocolo");
-                cliente.appendChild(root);
+                //Element root = cliente.createElement("protocolo");
+                //cliente.appendChild(root);
+                cliente.appendChild(cliente.adoptNode(noscliente.item(0).cloneNode(true)));
+                /*
                 for (int i = 0; i < noscliente.getLength(); i++) {
                     Node node = noscliente.item(i);
                     Node copyNode = cliente.importNode(node, true);
                     root.appendChild(copyNode);
                 }
+                */
                 XMLDoc.writeDocument(cliente, "resposta_dados.xml");
                 return cliente;
             } catch (ParserConfigurationException e) {

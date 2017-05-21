@@ -30,7 +30,7 @@ public class LoginModel {
 		tcp.writeSocket(doc);
 		
 		String readedMSG = tcp.readSocket();
-		doc = Protocolo.convertStringToDocument(readedMSG);
+		doc = pro.convertStringToDocument(readedMSG);
 		boolean isLogin = xmlInt.getLoginAnswer(doc);
 
 		if(isLogin){
@@ -39,7 +39,7 @@ public class LoginModel {
 			
 			readedMSG = tcp.readSocket();
 			System.out.println(readedMSG);
-			doc = Protocolo.convertStringToDocument(readedMSG);
+			doc = pro.convertStringToDocument(readedMSG);
 			//cli = xmlInt.getClient(doc);
 			login = true;
 		}

@@ -36,7 +36,7 @@ public class ClientModel {
 		tcp.writeSocket(doc);
 		
 		String readedMSG = tcp.readSocket();
-		doc = Protocolo.convertStringToDocument(readedMSG);
+		doc = pro.convertStringToDocument(readedMSG);
 		boolean isLogin = xmlInt.getLoginAnswer(doc);
 		return true;
 	}

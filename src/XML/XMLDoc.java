@@ -211,7 +211,7 @@ final public class XMLDoc {
                         input.getXmlEncoding());
             else
                 transformer
-                        .setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
+                        .setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
