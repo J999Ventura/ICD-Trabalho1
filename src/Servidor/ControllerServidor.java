@@ -11,6 +11,7 @@ public class ControllerServidor {
     private static Protocolo log;
     private static Document db;
     private static String user = "";
+    private static
 
     static String gestorComunicacao(String msg){
 
