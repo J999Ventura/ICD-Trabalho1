@@ -105,16 +105,6 @@ public class Protocolo {
      *  Metodos do Servidor
      */
 
-    public Document loginReply(boolean validation){
-
-        Element ok_tag = D.createElement("OK");
-
-        ok_tag.setTextContent(validation ? "true" : "false");
-
-        protocol_tag.appendChild(ok_tag);
-
-        return D;
-    }
 
     public Document respostaServidor(boolean validation){
         Element ok_tag = D.createElement("OK");
@@ -468,7 +458,7 @@ public class Protocolo {
 
         removeChilds(d.getDocumentElement());
 
-        d = log.loginReply(true);
+        d = log.respostaServidor(true);
         XMLDoc.writeDocument(d, "resposta.xml");
 
         removeChilds(d.getDocumentElement());
