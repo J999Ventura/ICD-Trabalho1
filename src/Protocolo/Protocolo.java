@@ -241,9 +241,6 @@ public class Protocolo {
 
     public Document infoConta(Conta conta){
 
-        private List<Movimento> movimentos;
-
-
         Element conta_tag = D.createElement("conta");
         Element tipoConta_tag = D.createElement("tipoConta");
         Element titular_tag = D.createElement("titular");
@@ -251,29 +248,28 @@ public class Protocolo {
         Element nomeConta_tag = D.createElement("nomeConta");
         Element nib_tag = D.createElement("nib");
         Element iban_tag = D.createElement("iban");
-        Element idCliente_tag = D.createElement("idCliente");
         Element saldoContabilistico_tag = D.createElement("saldoContabilistico");
         Element saldoDisponivel_tag = D.createElement("saldoDisponivel");
         Element saldoAutorizado_tag = D.createElement("saldoAutorizado");
         Element movimentos_tag = D.createElement("movimentos");
 
-        tipoConta_tag.setTextContent(conta.get        );
+        tipoConta_tag.setTextContent(conta.getTipoConta().getTipo());
+        titular_tag.setTextContent(conta.getTitular());
         numConta_tag.setTextContent(conta.getNumConta());
         nomeConta_tag.setTextContent(conta.getNomeConta());
         nib_tag.setTextContent(conta.getNib());
         iban_tag.setTextContent(conta.getIban());
-        idCliente_tag.setTextContent(conta.getTitular()+"");
-        saldoContabilistico_tag.setTextContent(Double.toString(conta.getSaldoContabilistico());
+        saldoContabilistico_tag.setTextContent(Double.toString(conta.getSaldoContabilistico()));
         saldoDisponivel_tag.setTextContent(Double.toString(conta.getSaldoDisponivel()));
         saldoAutorizado_tag.setTextContent(Double.toString(conta.getSaldoAutorizado()));
 
         protocol_tag.appendChild(conta_tag);
+        conta_tag.appendChild(tipoConta_tag);
+        conta_tag.appendChild(titular_tag);
         conta_tag.appendChild(numConta_tag);
         conta_tag.appendChild(nomeConta_tag);
         conta_tag.appendChild(nib_tag);
         conta_tag.appendChild(iban_tag);
-       
-        conta_tag.appendChild(idCliente_tag);
         conta_tag.appendChild(saldoContabilistico_tag);
         conta_tag.appendChild(saldoDisponivel_tag);
         conta_tag.appendChild(saldoAutorizado_tag);
@@ -287,36 +283,35 @@ public class Protocolo {
                 Element dataValor_tag = D.createElement("dataValor");
                 Element dataLancamento_tag = D.createElement("dataLancamento");
                 Element valor_tag = D.createElement("valor");
-                Element tipo_tag = D.createElement("tipo");
-                Element contaDestino_tag = D.createElement("contaDestino");
+                Element tipoMovimento_tag = D.createElement("tipomovimento");
                 Element contaRemetente_tag = D.createElement("contaRemetente");
+                Element contaDestino_tag = D.createElement("contaDestino");
    
                 descricao_tag.setTextContent(conta.getMovimentos().get(i).getDescricao());
                 dataValor_tag.setTextContent(conta.getMovimentos().get(i).getDataValor());
                 dataLancamento_tag.setTextContent(conta.getMovimentos().get(i).getDataLancamento());
                 valor_tag.setTextContent(Double.toString(conta.getMovimentos().get(i).getValor()));
-                tipo_tag.setTextContent(conta.getMovimentos().get(i).getTipoMovimento().getTipo());
+                tipoMovimento_tag.setTextContent(conta.getMovimentos().get(i).getTipoMovimento().getTipo());
                 contaDestino_tag.setTextContent(conta.getMovimentos().get(i).getContaDestino());
                 contaRemetente_tag.setTextContent(conta.getMovimentos().get(i).getContaRemetente());
 
                 movimentos_tag.appendChild(movimento_tag);
-                
-                movimento_tag.appendChild(contaRemetente_tag);
-                movimento_tag.appendChild(contaDestino_tag);
-                movimento_tag.appendChild(descricao_tag);
+
                 movimento_tag.appendChild(dataValor_tag);
                 movimento_tag.appendChild(dataLancamento_tag);
+                movimento_tag.appendChild(descricao_tag);
                 movimento_tag.appendChild(valor_tag);
-                movimento_tag.appendChild(tipo_tag);
+                movimento_tag.appendChild(tipoMovimento_tag);
+                movimento_tag.appendChild(contaRemetente_tag);
+                movimento_tag.appendChild(contaDestino_tag);
             }
-
         }
 
         return D;
     }
     
     
-    public Document enviarEmprestimo(ArrayList<Emprestimo> list){
+    public Document infoEmprestimo(ArrayList<Emprestimo> list){
     	
     	Element emprestimos_tag = D.createElement("emprestimos");
 
@@ -339,8 +334,7 @@ public class Protocolo {
                 juros.setTextContent(""+list.get(i).getJuros());
                 timeToPay.setTextContent(list.get(i).getTempoRestante());
                 mensal.setTextContent(""+list.get(i).getValorMensal());
-                nomeConta.setTextContent(list.get(i).getNomeConta()); 
-
+                nomeConta.setTextContent(list.get(i).getNomeConta());
                 
                 emprestimos_tag.appendChild(emprestimo_tag);
                 
@@ -351,7 +345,6 @@ public class Protocolo {
                 emprestimo_tag.appendChild(mensal);
                 emprestimo_tag.appendChild(timeToPay);
             }
-
         }
     	
     	return D;	

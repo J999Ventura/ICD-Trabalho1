@@ -58,7 +58,7 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 		e.add(new Emprestimo("teste1", 45.0, 5.0, 3.0, 7));
 
 		clientM.setAccountList(xmlInt.getAccounts(pro.infoConta(c)));
-		clientM.setLoansList(xmlInt.getLoans(pro.enviarEmprestimo(e)));
+		clientM.setLoansList(xmlInt.getLoans(pro.infoEmprestimo(e)));
 	}
 	
 	

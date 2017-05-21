@@ -33,6 +33,7 @@ public class Cliente {
         this.foto = foto;
         this.tipoCliente = tipoCliente;
         contas = new ArrayList<>();
+        emprestimos = new ArrayList<>();
     }
 
     public String getNomeCliente() {
@@ -90,6 +91,10 @@ public class Cliente {
 	public void setUserName(String name){
 		this.userName = name;
 	}
+
+    public List<Emprestimo> getEmprestimos() {
+        return emprestimos;
+    }
 
     public List<Conta> getContas() {
         return contas;
