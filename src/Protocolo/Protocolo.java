@@ -29,22 +29,17 @@ import java.util.Base64;
 public class Protocolo {
     private Document D = null; // representa a arvore DOM com o login
     private Element protocol_tag;
+    private DocumentBuilder builder;
 
     public Protocolo() {
         DocumentBuilderFactory factory;
-        DocumentBuilder builder = null;
+        builder = null;
 
         try {
             factory = DocumentBuilderFactory.newInstance();
             builder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
-        }
-
-        if (builder != null) {
-            D = builder.newDocument();
-            protocol_tag = D.createElement("protocolo");
-            D.appendChild(protocol_tag);
         }
     }
 
@@ -53,24 +48,35 @@ public class Protocolo {
      */
 
     public Document writeLogin(String user, String pass){
-
-        Element tipo_pedido = D.createElement("tipopedido");
-        Element user_tag = D.createElement("user");
-        Element pass_tag = D.createElement("pass");
-
-        tipo_pedido.setTextContent("login");
-        user_tag.setTextContent(user);
-        pass_tag.setTextContent(pass);
-
-        protocol_tag.appendChild(tipo_pedido);
-        protocol_tag.appendChild(user_tag);
-        protocol_tag.appendChild(pass_tag);
+    	 
+    	if (builder != null) {
+             D = builder.newDocument();
+             protocol_tag = D.createElement("protocolo");
+             D.appendChild(protocol_tag);
+         
+	        Element tipo_pedido = D.createElement("tipopedido");
+	        Element user_tag = D.createElement("user");
+	        Element pass_tag = D.createElement("pass");
+	
+	        tipo_pedido.setTextContent("login");
+	        user_tag.setTextContent(user);
+	        pass_tag.setTextContent(pass);
+	
+	        protocol_tag.appendChild(tipo_pedido);
+	        protocol_tag.appendChild(user_tag);
+	        protocol_tag.appendChild(pass_tag);
+    	}
 
         return D;
     }
 
     public Document criarConta(Conta conta){
-
+    	if (builder != null) {
+            D = builder.newDocument();
+            protocol_tag = D.createElement("protocolo");
+            D.appendChild(protocol_tag);
+        
+    	
         Element tipo_pedido = D.createElement("tipopedido");
         Element conta_tag = D.createElement("conta");
         Element tipoConta_tag = D.createElement("tipoConta");
@@ -108,41 +114,46 @@ public class Protocolo {
         conta_tag.appendChild(saldoAutorizado_tag);
         conta_tag.appendChild(movimentos_tag);
 
-        if (conta.getMovimentos() != null) {
-            for (int i = 0; i < conta.getMovimentos().size(); i++) {
-
-                Element movimento_tag = D.createElement("movimento");
-                Element descricao_tag = D.createElement("descricao");
-                Element dataValor_tag = D.createElement("dataValor");
-                Element dataLancamento_tag = D.createElement("dataLancamento");
-                Element valor_tag = D.createElement("valor");
-                Element tipoMovimento_tag = D.createElement("tipomovimento");
-                Element contaRemetente_tag = D.createElement("contaRemetente");
-                Element contaDestino_tag = D.createElement("contaDestino");
-
-                descricao_tag.setTextContent(conta.getMovimentos().get(i).getDescricao());
-                dataValor_tag.setTextContent(conta.getMovimentos().get(i).getDataValor().toString());
-                dataLancamento_tag.setTextContent(conta.getMovimentos().get(i).getDataLancamento().toString());
-                valor_tag.setTextContent(Double.toString(conta.getMovimentos().get(i).getValor()));
-                tipoMovimento_tag.setTextContent(conta.getMovimentos().get(i).getTipoMovimento().getTipo());
-                contaDestino_tag.setTextContent(conta.getMovimentos().get(i).getContaDestino());
-                contaRemetente_tag.setTextContent(conta.getMovimentos().get(i).getContaRemetente());
-
-                movimentos_tag.appendChild(movimento_tag);
-
-                movimento_tag.appendChild(dataValor_tag);
-                movimento_tag.appendChild(dataLancamento_tag);
-                movimento_tag.appendChild(descricao_tag);
-                movimento_tag.appendChild(valor_tag);
-                movimento_tag.appendChild(tipoMovimento_tag);
-                movimento_tag.appendChild(contaRemetente_tag);
-                movimento_tag.appendChild(contaDestino_tag);
-            }
-        }
+	        if (conta.getMovimentos() != null) {
+	            for (int i = 0; i < conta.getMovimentos().size(); i++) {
+	
+	                Element movimento_tag = D.createElement("movimento");
+	                Element descricao_tag = D.createElement("descricao");
+	                Element dataValor_tag = D.createElement("dataValor");
+	                Element dataLancamento_tag = D.createElement("dataLancamento");
+	                Element valor_tag = D.createElement("valor");
+	                Element tipoMovimento_tag = D.createElement("tipomovimento");
+	                Element contaRemetente_tag = D.createElement("contaRemetente");
+	                Element contaDestino_tag = D.createElement("contaDestino");
+	
+	                descricao_tag.setTextContent(conta.getMovimentos().get(i).getDescricao());
+	                dataValor_tag.setTextContent(conta.getMovimentos().get(i).getDataValor().toString());
+	                dataLancamento_tag.setTextContent(conta.getMovimentos().get(i).getDataLancamento().toString());
+	                valor_tag.setTextContent(Double.toString(conta.getMovimentos().get(i).getValor()));
+	                tipoMovimento_tag.setTextContent(conta.getMovimentos().get(i).getTipoMovimento().getTipo());
+	                contaDestino_tag.setTextContent(conta.getMovimentos().get(i).getContaDestino());
+	                contaRemetente_tag.setTextContent(conta.getMovimentos().get(i).getContaRemetente());
+	
+	                movimentos_tag.appendChild(movimento_tag);
+	
+	                movimento_tag.appendChild(dataValor_tag);
+	                movimento_tag.appendChild(dataLancamento_tag);
+	                movimento_tag.appendChild(descricao_tag);
+	                movimento_tag.appendChild(valor_tag);
+	                movimento_tag.appendChild(tipoMovimento_tag);
+	                movimento_tag.appendChild(contaRemetente_tag);
+	                movimento_tag.appendChild(contaDestino_tag);
+	            }
+        	}
+    	}
         return D;
     }
 
     public Document fecharConta(String numConta){
+    	if (builder != null) {
+            D = builder.newDocument();
+            protocol_tag = D.createElement("protocolo");
+            D.appendChild(protocol_tag);
 
         Element tipo_pedido = D.createElement("tipopedido");
         Element numConta_tag = D.createElement("user");
@@ -152,12 +163,16 @@ public class Protocolo {
 
         protocol_tag.appendChild(tipo_pedido);
         protocol_tag.appendChild(numConta_tag);
-
+    	}
         return D;
     }
 
     public Document atribuirEmprestimo(String user, String pass){
-
+    	if (builder != null) {
+            D = builder.newDocument();
+            protocol_tag = D.createElement("protocolo");
+            D.appendChild(protocol_tag);
+            
         Element tipo_pedido = D.createElement("tipopedido");
         Element user_tag = D.createElement("user");
         Element pass_tag = D.createElement("pass");
@@ -169,19 +184,30 @@ public class Protocolo {
         protocol_tag.appendChild(tipo_pedido);
         protocol_tag.appendChild(user_tag);
         protocol_tag.appendChild(pass_tag);
-
+    	}
         return D;
     }
 
     public Document queryServidor(String pedido){
+    	if (builder != null) {
+            D = builder.newDocument();
+            protocol_tag = D.createElement("protocolo");
+            D.appendChild(protocol_tag);
+            
         Element tipo_pedido = D.createElement("tipopedido");
 
         tipo_pedido.setTextContent(pedido);    
         protocol_tag.appendChild(tipo_pedido);
+    	}
         return D;
     }
     
     public Document makeTransfer(String nib, double value){
+    	if (builder != null) {
+            D = builder.newDocument();
+            protocol_tag = D.createElement("protocolo");
+            D.appendChild(protocol_tag);
+            
         Element transfer_tag = D.createElement("transfer");
         Element nib_tag = D.createElement("nib");
         Element value_tag = D.createElement("value");
@@ -192,15 +218,22 @@ public class Protocolo {
         protocol_tag.appendChild(transfer_tag);
         transfer_tag.appendChild(nib_tag);
         transfer_tag.appendChild(value_tag);
+    	}
         return D;
     }
     
     public Document changeUserName(String name){
+    	if (builder != null) {
+            D = builder.newDocument();
+            protocol_tag = D.createElement("protocolo");
+            D.appendChild(protocol_tag);
+            
         Element userName_tag = D.createElement("changeUserName");
         
         userName_tag.setTextContent(name);
         
         protocol_tag.appendChild(userName_tag);
+    	}
         return D;
     }
 
@@ -211,17 +244,26 @@ public class Protocolo {
 
 
     public Document respostaServidor(boolean validation){
+    	if (builder != null) {
+            D = builder.newDocument();
+            protocol_tag = D.createElement("protocolo");
+            D.appendChild(protocol_tag);
+            
         Element ok_tag = D.createElement("OK");
 
         ok_tag.setTextContent(validation ? "true" : "false");
 
         protocol_tag.appendChild(ok_tag);
-
+    	}
         return D;
     }
     
     public Document logout(boolean validation){
-
+    	if (builder != null) {
+            D = builder.newDocument();
+            protocol_tag = D.createElement("protocolo");
+            D.appendChild(protocol_tag);
+            
         Element logout_tag = D.createElement("logout");
         Element ok_tag = D.createElement("OK");
 
@@ -229,12 +271,16 @@ public class Protocolo {
 
         protocol_tag.appendChild(logout_tag);
         logout_tag.appendChild(ok_tag);
-
+    	}
         return D;
     }
     
     public Document nameChanged(boolean validation){
-
+    	if (builder != null) {
+            D = builder.newDocument();
+            protocol_tag = D.createElement("protocolo");
+            D.appendChild(protocol_tag);
+            
         Element name_tag = D.createElement("nameChanged");
         Element ok_tag = D.createElement("OK");
 
@@ -242,12 +288,16 @@ public class Protocolo {
 
         protocol_tag.appendChild(name_tag);
         name_tag.appendChild(ok_tag);
-
+    	}
         return D;
     }
     
     public Document transferMade(boolean validation){
-
+    	if (builder != null) {
+            D = builder.newDocument();
+            protocol_tag = D.createElement("protocolo");
+            D.appendChild(protocol_tag);
+            
         Element transfer_tag = D.createElement("transferMade");
         Element ok_tag = D.createElement("OK");
 
@@ -255,11 +305,16 @@ public class Protocolo {
 
         protocol_tag.appendChild(transfer_tag);
         transfer_tag.appendChild(ok_tag);
-
+    	}
         return D;
     }
     
     public Document pedirCliente(String user){
+    	if (builder != null) {
+            D = builder.newDocument();
+            protocol_tag = D.createElement("protocolo");
+            D.appendChild(protocol_tag);
+            
         Element clientePedido_tag = D.createElement("clientePedido");
         Element actual_tag = D.createElement("actual");
 
@@ -267,12 +322,17 @@ public class Protocolo {
 
         protocol_tag.appendChild(clientePedido_tag);
         clientePedido_tag.appendChild(actual_tag);
+    	}
     	return D;
     }
 
     
     public Document infoCliente(Cliente cliente){
-
+    	if (builder != null) {
+            D = builder.newDocument();
+            protocol_tag = D.createElement("protocolo");
+            D.appendChild(protocol_tag);
+            
         Element cliente_tag = D.createElement("cliente");
         Element userName_tag = D.createElement("userName");
         Element nomeCliente_tag = D.createElement("nomeCliente");
@@ -339,13 +399,18 @@ public class Protocolo {
             cliente_tag.appendChild(emprestimo_tag);
 
         }
+    	}
         return D;
     }
 
 
     
     public Document infoEmprestimo(ArrayList<Emprestimo> list){
-    	
+    	if (builder != null) {
+            D = builder.newDocument();
+            protocol_tag = D.createElement("protocolo");
+            D.appendChild(protocol_tag);
+            
     	Element emprestimos_tag = D.createElement("emprestimos");
 
         protocol_tag.appendChild(emprestimos_tag);
@@ -379,7 +444,7 @@ public class Protocolo {
                 emprestimo_tag.appendChild(timeToPay);
             }
         }
-    	
+    	}
     	return D;	
     }
 

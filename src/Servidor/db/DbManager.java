@@ -22,6 +22,7 @@ public class DbManager {
 
     public static synchronized boolean validateLogin(String user, String pass, Document db){
 
+
         String userInDB = XMLDoc.getXPathV("//user/username[text() = '" + user + "']", db);
         String passInDB = XMLDoc.getXPathV("//user/pass[text() = '" + pass + "']", db);
 
