@@ -193,50 +193,52 @@ public class Protocolo {
     public Document infoCliente(Cliente cliente){
 
         Element cliente_tag = D.createElement("cliente");
+        Element userName_tag = D.createElement("userName");
         Element nomeCliente_tag = D.createElement("nomeCliente");
         Element idCliente_tag = D.createElement("idCliente");
         Element nif_tag = D.createElement("nif");
         Element morada_tag = D.createElement("morada");
         Element numTelefone_tag = D.createElement("numTelefone");
-        Element numConta_tag = D.createElement("numConta");
         Element foto_tag = D.createElement("foto");
         Element assinatura_tag = D.createElement("assinatura");
-        Element userName_tag = D.createElement("userName");
-        Element age_tag = D.createElement("age");
-        Element dataNascimento_tag = D.createElement("birthday");
-        Element isAdmin_tag = D.createElement("isAdmin");
+        Element conta_tag = D.createElement("contas");
+        Element tipoCliente_tag = D.createElement("tipoCliente");
+
+        userName_tag.setTextContent(cliente.getUserName());
+        nomeCliente_tag.setTextContent(cliente.getNomeCliente());
+        idCliente_tag.setTextContent(cliente.getIdCliente());
+        nif_tag.setTextContent(cliente.getNif());
+        morada_tag.setTextContent(cliente.getMorada());
+        numTelefone_tag.setTextContent(cliente.getNumTelefone());
+        foto_tag.setTextContent(imageToBase64Encode(cliente.getFoto()));
+        assinatura_tag.setTextContent(imageToBase64Encode(cliente.getAssinatura()));
+
 
         if (cliente instanceof ClienteIndividual){
 
+            Element numCartaoCidadao_tag = D.createElement("numCartaoCidadao");
+            Element numPassaporte_tag = D.createElement("numPassaporte");
+            Element dataDeNascimento_tag = D.createElement("dataDeNascimento");
 
-
-            nomeCliente_tag.setTextContent(cliente.getNomeCliente());
-            nif_tag.setTextContent(Integer.toString(cliente.getNif()));
-            idCliente_tag.setTextContent(Integer.toString(cliente.getIdCliente()));
-            morada_tag.setTextContent(cliente.getMorada());
-            numTelefone_tag.setTextContent(Integer.toString(cliente.getNumTelefone()));
-            numConta_tag.setTextContent(Integer.toString(cliente.getNumConta()));
-            userName_tag.setTextContent(cliente.getUserName());
-            age_tag.setTextContent(cliente.getAge());
-            dataNascimento_tag.setTextContent(cliente.getBirthday());
-            isAdmin_tag.setTextContent(cliente.getIsAdmin()? "true" : "false");
-
-            foto_tag.setTextContent(imageToBase64Encode(cliente.getFoto()));
-            assinatura_tag.setTextContent(imageToBase64Encode(cliente.getAssinatura()));
+            numCartaoCidadao_tag.setTextContent(((ClienteIndividual) cliente).getNumCartaoCidadao());
+            numPassaporte_tag.setTextContent(((ClienteIndividual) cliente).getNumPassaporte());
+            dataDeNascimento_tag.setTextContent(((ClienteIndividual) cliente).getDataDeNascimento().toString());
+            tipoCliente_tag.setTextContent(cliente.getTipoCliente().getTipo());
 
             protocol_tag.appendChild(cliente_tag);
-            cliente_tag.appendChild(nomeCliente_tag);
             cliente_tag.appendChild(userName_tag);
+            cliente_tag.appendChild(nomeCliente_tag);
             cliente_tag.appendChild(idCliente_tag);
             cliente_tag.appendChild(nif_tag);
-            cliente_tag.appendChild(isAdmin_tag);
             cliente_tag.appendChild(morada_tag);
             cliente_tag.appendChild(numTelefone_tag);
-            cliente_tag.appendChild(numConta_tag);
-            cliente_tag.appendChild(age_tag);
-            cliente_tag.appendChild(dataNascimento_tag);
             cliente_tag.appendChild(foto_tag);
             cliente_tag.appendChild(assinatura_tag);
+            cliente_tag.appendChild(numCartaoCidadao_tag);
+            cliente_tag.appendChild(numPassaporte_tag);
+            cliente_tag.appendChild(dataDeNascimento_tag);
+            cliente_tag.appendChild(conta_tag);
+
 
             return D;
 
