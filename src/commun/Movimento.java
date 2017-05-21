@@ -1,17 +1,19 @@
 package commun;
 
 
+import java.time.LocalDate;
+
 public class Movimento {
 
     private String descricao;
-    private String dataValor;
-    private String dataLancamento;
+    private LocalDate dataValor;
+    private LocalDate dataLancamento;
     private double valor;
     private TipoMovimentoEnum tipoMovimento;
     private String contaRemetente;
     private String contaDestino;
 
-    public Movimento(String descricao, String dataValor, String dataLancamento, double valor, TipoMovimentoEnum tipo, String contaD, String contaR) {
+    public Movimento(String descricao, LocalDate dataValor, LocalDate dataLancamento, double valor, TipoMovimentoEnum tipo, String contaD, String contaR) {
         this.descricao = descricao;
         this.dataValor = dataValor;
         this.dataLancamento = dataLancamento;
@@ -37,19 +39,19 @@ public class Movimento {
         this.descricao = descricao;
     }
 
-    public String getDataValor() {
+    public LocalDate getDataValor() {
         return dataValor;
     }
 
-    public void setDataValor(String dataValor) {
+    public void setDataValor(LocalDate dataValor) {
         this.dataValor = dataValor;
     }
 
-    public String getDataLancamento() {
+    public LocalDate getDataLancamento() {
         return dataLancamento;
     }
 
-    public void setDataLancamento(String dataLancamento) {
+    public void setDataLancamento(LocalDate dataLancamento) {
         this.dataLancamento = dataLancamento;
     }
 

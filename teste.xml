@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <protocolo>
-<tipo>login</tipo>
+<tipopedido>login</tipopedido>
 <user>joaofilipevaz</user>
 <pass>[B@1b6d3586</pass>
 </protocolo>

@@ -17,6 +17,7 @@ public class Cliente {
     private Image foto;
     private Image assinatura;
     private List<Conta> contas;
+    private List<Emprestimo> emprestimos;
     private TipoClienteEnum tipoCliente;
 
     public Cliente(String userName, String nomeCliente, String nif, String morada, String numTelefone, Image assinatura, Image foto, TipoClienteEnum tipoCliente) {
@@ -32,6 +33,7 @@ public class Cliente {
         this.foto = foto;
         this.tipoCliente = tipoCliente;
         contas = new ArrayList<>();
+        emprestimos = new ArrayList<>();
     }
 
     public String getNomeCliente() {
@@ -89,6 +91,10 @@ public class Cliente {
 	public void setUserName(String name){
 		this.userName = name;
 	}
+
+    public List<Emprestimo> getEmprestimos() {
+        return emprestimos;
+    }
 
     public List<Conta> getContas() {
         return contas;

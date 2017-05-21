@@ -334,7 +334,6 @@ public class ManagerGui extends JFrame{
 		});
 		closeOrOpenAccountsPanel.add(btnCloseAccount);
 		
-		
 		JComboBox<String> typeAccountCB = new JComboBox<String>();
 		typeAccountCB.setFont(new Font("Century Gothic", Font.PLAIN, 12));
 		typeAccountCB.setBounds(455, 159, 161, 28);

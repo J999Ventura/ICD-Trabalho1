@@ -50,6 +50,19 @@ public class Conta {
         this.iban = iban;
     }
 
+    public TipoContaEnum getTipoConta() {
+        return tipoConta;
+    }
+
+    public void setMovimentos(List<Movimento> movimentos) {
+
+        this.movimentos = movimentos;
+    }
+
+    public void setNomeConta(String nomeConta) {
+        this.nomeConta = nomeConta;
+    }
+
     public double getSaldoContabilistico() {
         return saldoContabilistico;
     }
