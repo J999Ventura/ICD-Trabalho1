@@ -182,6 +182,7 @@ public class Protocolo {
         Element foto_tag = D.createElement("foto");
         Element assinatura_tag = D.createElement("assinatura");
         Element conta_tag = D.createElement("contas");
+        Element emprestimo_tag = D.createElement("emprestimos");
         Element tipoCliente_tag = D.createElement("tipoCliente");
 
         userName_tag.setTextContent(cliente.getUserName());
@@ -219,6 +220,7 @@ public class Protocolo {
             cliente_tag.appendChild(dataDeNascimento_tag);
             cliente_tag.appendChild(tipoCliente_tag);
             cliente_tag.appendChild(conta_tag);
+            cliente_tag.appendChild(emprestimo_tag);
 
         } else if (cliente instanceof ClienteEmpresarial) {
 
@@ -233,6 +235,7 @@ public class Protocolo {
             cliente_tag.appendChild(cae_tag);
             cliente_tag.appendChild(tipoCliente_tag);
             cliente_tag.appendChild(conta_tag);
+            cliente_tag.appendChild(emprestimo_tag);
 
         }
 
