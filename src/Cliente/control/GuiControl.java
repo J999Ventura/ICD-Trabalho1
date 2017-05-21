@@ -3,6 +3,7 @@ package Cliente.control;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -151,7 +152,7 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	}
 	
 	@Override
-	public ArrayList<Movimento> onGetAccountMovements() {
+	public List<Movimento> onGetAccountMovements() {
 		return clientM.getCurrentAccountMovimentsList();
 	}
 	
