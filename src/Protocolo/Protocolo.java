@@ -241,7 +241,12 @@ public class Protocolo {
 
     public Document infoConta(Conta conta){
 
+        private List<Movimento> movimentos;
+
+
         Element conta_tag = D.createElement("conta");
+        Element tipoConta_tag = D.createElement("tipoConta");
+        Element titular_tag = D.createElement("titular");
         Element numConta_tag = D.createElement("numConta");
         Element nomeConta_tag = D.createElement("nomeConta");
         Element nib_tag = D.createElement("nib");
@@ -252,12 +257,13 @@ public class Protocolo {
         Element saldoAutorizado_tag = D.createElement("saldoAutorizado");
         Element movimentos_tag = D.createElement("movimentos");
 
+        tipoConta_tag.setTextContent(conta.get        );
         numConta_tag.setTextContent(conta.getNumConta());
         nomeConta_tag.setTextContent(conta.getNomeConta());
         nib_tag.setTextContent(conta.getNib());
         iban_tag.setTextContent(conta.getIban());
         idCliente_tag.setTextContent(conta.getTitular()+"");
-        saldoContabilistico_tag.setTextContent(conta.getSaldoContabilistico()+"");
+        saldoContabilistico_tag.setTextContent(Double.toString(conta.getSaldoContabilistico());
         saldoDisponivel_tag.setTextContent(Double.toString(conta.getSaldoDisponivel()));
         saldoAutorizado_tag.setTextContent(Double.toString(conta.getSaldoAutorizado()));
 

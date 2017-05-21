@@ -17,6 +17,7 @@ public class Cliente {
     private Image foto;
     private Image assinatura;
     private List<Conta> contas;
+    private List<Emprestimo> emprestimos;
     private TipoClienteEnum tipoCliente;
 
     public Cliente(String userName, String nomeCliente, String nif, String morada, String numTelefone, Image assinatura, Image foto, TipoClienteEnum tipoCliente) {

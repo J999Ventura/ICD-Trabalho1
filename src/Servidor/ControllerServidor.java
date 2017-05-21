@@ -47,6 +47,9 @@ public class ControllerServidor {
             case "atribuirEmprestimo":
                 break;
 
+            case "logout":
+                break;
+
             default:
                 break;
         }
