@@ -490,10 +490,16 @@ public class Protocolo {
         XMLDoc.writeDocument(d, "cliente.xml");
 
         removeChilds(d.getDocumentElement());
-        Conta conta = new Conta("contaaordem", "276214522", "PT50321568432513215346", "", 103256221,
+        Conta contaaordem = new Conta("contaaordem", "276214522", "PT50321568432513215346", "", 103256221,
                 0.0, "321568432513215346", TipoContaEnum.CONTAORDEM);
 
-        d = log.infoConta(conta);
+        Conta contaprazo = new Conta("contaaordem", "276214522", "PT50321568432513215346", "", 103256221,
+                0.0, "321568432513215346", TipoContaEnum.CONTAPRAZO);
+
+        d = log.infoConta(contaaordem);
+        XMLDoc.writeDocument(d, "conta.xml");
+
+        d = log.infoConta(contaprazo);
         XMLDoc.writeDocument(d, "conta.xml");
     }
 
