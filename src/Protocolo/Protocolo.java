@@ -69,8 +69,6 @@ public class Protocolo {
         return D;
     }
 
-    
-        /*  */
     public Document queryServidor(String pedido){
         Element tipo_pedido = D.createElement("tipopedido");
 
@@ -109,12 +107,20 @@ public class Protocolo {
 
     public Document loginReply(boolean validation){
 
-        Element tipo_pedido = D.createElement("tipo");
         Element ok_tag = D.createElement("OK");
 
         ok_tag.setTextContent(validation ? "true" : "false");
 
-        protocol_tag.appendChild(tipo_pedido);
+        protocol_tag.appendChild(ok_tag);
+
+        return D;
+    }
+
+    public Document respostaServidor(boolean validation){
+        Element ok_tag = D.createElement("OK");
+
+        ok_tag.setTextContent(validation ? "true" : "false");
+
         protocol_tag.appendChild(ok_tag);
 
         return D;
