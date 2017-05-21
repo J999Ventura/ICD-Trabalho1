@@ -35,7 +35,6 @@ public class LoginModel {
 
 		if(isLogin){
 			/*
-			 * ghj
 			doc = pro.pedirCliente(user);
 			tcp.writeSocket(doc);
 			
