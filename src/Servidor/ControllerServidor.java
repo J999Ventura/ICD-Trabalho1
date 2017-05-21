@@ -54,6 +54,9 @@ public class ControllerServidor {
                 case "atribuirEmprestimo":
                     break;
 
+                case "changeUserName":
+                    break;
+
                 case "logout":
                     break;
 
