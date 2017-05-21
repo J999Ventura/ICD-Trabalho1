@@ -16,42 +16,45 @@ public class ControllerServidor {
         Document d = Protocolo.convertStringToDocument(msg);
         String tipoPedido = XMLDoc.getXPathV("//tipo",d);
 
-        switch (tipoPedido){
-            case "login":
+        if (tipoPedido != null) {
 
-                String user = XMLDoc.getXPathV("//user",d);
-                String pass = XMLDoc.getXPathV("//pass",d);
-                System.out.println(user);
-                System.out.println(pass);
-                if (DbManager.validateLogin(user, pass, db)) {
-                    return Protocolo.getStringFromDocument(log.loginReply(true));
-                } else {
-                    return Protocolo.getStringFromDocument(log.loginReply(false));
-                }
+            switch (tipoPedido) {
+                case "login":
 
-            case "getUserInfo":
-                break;
+                    String user = XMLDoc.getXPathV("//user", d);
+                    String pass = XMLDoc.getXPathV("//pass", d);
+                    System.out.println(user);
+                    System.out.println(pass);
+                    if (DbManager.validateLogin(user, pass, db)) {
+                        return Protocolo.getStringFromDocument(log.loginReply(true));
+                    } else {
+                        return Protocolo.getStringFromDocument(log.loginReply(false));
+                    }
 
-            case "infoManager":
-                break;
+                case "getUserInfo":
+                    break;
 
-            case "movimentoConta":
-                break;
+                case "infoManager":
+                    break;
 
-            case "abrirConta":
-                break;
+                case "movimentoConta":
+                    break;
 
-            case "fecharConta":
-                break;
+                case "abrirConta":
+                    break;
 
-            case "atribuirEmprestimo":
-                break;
+                case "fecharConta":
+                    break;
 
-            case "logout":
-                break;
+                case "atribuirEmprestimo":
+                    break;
 
-            default:
-                break;
+                case "logout":
+                    break;
+
+                default:
+                    break;
+            }
         }
         return null;
     }
