@@ -20,11 +20,7 @@ import Cliente.view.login.OnLoginEventListener;
 import Cliente.view.manager.ManagerGui;
 import Cliente.view.manager.OnManagerEventListener;
 import Protocolo.Protocolo;
-import commun.Cliente;
-import commun.Conta;
-import commun.Emprestimo;
-import commun.Movimento;
-import commun.TipoMovimento;
+import commun.*;
 
 
 public class GuiControl implements OnLoginEventListener, OnClientEventListener, OnCommunEventListener, OnManagerEventListener{
@@ -50,11 +46,11 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 		Protocolo pro = new Protocolo();
 		xmlInt = new XMLInteration();
 		Conta c = new Conta("teste1", "3215648948", 1234578, 1.0, ""+111111, ""+111111);
-		c.setMovimento(new Movimento("mov1", "dsfdsf", "sdfdf", 1.1, TipoMovimento.DEBITO, "qwe1", "asd1"));
-		c.setMovimento(new Movimento("mov2", null, null, 2.2, TipoMovimento.CREDITO, "qwe2", "asd2"));
-		c.setMovimento(new Movimento("mov3", null, null, 3.3, TipoMovimento.DEBITO, "qwe3", "asd3"));
-		c.setMovimento(new Movimento("mov4", null, null, 4.4, TipoMovimento.CREDITO, "qwe4", "asd4"));
-		c.setMovimento(new Movimento("mov5", null, null, 5.5, TipoMovimento.DEBITO, "qwe5", "asd5"));
+		c.setMovimento(new Movimento("mov1", "dsfdsf", "sdfdf", 1.1, TipoMovimentoEnum.DEBITO, "qwe1", "asd1"));
+		c.setMovimento(new Movimento("mov2", null, null, 2.2, TipoMovimentoEnum.CREDITO, "qwe2", "asd2"));
+		c.setMovimento(new Movimento("mov3", null, null, 3.3, TipoMovimentoEnum.DEBITO, "qwe3", "asd3"));
+		c.setMovimento(new Movimento("mov4", null, null, 4.4, TipoMovimentoEnum.CREDITO, "qwe4", "asd4"));
+		c.setMovimento(new Movimento("mov5", null, null, 5.5, TipoMovimentoEnum.DEBITO, "qwe5", "asd5"));
 
 		
 		ArrayList<Emprestimo> e = new ArrayList<Emprestimo>();

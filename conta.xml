@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <protocolo>
 <conta>
-<numConta>0276214522</numConta>
-<nib/>
-<iban/>
-<idCliente/>
+<numConta>276214522</numConta>
+<nomeConta>contaaordem</nomeConta>
+<nib>321568432513215346</nib>
+<iban>PT50321568432513215346</iban>
+<idCliente>103256221</idCliente>
 <saldoContabilistico>0.0</saldoContabilistico>
 <saldoDisponivel>0.0</saldoDisponivel>
 <saldoAutorizado>0.0</saldoAutorizado>

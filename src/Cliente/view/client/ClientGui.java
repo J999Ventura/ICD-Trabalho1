@@ -1003,7 +1003,7 @@ public class ClientGui extends JFrame{
 	
 	public void setOnClientEventListener(OnClientEventListener listener){
 		clientActionListener = listener;
-		fillResumePanelAttributes(); //coloquei aqui porque para preencher a primeira vez já é necessario haver um listener; assim preenche o resume board quando se abre a aplicacao do cliente;
+		fillResumePanelAttributes(); //coloquei aqui porque para preencher a primeira vez jï¿½ ï¿½ necessario haver um listener; assim preenche o resume board quando se abre a aplicacao do cliente;
 		fillComboBoxes();//preenche as combobox todas ao inicio;
 	}
 	
@@ -1117,7 +1117,7 @@ public class ClientGui extends JFrame{
 	}
 	
 	/*
-	 * faz refresh aos atributos de uma conta. é utilizado quando se troca de conta.
+	 * faz refresh aos atributos de uma conta. ï¿½ utilizado quando se troca de conta.
 	 */
 	private void refreshAccountSettings() {
 		if(clientActionListener != null){
@@ -1141,13 +1141,13 @@ public class ClientGui extends JFrame{
 	}
 	
 	/*
-	 * quando se abre a aplicacao, este metodo preenche os atributos visiveis com as informaçoes do utilizador.
+	 * quando se abre a aplicacao, este metodo preenche os atributos visiveis com as informaï¿½oes do utilizador.
 	 */
 	private void initUserFillds(Cliente user) {
 		userNameLabel.setText(user.getUserName());
 		aNameLabel.setText(user.getNomeCliente());
-		aAgeLabel.setText(user.getAge());
-		aBirthdayLabel.setText(user.getBirthday());
+		//aAgeLabel.setText(user.getAge());
+		//aBirthdayLabel.setText(user.getBirthday());
 		aMoradaLabel.setText(user.getMorada());
 	}
 	

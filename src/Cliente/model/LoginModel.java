@@ -16,7 +16,7 @@ public class LoginModel {
 		
 		pro = new Protocolo();
 		xmlInt = new XMLInteration();
-		cli =  xmlInt.getClient(pro.infoCliente(new Cliente("nigga","Joao Filipe Vaz", 207905835, false)));
+		//cli =  xmlInt.getClient(pro.infoCliente(new Cliente("nigga","Joao Filipe Vaz", 207905835, false)));
 	}
 
 	private void initCommunicationClientServer() {
@@ -55,7 +55,7 @@ public class LoginModel {
 	}
 	
 	public boolean isAdmin(){
-		return cli.getIsAdmin();
+		return false;//cli.getIsAdmin();
 	}
 	
 	

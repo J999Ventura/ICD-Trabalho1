@@ -21,6 +21,7 @@ import java.awt.image.RenderedImage;
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -472,7 +473,7 @@ public class Protocolo {
      */
     public static void main(String[] args) {
         //user e pass para teste
-        String u = "zeto";
+        String u = "joaofilipevaz";
         String pass = "asdwf23425";
 
         Protocolo log = new Protocolo();
@@ -500,9 +501,11 @@ public class Protocolo {
             e.printStackTrace();
         }
 
-        //Cliente clt = new Cliente("Joao Filipe Vaz", 207905835, foto, assinatura);
+        Cliente clt = new ClienteIndividual("joaofilipevaz","Joao Filipe Sant'Ana Ruivo Neves Vaz",
+                "207905835", "Avenida de Berlim Lt K", "+351963938893", foto, assinatura,
+                "123512354","PT654867321354", LocalDate.of(1981, 8, 23));
 
-        //d = log.infoCliente(clt);
+        d = log.infoCliente(clt);
         XMLDoc.writeDocument(d, "cliente.xml");
 
         removeChilds(d.getDocumentElement());

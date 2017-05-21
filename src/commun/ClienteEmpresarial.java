@@ -8,9 +8,9 @@ public class ClienteEmpresarial extends Cliente {
     //Classificação Portuguesa das Actividades Económicas
     private String cae;
 
-    public ClienteEmpresarial(String userName, String nomeCliente, String nif, Image foto, Image assinatura,
+    public ClienteEmpresarial(String userName, String nomeCliente, String nif, String morada, String numTelefone, Image foto, Image assinatura,
                               String nomeResponsavel, String cae) {
-        super(userName, nomeCliente, nif, assinatura, foto, TipoClienteEnum.CLIENTEEMPRESARIAL);
+        super(userName, nomeCliente, nif, morada, numTelefone, assinatura, foto, TipoClienteEnum.CLIENTEEMPRESARIAL);
         this.nomeResponsavel = nomeResponsavel;
         this.cae = cae;
     }

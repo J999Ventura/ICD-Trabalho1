@@ -18,13 +18,15 @@ public class Cliente {
     private List<Conta> contas;
     private TipoClienteEnum tipoCliente;
 
-    public Cliente(String userName, String nomeCliente, String nif, Image assinatura, Image foto, TipoClienteEnum tipoCliente) {
+    public Cliente(String userName, String nomeCliente, String nif, String morada, String numTelefone, Image assinatura, Image foto, TipoClienteEnum tipoCliente) {
 
         //gera um Universal Unique ID para cada cliente
         this.idCliente = UUID.randomUUID().toString();
         this.userName = userName;
         this.nomeCliente = nomeCliente;
         this.nif = nif;
+        this.morada = morada;
+        this.numTelefone = numTelefone;
         this.assinatura = assinatura;
         this.foto = foto;
         this.tipoCliente = tipoCliente;
