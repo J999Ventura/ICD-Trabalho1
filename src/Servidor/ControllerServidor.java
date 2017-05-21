@@ -27,9 +27,9 @@ public class ControllerServidor {
                     System.out.println(user);
                     System.out.println(pass);
                     if (DbManager.validateLogin(user, pass, db)) {
-                        return Protocolo.getStringFromDocument(log.loginReply(true));
+                        return Protocolo.getStringFromDocument(log.respostaServidor(true));
                     } else {
-                        return Protocolo.getStringFromDocument(log.loginReply(false));
+                        return Protocolo.getStringFromDocument(log.respostaServidor(false));
                     }
 
                 case "getUserInfo":
