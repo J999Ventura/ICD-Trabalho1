@@ -10,8 +10,9 @@ public class ControllerServidor {
     private final static int DEFAULT_PORT = 5025;
     private static Protocolo log;
     private static Document db;
+    private static String user = "";
 
-    public static String gestorComunicacao(String msg){
+    static String gestorComunicacao(String msg){
 
         Document d = Protocolo.convertStringToDocument(msg);
         String tipoPedido = XMLDoc.getXPathV("//tipopedido",d);
@@ -20,7 +21,7 @@ public class ControllerServidor {
 
             switch (tipoPedido) {
                 case "login":
-                    String user = XMLDoc.getXPathV("//user", d);
+                    user = XMLDoc.getXPathV("//user", d);
                     String pass = XMLDoc.getXPathV("//pass", d);
                     System.out.println(user);
                     System.out.println(pass);
@@ -31,7 +32,7 @@ public class ControllerServidor {
                     }
 
                 case "getUserInfo":
-                    break;
+                    return Protocolo.getStringFromDocument(DbManager.getClientDataFromDB(user, db));
 
                 case "infoManager":
                     break;

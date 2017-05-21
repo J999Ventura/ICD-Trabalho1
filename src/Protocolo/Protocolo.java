@@ -60,7 +60,7 @@ public class Protocolo {
 
         tipo_pedido.setTextContent("login");
         user_tag.setTextContent(user);
-        pass_tag.setTextContent(md5Hash(pass));
+        pass_tag.setTextContent(pass);
 
         protocol_tag.appendChild(tipo_pedido);
         protocol_tag.appendChild(user_tag);
@@ -169,6 +169,7 @@ public class Protocolo {
         clientePedido_tag.appendChild(actual_tag);
     	return D;
     }
+
     
     public Document infoCliente(Cliente cliente){
 
