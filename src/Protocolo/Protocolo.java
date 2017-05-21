@@ -68,34 +68,12 @@ public class Protocolo {
 
         return D;
     }
-    
-    public Document writeLogout(String user){
-        Element tipo_pedido = D.createElement("tipopedido");
-        Element user_tag = D.createElement("user");
-
-        tipo_pedido.setTextContent("logout");
-        user_tag.setTextContent(user);
-
-        protocol_tag.appendChild(tipo_pedido);
-        protocol_tag.appendChild(user_tag);
-        return D;
-    }
-    
-    public Document getUserInfo(){
-
-        Element tipo_pedido = D.createElement("tipopedido");
-
-        tipo_pedido.setTextContent("getUserInfo");
-        
-        protocol_tag.appendChild(tipo_pedido);
-        return D;
-    }
 
     /* ? */
-    public Document queryServidor(String modelo){
+    public Document queryServidor(String pedido){
         Element tipo_pedido = D.createElement("tipopedido");
 
-        tipo_pedido.setTextContent(modelo);
+        tipo_pedido.setTextContent(pedido);
         
         protocol_tag.appendChild(tipo_pedido);
         return D;
@@ -468,7 +446,6 @@ public class Protocolo {
         }
         return null;
     }
-
 
     /**
      *  script de teste
