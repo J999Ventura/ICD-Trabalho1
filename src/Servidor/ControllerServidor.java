@@ -14,13 +14,12 @@ public class ControllerServidor {
     public static String gestorComunicacao(String msg){
 
         Document d = Protocolo.convertStringToDocument(msg);
-        String tipoPedido = XMLDoc.getXPathV("//tipo",d);
+        String tipoPedido = XMLDoc.getXPathV("//tipopedido",d);
 
         if (tipoPedido != null) {
 
             switch (tipoPedido) {
                 case "login":
-
                     String user = XMLDoc.getXPathV("//user", d);
                     String pass = XMLDoc.getXPathV("//pass", d);
                     System.out.println(user);

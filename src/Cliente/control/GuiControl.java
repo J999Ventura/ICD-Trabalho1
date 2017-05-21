@@ -38,11 +38,10 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	private ClientModel clientM;
 	private ManagerModel managerM;
 	private boolean isAdminGui;
+	private ClienteSimplesTCP clienteTCP;
 	
-	public final static String DEFAULT_HOSTNAME = "localhost";
-	public final static int DEFAULT_PORT = 5025;
-	
-	public GuiControl(/* irei receber tambem um servidor e um cliente */ ){
+	public GuiControl(ClienteSimplesTCP clienteTCP ){
+		this.clienteTCP = clienteTCP;
 		createLoginGui();
 	}
 	
@@ -84,7 +83,6 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 			if(loginModel.isAdmin()){
 				createManagerGui(loginModel.getCliente());
 			}else{
-				
 				createClientGui(loginModel.getCliente());
 			}
 		}else{
@@ -111,9 +109,11 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	public void onCloseApp() {
 		if(isAdminGui && managerM.logout()){
 			this.frameManager.dispose();//close client window;
+			clienteTCP.closeSocket();
 		}else{
 			if(!isAdminGui && clientM.logout()){
 				this.frameClient.dispose();//close client window;
+				clienteTCP.closeSocket();
 			}else{
 				JOptionPane.showMessageDialog(frameLogin, "The app couldn't make the logout! Please try again.");
 			}
@@ -227,7 +227,7 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 		frameLogin = new LoginGui();
 		
 		centreWindow(frameLogin);
-		loginModel = new LoginModel();
+		loginModel = new LoginModel(clienteTCP);
 	    frameLogin.setOnLoginEventListener(this);
 		frameLogin.setVisible(true);
 	}
@@ -238,7 +238,7 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 		frameClient = new ClientGui(user);
 		
 		centreWindow(frameClient);
-		clientM = new ClientModel(user);
+		clientM = new ClientModel(clienteTCP, user);
 		fillClientObj();
 		frameClient.setOnClientEventListener(this);
 		frameClient.setOnCommunEventListener(this);
@@ -250,7 +250,7 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 		frameManager = new ManagerGui(user);
 		
 		centreWindow(frameManager);
-		managerM = new ManagerModel(user);
+		managerM = new ManagerModel(clienteTCP, user);
 		
 		frameManager.setOnManagerEventListener(this);
 		frameManager.setOnCommunEventListener(this);
@@ -266,30 +266,6 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	    int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
 	    int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
 	    frame.setLocation(x, y);
-	}
-	/* #################################################################  */
-	
-	/* ####################### SOCKET CONNECTION #######################  */
-	private void setUpConnection(){
-		 String host = DEFAULT_HOSTNAME;  // Maquina onde reside a aplicacao servidora
-	        int port = DEFAULT_PORT;      // Porto da aplicacao servidora
-
-	        ClienteSimplesTCP clienteTCP = new ClienteSimplesTCP();
-	        clienteTCP.openSocket(host, port);
-
-	        //user e pass para teste
-	        String u = "zeto";
-	        String pass = "asdwf23425";
-
-	        Protocolo log = new Protocolo();
-
-	        Document d = log.writeLogin(u, pass);
-
-	        clienteTCP.writeSocket(d);
-
-	        clienteTCP.closeSocket();
-
-	        //log.removeChilds(d.getDocumentElement());
 	}
 	/* #################################################################  */
 }

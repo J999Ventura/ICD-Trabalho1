@@ -1,11 +1,14 @@
 package Cliente.model;
 
+import Cliente.control.ClienteSimplesTCP;
 import commun.Cliente;
 
 public class ManagerModel {
 	
-	public ManagerModel(Cliente user){
-		
+	private ClienteSimplesTCP clienteTCP;
+	
+	public ManagerModel(ClienteSimplesTCP clienteTCP, Cliente user){
+		this.clienteTCP = clienteTCP;
 	}
 
 	public boolean logout() {

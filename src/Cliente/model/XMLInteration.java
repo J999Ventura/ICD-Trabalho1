@@ -170,6 +170,7 @@ public class XMLInteration {
     }
 
     public boolean getLoginAnswer(Document doc) {
+    	System.out.println(XMLDoc.getXPathV("//OK",doc));
         return (XMLDoc.getXPathV("//OK",doc).equals("true"));
     }
 }

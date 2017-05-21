@@ -3,6 +3,10 @@ package Cliente.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.w3c.dom.Document;
+
+import Cliente.control.ClienteSimplesTCP;
+import Protocolo.Protocolo;
 import commun.Cliente;
 import commun.Conta;
 import commun.Emprestimo;
@@ -15,14 +19,25 @@ public class ClientModel {
 	private ArrayList<Conta> accountList;
 	private ArrayList<String> balanceList;
 	private ArrayList<Emprestimo> emprestimos;
+	private ClienteSimplesTCP tcp;
+	private Protocolo pro;
+	private XMLInteration xmlInt;
 	
-	public ClientModel(Cliente user){
+	public ClientModel(ClienteSimplesTCP clienteTCP, Cliente user){
 		this.user = user;
+		this.tcp = clienteTCP;
+		pro = new Protocolo();
+		xmlInt = new XMLInteration();
 	}
 	
 	
 	public boolean logout(){
-		// TODO Auto-generated method stub
+		Document doc = pro.logout(true);
+		tcp.writeSocket(doc);
+		
+		String readedMSG = tcp.readSocket();
+		doc = Protocolo.convertStringToDocument(readedMSG);
+		boolean isLogin = xmlInt.getLoginAnswer(doc);
 		return true;
 	}
 	
