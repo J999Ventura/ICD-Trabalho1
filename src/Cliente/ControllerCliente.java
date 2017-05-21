@@ -20,7 +20,7 @@ public class ControllerCliente {
         clienteTCP.openSocket(DEFAULT_HOSTNAME, DEFAULT_PORT);
 
         //user e pass para teste
-        String u = "zeto";
+        String u = "joaofilipevaz";
         String pass = "asdwf23425";
 
         Protocolo log = new Protocolo();
