@@ -11,7 +11,7 @@ public class ClienteIndividual extends Cliente {
 
     public ClienteIndividual(String userName, String nomeCliente, String nif, Image foto, Image assinatura,
                              String numCartaoCidadao, String numPassaporte, LocalDate dataDeNascimento) {
-        super(userName, nomeCliente, nif, assinatura, foto);
+        super(userName, nomeCliente, nif, assinatura, foto, TipoClienteEnum.CLIENTEINDIVIDUAL);
         this.numCartaoCidadao = numCartaoCidadao;
         this.numPassaporte = numPassaporte;
         this.dataDeNascimento = dataDeNascimento;

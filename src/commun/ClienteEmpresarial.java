@@ -10,7 +10,7 @@ public class ClienteEmpresarial extends Cliente {
 
     public ClienteEmpresarial(String userName, String nomeCliente, String nif, Image foto, Image assinatura,
                               String nomeResponsavel, String cae) {
-        super(userName, nomeCliente, nif, assinatura, foto);
+        super(userName, nomeCliente, nif, assinatura, foto, TipoClienteEnum.CLIENTEEMPRESARIAL);
         this.nomeResponsavel = nomeResponsavel;
         this.cae = cae;
     }

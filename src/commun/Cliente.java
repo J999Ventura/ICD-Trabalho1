@@ -16,8 +16,9 @@ public class Cliente {
     private Image foto;
     private Image assinatura;
     private List<Conta> contas;
+    private TipoClienteEnum tipoCliente;
 
-    public Cliente(String userName, String nomeCliente, String nif, Image assinatura, Image foto) {
+    public Cliente(String userName, String nomeCliente, String nif, Image assinatura, Image foto, TipoClienteEnum tipoCliente) {
 
         //gera um Universal Unique ID para cada cliente
         this.idCliente = UUID.randomUUID().toString();
@@ -26,6 +27,7 @@ public class Cliente {
         this.nif = nif;
         this.assinatura = assinatura;
         this.foto = foto;
+        this.tipoCliente = tipoCliente;
     }
 
     public String getNomeCliente() {
@@ -90,6 +92,14 @@ public class Cliente {
 
     public void setContas(List<Conta> contas) {
         this.contas = contas;
+    }
+
+    public TipoClienteEnum getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public void setTipoCliente(TipoClienteEnum tipoCliente) {
+        this.tipoCliente = tipoCliente;
     }
 }
 

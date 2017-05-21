@@ -191,6 +191,7 @@ public class Protocolo {
     }
     
     public Document infoCliente(Cliente cliente){
+
         Element cliente_tag = D.createElement("cliente");
         Element nomeCliente_tag = D.createElement("nomeCliente");
         Element idCliente_tag = D.createElement("idCliente");
@@ -205,35 +206,86 @@ public class Protocolo {
         Element dataNascimento_tag = D.createElement("birthday");
         Element isAdmin_tag = D.createElement("isAdmin");
 
-        nomeCliente_tag.setTextContent(cliente.getNomeCliente());
-        nif_tag.setTextContent(Integer.toString(cliente.getNif()));
-        idCliente_tag.setTextContent(Integer.toString(cliente.getIdCliente()));
-        morada_tag.setTextContent(cliente.getMorada());
-        numTelefone_tag.setTextContent(Integer.toString(cliente.getNumTelefone()));
-        numConta_tag.setTextContent(Integer.toString(cliente.getNumConta()));
-        userName_tag.setTextContent(cliente.getUserName());
-        age_tag.setTextContent(cliente.getAge());
-        dataNascimento_tag.setTextContent(cliente.getBirthday());
-        isAdmin_tag.setTextContent(cliente.getIsAdmin()? "true" : "false");
-        
-        foto_tag.setTextContent(imageToBase64Encode(cliente.getFoto()));
-        assinatura_tag.setTextContent(imageToBase64Encode(cliente.getAssinatura()));
+        if (cliente instanceof ClienteIndividual){
 
-        protocol_tag.appendChild(cliente_tag);
-        cliente_tag.appendChild(nomeCliente_tag);
-        cliente_tag.appendChild(userName_tag);
-        cliente_tag.appendChild(idCliente_tag);
-        cliente_tag.appendChild(nif_tag);
-        cliente_tag.appendChild(isAdmin_tag);
-        cliente_tag.appendChild(morada_tag);
-        cliente_tag.appendChild(numTelefone_tag);
-        cliente_tag.appendChild(numConta_tag);
-        cliente_tag.appendChild(age_tag);
-        cliente_tag.appendChild(dataNascimento_tag);
-        cliente_tag.appendChild(foto_tag);
-        cliente_tag.appendChild(assinatura_tag);
 
-        return D;
+
+            nomeCliente_tag.setTextContent(cliente.getNomeCliente());
+            nif_tag.setTextContent(Integer.toString(cliente.getNif()));
+            idCliente_tag.setTextContent(Integer.toString(cliente.getIdCliente()));
+            morada_tag.setTextContent(cliente.getMorada());
+            numTelefone_tag.setTextContent(Integer.toString(cliente.getNumTelefone()));
+            numConta_tag.setTextContent(Integer.toString(cliente.getNumConta()));
+            userName_tag.setTextContent(cliente.getUserName());
+            age_tag.setTextContent(cliente.getAge());
+            dataNascimento_tag.setTextContent(cliente.getBirthday());
+            isAdmin_tag.setTextContent(cliente.getIsAdmin()? "true" : "false");
+
+            foto_tag.setTextContent(imageToBase64Encode(cliente.getFoto()));
+            assinatura_tag.setTextContent(imageToBase64Encode(cliente.getAssinatura()));
+
+            protocol_tag.appendChild(cliente_tag);
+            cliente_tag.appendChild(nomeCliente_tag);
+            cliente_tag.appendChild(userName_tag);
+            cliente_tag.appendChild(idCliente_tag);
+            cliente_tag.appendChild(nif_tag);
+            cliente_tag.appendChild(isAdmin_tag);
+            cliente_tag.appendChild(morada_tag);
+            cliente_tag.appendChild(numTelefone_tag);
+            cliente_tag.appendChild(numConta_tag);
+            cliente_tag.appendChild(age_tag);
+            cliente_tag.appendChild(dataNascimento_tag);
+            cliente_tag.appendChild(foto_tag);
+            cliente_tag.appendChild(assinatura_tag);
+
+            return D;
+
+        } else {
+            Element cliente_tag = D.createElement("cliente");
+            Element nomeCliente_tag = D.createElement("nomeCliente");
+            Element idCliente_tag = D.createElement("idCliente");
+            Element nif_tag = D.createElement("nif");
+            Element morada_tag = D.createElement("morada");
+            Element numTelefone_tag = D.createElement("numTelefone");
+            Element numConta_tag = D.createElement("numConta");
+            Element foto_tag = D.createElement("foto");
+            Element assinatura_tag = D.createElement("assinatura");
+            Element userName_tag = D.createElement("userName");
+            Element age_tag = D.createElement("age");
+            Element dataNascimento_tag = D.createElement("birthday");
+            Element isAdmin_tag = D.createElement("isAdmin");
+
+            nomeCliente_tag.setTextContent(cliente.getNomeCliente());
+            nif_tag.setTextContent(Integer.toString(cliente.getNif()));
+            idCliente_tag.setTextContent(Integer.toString(cliente.getIdCliente()));
+            morada_tag.setTextContent(cliente.getMorada());
+            numTelefone_tag.setTextContent(Integer.toString(cliente.getNumTelefone()));
+            numConta_tag.setTextContent(Integer.toString(cliente.getNumConta()));
+            userName_tag.setTextContent(cliente.getUserName());
+            age_tag.setTextContent(cliente.getAge());
+            dataNascimento_tag.setTextContent(cliente.getBirthday());
+            isAdmin_tag.setTextContent(cliente.getIsAdmin()? "true" : "false");
+
+            foto_tag.setTextContent(imageToBase64Encode(cliente.getFoto()));
+            assinatura_tag.setTextContent(imageToBase64Encode(cliente.getAssinatura()));
+
+            protocol_tag.appendChild(cliente_tag);
+            cliente_tag.appendChild(nomeCliente_tag);
+            cliente_tag.appendChild(userName_tag);
+            cliente_tag.appendChild(idCliente_tag);
+            cliente_tag.appendChild(nif_tag);
+            cliente_tag.appendChild(isAdmin_tag);
+            cliente_tag.appendChild(morada_tag);
+            cliente_tag.appendChild(numTelefone_tag);
+            cliente_tag.appendChild(numConta_tag);
+            cliente_tag.appendChild(age_tag);
+            cliente_tag.appendChild(dataNascimento_tag);
+            cliente_tag.appendChild(foto_tag);
+            cliente_tag.appendChild(assinatura_tag);
+
+            return D;
+        }
+
     }
 
     public Document infoConta(Conta conta){
