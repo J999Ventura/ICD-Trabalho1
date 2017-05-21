@@ -170,10 +170,6 @@ public class Protocolo {
     	return D;
     }
 
-    public Document infoCompletaGUI() {
-
-    }
-
     
     public Document infoCliente(Cliente cliente){
 
