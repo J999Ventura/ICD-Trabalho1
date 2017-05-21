@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.CardLayout;
+import java.util.List;
 import javax.swing.border.LineBorder;
 
 import Cliente.OnCommunEventListener;
@@ -1021,7 +1022,7 @@ public class ClientGui extends JFrame{
 	
 	private void fillBalance(JTextArea area){
 		if(clientActionListener != null){
-			ArrayList<String> accountBalanceList = clientActionListener.onGetAccountBalance();
+			List<String> accountBalanceList = clientActionListener.onGetAccountBalance();
 			area.setText(null);
 			for(String balance : accountBalanceList){
 				area.append(balance + "\n");
@@ -1031,7 +1032,7 @@ public class ClientGui extends JFrame{
 	
 	private void fillAccounts(JTextArea area){
 		if(clientActionListener != null){
-			ArrayList<Conta> accountList = clientActionListener.onGetAccounts();
+			List<Conta> accountList = clientActionListener.onGetAccounts();
 			area.setText(null);
 			for(Conta account : accountList){
 				area.append(account.getNomeConta() + "\n");
@@ -1041,7 +1042,7 @@ public class ClientGui extends JFrame{
 	
 	private void fillLoans(JTextArea area){
 		if(clientActionListener != null){
-			ArrayList<Emprestimo> accountLoansList = clientActionListener.onGetAccountLoans();
+			List<Emprestimo> accountLoansList = clientActionListener.onGetAccountLoans();
 			area.setText(null);
 			for(Emprestimo loan : accountLoansList){
 				area.append(loan.toString() + "\n");
@@ -1051,7 +1052,7 @@ public class ClientGui extends JFrame{
 	
 	private void fillMovements(JTextArea area){
 		if(clientActionListener != null){
-			ArrayList<Movimento> accountMovementList = clientActionListener.onGetAccountMovements();
+			List<Movimento> accountMovementList = clientActionListener.onGetAccountMovements();
 			area.setText(null);
 			for(Movimento mov : accountMovementList){
 				area.append(mov.toString() + "\n");
@@ -1061,7 +1062,7 @@ public class ClientGui extends JFrame{
 	
 	private void fillAccountComboBox(JComboBox<String> box){
 		if(clientActionListener != null){
-			ArrayList<Conta> accountList = clientActionListener.onGetAccounts();
+			List<Conta> accountList = clientActionListener.onGetAccounts();
 			box.removeAllItems();
 			if(accountList != null){
 				for(Conta account : accountList){
@@ -1081,7 +1082,7 @@ public class ClientGui extends JFrame{
 
 	private void fillAllAccountsMovements(JTextArea area) {
 		if(clientActionListener != null){
-			ArrayList<Movimento> accountMovementList = clientActionListener.onGetAllAccountsMovements();
+			List<Movimento> accountMovementList = clientActionListener.onGetAllAccountsMovements();
 			area.setText(null);
 			for(Movimento mov : accountMovementList){
 				area.append(mov.toString() + "\n");
