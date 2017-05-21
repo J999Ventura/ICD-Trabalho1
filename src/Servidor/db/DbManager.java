@@ -22,12 +22,15 @@ public class DbManager {
 
     public static synchronized boolean validateLogin(String user, String pass, Document db){
 
-
         String userInDB = XMLDoc.getXPathV("//user/username[text() = '" + user + "']", db);
-        String passInDB = XMLDoc.getXPathV("//user/pass[text() = '" + pass + "']", db);
-
-        if ((userInDB.equals(user)) && (passInDB.equals(pass))) {
-            return true;
+        if (userInDB != null){
+            String passInDB = XMLDoc.getXPathV("//user[username/text() = '" + userInDB + "']/pass[text() = '"
+                    + pass +"']", db);
+            if (passInDB != null) {
+                if ((userInDB.equals(user)) && (passInDB.equals(pass))) {
+                    return true;
+                }
+            }
         }
         return false;
     }
