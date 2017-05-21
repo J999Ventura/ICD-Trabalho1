@@ -12,6 +12,7 @@ import org.w3c.dom.Document;
 import Cliente.OnCommunEventListener;
 import Cliente.model.ClientModel;
 import Cliente.model.LoginModel;
+import Cliente.model.ManagerModel;
 import Cliente.model.XMLInteration;
 import Cliente.view.client.ClientGui;
 import Cliente.view.client.OnClientEventListener;
@@ -33,6 +34,8 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	
 	private LoginModel loginModel;
 	private ClientModel clientM;
+	private ManagerModel managerM;
+	private boolean isAdminGui;
 	
 	public final static String DEFAULT_HOSTNAME = "localhost";
 	public final static int DEFAULT_PORT = 5025;
@@ -45,19 +48,19 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	public void fillClientObj(){
 		Protocolo pro = new Protocolo();
 		xmlInt = new XMLInteration();
-		Conta c = new Conta("teste1", "3215648948", 1234578, 1.0, ""+111111, ""+111111);
+		/*Conta c = new Conta("teste1", "3215648948", 1234578, 1.0, ""+111111, ""+111111);
 		c.setMovimento(new Movimento("mov1", "dsfdsf", "sdfdf", 1.1, TipoMovimentoEnum.DEBITO, "qwe1", "asd1"));
 		c.setMovimento(new Movimento("mov2", null, null, 2.2, TipoMovimentoEnum.CREDITO, "qwe2", "asd2"));
 		c.setMovimento(new Movimento("mov3", null, null, 3.3, TipoMovimentoEnum.DEBITO, "qwe3", "asd3"));
 		c.setMovimento(new Movimento("mov4", null, null, 4.4, TipoMovimentoEnum.CREDITO, "qwe4", "asd4"));
-		c.setMovimento(new Movimento("mov5", null, null, 5.5, TipoMovimentoEnum.DEBITO, "qwe5", "asd5"));
+		c.setMovimento(new Movimento("mov5", null, null, 5.5, TipoMovimentoEnum.DEBITO, "qwe5", "asd5"));*/
 
 		
 		ArrayList<Emprestimo> e = new ArrayList<Emprestimo>();
 		e.add(new Emprestimo("teste1", 725.0, 5.0, 2.0, 6));
 		e.add(new Emprestimo("teste1", 45.0, 5.0, 3.0, 7));
 
-		clientM.setAccountList(xmlInt.getAccounts(pro.infoConta(c)));
+		//clientM.setAccountList(xmlInt.getAccounts(pro.infoConta(c)));
 		clientM.setLoansList(xmlInt.getLoans(pro.enviarEmprestimo(e)));
 	}
 	
@@ -84,21 +87,31 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	
 	@Override
 	public void onLogoutOrCloseApp(){
-			if(clientM.logout()){
-				this.frameClient.dispose();//close client window;
+			if(isAdminGui && managerM.logout()){
+				this.frameManager.dispose();//close client window;
 				createLoginGui();
 			}else{
-				JOptionPane.showMessageDialog(frameLogin, "The app couldn't make the logout! Please try again.");
+				if(!isAdminGui && clientM.logout()){
+					this.frameClient.dispose();//close client window;
+					createLoginGui();
+				}else{
+					JOptionPane.showMessageDialog(frameLogin, "The app couldn't make the logout! Please try again.");
+				}
 			}
 	}
 	
 	@Override
 	public void onCloseApp() {
-		if(clientM.logout()){
-			this.frameClient.dispose();//close client window;
+		if(isAdminGui && managerM.logout()){
+			this.frameManager.dispose();//close client window;
 		}else{
-			JOptionPane.showMessageDialog(frameLogin, "The app couldn't make the logout! Please try again.");
+			if(!isAdminGui && clientM.logout()){
+				this.frameClient.dispose();//close client window;
+			}else{
+				JOptionPane.showMessageDialog(frameLogin, "The app couldn't make the logout! Please try again.");
+			}
 		}
+		
 	}
 	/* ********************************** */
 
@@ -151,7 +164,7 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	
 	@Override
 	public ArrayList<Movimento> onGetAccountMovements() {
-		return clientM.getCurrentAccountMovimentsList();
+		return (ArrayList<Movimento>)clientM.getCurrentAccountMovimentsList();
 	}
 	
 	@Override
@@ -171,6 +184,34 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	}
 	/* ********************************** */
 	
+	/* ************* Manager ************ */
+	@Override
+	public void createAccount(String clientID, String accountName, String accountType) {
+		if(managerM.createAccountRequest(clientID, accountName, accountType)){
+			JOptionPane.showMessageDialog(frameManager, "Account created");
+		}else{
+			JOptionPane.showMessageDialog(frameManager, "The account was not created!");
+		}
+	}
+
+	@Override
+	public void closeAccount(String clientID, String accountNumber) {
+		if(managerM.closeAccountRequest(clientID, accountNumber)){
+			JOptionPane.showMessageDialog(frameManager, "Account closed");
+		}else{
+			JOptionPane.showMessageDialog(frameManager, "The account was not closed!");
+		}
+	}
+
+	@Override
+	public void createLoan(String clientID, String amount, String payment, String rate) {
+		if(managerM.createLoanRequest(clientID, amount, payment, rate)){
+			JOptionPane.showMessageDialog(frameManager, "Loan created");
+		}else{
+			JOptionPane.showMessageDialog(frameManager, "The loan was not created!");
+		}
+	}
+	/* ********************************** */
 	/* #################################################################  */
 	
 	
@@ -186,6 +227,7 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 
 	
 	private void createClientGui(Cliente user){
+		isAdminGui = false;
 		frameClient = new ClientGui(user);
 		
 		centreWindow(frameClient);
@@ -197,10 +239,12 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	}
 	
 	private void createManagerGui(Cliente user){
+		isAdminGui = true;
 		frameManager = new ManagerGui(user);
 		
 		centreWindow(frameManager);
-		//frameManager = new ManagerModel();
+		managerM = new ManagerModel(user);
+		
 		frameManager.setOnManagerEventListener(this);
 		frameManager.setOnCommunEventListener(this);
 		this.frameManager.setVisible(true);

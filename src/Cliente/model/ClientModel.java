@@ -1,6 +1,7 @@
 package Cliente.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import commun.Cliente;
 import commun.Conta;
@@ -77,7 +78,7 @@ public class ClientModel {
 		currentAccount.setMovimentos(list);
 	}
 	
-	public ArrayList<Movimento> getCurrentAccountMovimentsList(){
+	public List<Movimento> getCurrentAccountMovimentsList(){
 		return currentAccount.getMovimentos();
 	}
 	

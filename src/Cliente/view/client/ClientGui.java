@@ -453,7 +453,7 @@ public class ClientGui extends JFrame{
 				}
 			}
 		});
-		changeSettingsBtn.setBounds(398, 487, 166, 29);
+		changeSettingsBtn.setBounds(398, 487, 183, 29);
 		accountPanel.add(changeSettingsBtn);
 
 		accountComboBox = new JComboBox<String>();

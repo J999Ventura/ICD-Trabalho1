@@ -99,7 +99,7 @@ public class XMLInteration {
     }
 
     public Cliente getClient(Document doc){
-/*
+    	/*
 		Cliente cliente = new Cliente(XMLDoc.getXPathV("//cliente/userName", doc),
 				XMLDoc.getXPathV("//cliente/nomeCliente", doc),
 				Integer.parseInt(XMLDoc.getXPathV("//cliente/nif", doc)),

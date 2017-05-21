@@ -89,7 +89,6 @@ public class Protocolo {
         return D;
     }
 
-    /* ? */
     public Document queryServidor(String modelo){
         Element query_tag = D.createElement("query");
         
@@ -253,9 +252,7 @@ public class Protocolo {
             cliente_tag.appendChild(cae_tag);
             cliente_tag.appendChild(tipoCliente_tag);
             cliente_tag.appendChild(conta_tag);
-
         }
-
         return D;
     }
 
@@ -323,12 +320,9 @@ public class Protocolo {
                 movimento_tag.appendChild(valor_tag);
                 movimento_tag.appendChild(tipo_tag);
             }
-
         }
-
         return D;
     }
-    
     
     public Document enviarEmprestimo(ArrayList<Emprestimo> list){
     	
