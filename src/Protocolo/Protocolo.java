@@ -169,6 +169,11 @@ public class Protocolo {
         clientePedido_tag.appendChild(actual_tag);
     	return D;
     }
+
+    public Document infoCompletaGUI() {
+
+    }
+
     
     public Document infoCliente(Cliente cliente){
 
