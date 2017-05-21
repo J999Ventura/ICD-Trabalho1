@@ -54,7 +54,7 @@ public class Protocolo {
 
     public Document writeLogin(String user, String pass){
 
-        Element tipo_pedido = D.createElement("tipo");
+        Element tipo_pedido = D.createElement("tipopedido");
         Element user_tag = D.createElement("user");
         Element pass_tag = D.createElement("pass");
 
@@ -70,32 +70,34 @@ public class Protocolo {
     }
     
     public Document writeLogout(String user){
-        Element logout_tag = D.createElement("logout");
+        Element tipo_pedido = D.createElement("tipopedido");
         Element user_tag = D.createElement("user");
 
+        tipo_pedido.setTextContent("logout");
         user_tag.setTextContent(user);
 
-        protocol_tag.appendChild(logout_tag);
-        logout_tag.appendChild(user_tag);
+        protocol_tag.appendChild(tipo_pedido);
+        protocol_tag.appendChild(user_tag);
         return D;
     }
     
     public Document getUserInfo(){
-        Element user_tag = D.createElement("userInfo");
+
+        Element tipo_pedido = D.createElement("tipopedido");
+
+        tipo_pedido.setTextContent("getUserInfo");
         
-        user_tag.setTextContent("getUserInfo");
-        
-        protocol_tag.appendChild(user_tag);
+        protocol_tag.appendChild(tipo_pedido);
         return D;
     }
 
     /* ? */
     public Document queryServidor(String modelo){
-        Element query_tag = D.createElement("query");
+        Element tipo_pedido = D.createElement("tipopedido");
+
+        tipo_pedido.setTextContent(modelo);
         
-        query_tag.setTextContent(modelo);
-        
-        protocol_tag.appendChild(query_tag);
+        protocol_tag.appendChild(tipo_pedido);
         return D;
     }
     

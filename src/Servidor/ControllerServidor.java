@@ -29,7 +29,7 @@ public class ControllerServidor {
                     return Protocolo.getStringFromDocument(log.loginReply(false));
                 }
 
-            case "infoCliente":
+            case "getUserInfo":
                 break;
 
             case "infoManager":
