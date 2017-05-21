@@ -291,8 +291,8 @@ public class Protocolo {
                 Element contaDestino_tag = D.createElement("contaDestino");
    
                 descricao_tag.setTextContent(conta.getMovimentos().get(i).getDescricao());
-                dataValor_tag.setTextContent(conta.getMovimentos().get(i).getDataValor());
-                dataLancamento_tag.setTextContent(conta.getMovimentos().get(i).getDataLancamento());
+                dataValor_tag.setTextContent(conta.getMovimentos().get(i).getDataValor().toString());
+                dataLancamento_tag.setTextContent(conta.getMovimentos().get(i).getDataLancamento().toString());
                 valor_tag.setTextContent(Double.toString(conta.getMovimentos().get(i).getValor()));
                 tipoMovimento_tag.setTextContent(conta.getMovimentos().get(i).getTipoMovimento().getTipo());
                 contaDestino_tag.setTextContent(conta.getMovimentos().get(i).getContaDestino());
@@ -490,11 +490,22 @@ public class Protocolo {
         XMLDoc.writeDocument(d, "cliente.xml");
 
         removeChilds(d.getDocumentElement());
-        Conta contaaordem = new Conta("contaaordem", "276214522", "PT50321568432513215346", "", 103256221,
+        Conta contaaordem = new Conta("contaaordem", "276214522", "PT50321568432513215346", "joaofilipevaz", 103256221,
                 0.0, "321568432513215346", TipoContaEnum.CONTAORDEM);
 
-        Conta contaprazo = new Conta("contaaordem", "276214522", "PT50321568432513215346", "", 103256221,
+        Conta contaprazo = new Conta("contaaordem", "276214522", "PT50321568432513215346", "joaofilipevaz", 103256221,
                 0.0, "321568432513215346", TipoContaEnum.CONTAPRAZO);
+
+        Movimento mov1 = new Movimento("pag propinas isel", LocalDate.of(2017, 6, 14),
+                LocalDate.of(2017, 6, 14), 160.0, TipoMovimentoEnum.DEBITO ,
+                "PT50321568432513215346","PT50321568432513215368453");
+
+        Movimento mov2 = new Movimento("ordenado", LocalDate.of(2017, 5, 30),
+                LocalDate.of(2017, 5, 30), 1000.0, TipoMovimentoEnum.CREDITO ,
+                "PT50321568432513215368453","PT50321568432513215346");
+
+        contaaordem.setMovimento(mov1);
+        contaaordem.setMovimento(mov2);
 
         d = log.infoConta(contaaordem);
         XMLDoc.writeDocument(d, "conta.xml");

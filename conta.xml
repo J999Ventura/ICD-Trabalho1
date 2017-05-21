@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <protocolo>
 <conta>
-<numConta>276214522</numConta>
-<nomeConta>contaaordem</nomeConta>
-<nib>321568432513215346</nib>
+<tipoConta>Conta a Ordem</tipoConta>
+<titular/>
+<numConta>contaaordem</numConta>
+<nomeConta>321568432513215346</nomeConta>
+<nib>276214522</nib>
 <iban>PT50321568432513215346</iban>
-<titular>103256221</titular>
-<saldoContabilistico>0.0</saldoContabilistico>
+<saldoContabilistico>1.03256221E8</saldoContabilistico>
+<saldoDisponivel>0.0</saldoDisponivel>
+<saldoAutorizado>0.0</saldoAutorizado>
+<movimentos/>
+</conta>
+<conta>
+<tipoConta>Conta a Prazo</tipoConta>
+<titular/>
+<numConta>contaaordem</numConta>
+<nomeConta>321568432513215346</nomeConta>
+<nib>276214522</nib>
+<iban>PT50321568432513215346</iban>
+<saldoContabilistico>1.03256221E8</saldoContabilistico>
 <saldoDisponivel>0.0</saldoDisponivel>
 <saldoAutorizado>0.0</saldoAutorizado>
 <movimentos/>

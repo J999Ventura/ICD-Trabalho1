@@ -2,6 +2,7 @@ package Cliente.control;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 		xmlInt = new XMLInteration();
 		Conta c = new Conta("teste1", "3215648948","3215648948","3215648948",
 				1234578, 1.0, ""+111111, TipoContaEnum.CONTAJOVEM);
-		c.setMovimento(new Movimento("mov1", "dsfdsf", "sdfdf", 1.1, TipoMovimentoEnum.DEBITO, "qwe1", "asd1"));
+		c.setMovimento(new Movimento("mov1", LocalDate.of(2017, 5, 30), LocalDate.of(2017, 5, 30), 1.1, TipoMovimentoEnum.DEBITO, "qwe1", "asd1"));
 		c.setMovimento(new Movimento("mov2", null, null, 2.2, TipoMovimentoEnum.CREDITO, "qwe2", "asd2"));
 		c.setMovimento(new Movimento("mov3", null, null, 3.3, TipoMovimentoEnum.DEBITO, "qwe3", "asd3"));
 		c.setMovimento(new Movimento("mov4", null, null, 4.4, TipoMovimentoEnum.CREDITO, "qwe4", "asd4"));

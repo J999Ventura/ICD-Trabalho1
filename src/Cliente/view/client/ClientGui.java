@@ -4,27 +4,21 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.Color;
-
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.CardLayout;
 import java.util.List;
 import javax.swing.border.LineBorder;
-
 import Cliente.OnCommunEventListener;
 import commun.Cliente;
 import commun.Conta;
 import commun.Emprestimo;
 import commun.Movimento;
-
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
