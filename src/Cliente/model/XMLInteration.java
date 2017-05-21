@@ -119,7 +119,7 @@ public class XMLInteration {
     public ArrayList<Conta> getAccounts(Document doc){
         ArrayList<Conta> contasList = new ArrayList<Conta>();
         NodeList contas = XMLDoc.getXPath("//conta", doc);
-
+/*
         for(int i = 0; i < contas.getLength(); i++){
             Conta conta = new Conta(XMLDoc.getXPathV("//conta/nomeConta", doc),
                     XMLDoc.getXPathV("//conta/numConta", doc),
@@ -148,6 +148,8 @@ public class XMLInteration {
         }
 
         return contasList;
+        		*/
+        return null;
     }
 
     public ArrayList<Emprestimo> getLoans(Document doc){

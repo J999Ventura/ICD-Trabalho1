@@ -55,7 +55,8 @@ public class LoginModel {
 	}
 	
 	public boolean isAdmin(){
-		return false;//cli.getIsAdmin();
+		return false;
+		//cli.getIsAdmin();
 	}
 	
 	
