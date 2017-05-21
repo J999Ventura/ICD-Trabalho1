@@ -31,7 +31,8 @@ public class DbManager {
     }
 
     public static synchronized Document getClientDataFromDB(String user, Document db){
-        NodeList noscliente = XMLDoc.getXPath("//cliente[/username/text()='"+ user +"']", db);
+        //cliente[userName/text()='joaofilipevaz']
+        NodeList noscliente = XMLDoc.getXPath("//cliente[userName/text()='"+user+"']", db);
         Document cliente = null;
         try {
             cliente = DocumentBuilderFactory.newInstance()
@@ -46,6 +47,7 @@ public class DbManager {
             Node copyNode = cliente.importNode(node, true);
             root.appendChild(copyNode);
         }
+        XMLDoc.writeDocument(cliente, "resposta_dados.xml");
         return cliente;
     }
 }

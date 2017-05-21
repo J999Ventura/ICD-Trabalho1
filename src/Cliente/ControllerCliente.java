@@ -29,12 +29,23 @@ public class ControllerCliente {
 
         clienteTCP.writeSocket(d);
 
-        while(session){
+        //while(session){
+            clienteTCP.readSocket();
+        //}
+
+        log.removeChilds(d.getDocumentElement());
+
+        Document d2 = log.queryServidor("getUserInfo");
+
+        clienteTCP.writeSocket(d2);
+
+        while(session) {
             clienteTCP.readSocket();
         }
+
         clienteTCP.closeSocket();
 
-        //log.removeChilds(d.getDocumentElement());
+        //
 
     } // end main
 }
