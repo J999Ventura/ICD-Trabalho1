@@ -4,13 +4,14 @@ import java.awt.*;
 
 public class ClienteEmpresarial extends Cliente {
 
-    protected String nomeGerente;
+    private String nomeResponsavel;
+    //Classificação Portuguesa das Actividades Económicas
+    private String cae;
 
-    public ClienteEmpresarial(String userName, String nomeCliente, int nif, Image foto, Image assinatura,
-                              String nomeGerente, boolean isAdmin) {
-        super(userName, nomeCliente, nif, isAdmin);
-        this.nomeGerente = nomeGerente;
+    public ClienteEmpresarial(String userName, String nomeCliente, String nif, Image foto, Image assinatura,
+                              String nomeResponsavel, String cae) {
+        super(userName, nomeCliente, nif, assinatura, foto);
+        this.nomeResponsavel = nomeResponsavel;
+        this.cae = cae;
     }
-
-
 }

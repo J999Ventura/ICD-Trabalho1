@@ -15,7 +15,6 @@ public class Cliente {
     private String numTelefone;
     private Image foto;
     private Image assinatura;
-    private LocalDate dateOfBirth;
     private List<Conta> contas;
 
     public Cliente(String userName, String nomeCliente, String nif, Image assinatura, Image foto) {
@@ -84,14 +83,6 @@ public class Cliente {
 	public void setUserName(String name){
 		this.userName = name;
 	}
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
 
     public List<Conta> getContas() {
         return contas;
