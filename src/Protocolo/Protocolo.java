@@ -10,9 +10,7 @@ import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.awt.*;
@@ -539,6 +537,21 @@ public class Protocolo {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    public static final void prettyPrint(Document xml) {
+        try {
+            Transformer tf = TransformerFactory.newInstance().newTransformer();
+            tf.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            tf.setOutputProperty(OutputKeys.INDENT, "yes");
+            Writer out = new StringWriter();
+            tf.transform(new DOMSource(xml), new StreamResult(out));
+            System.out.println(out.toString());
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

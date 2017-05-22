@@ -2,6 +2,7 @@ package Cliente;
 
 import Cliente.control.ClienteSimplesTCP;
 import Protocolo.Protocolo;
+import XML.XMLDoc;
 import org.w3c.dom.Document;
 
 public class ControllerCliente {
@@ -41,6 +42,7 @@ public class ControllerCliente {
 
         String dados = clienteTCP.readSocket();
         System.out.println(dados);
+        //Document d4 = XMLDoc.parseFile("resposta_dados.xml");
         Document infoCliente = log.convertStringToDocument(dados);
 
         while(session) {
