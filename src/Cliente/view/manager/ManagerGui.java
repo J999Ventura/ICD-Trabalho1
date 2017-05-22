@@ -134,13 +134,11 @@ public class ManagerGui extends JFrame{
 		
 		JTextArea amountLabel = new JTextArea();
 		amountLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		amountLabel.setEditable(false);
 		amountLabel.setBounds(244, 171, 161, 23);
 		makeLoansPanel.add(amountLabel);
 		
 		JTextArea clientNibLabel = new JTextArea();
 		clientNibLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		clientNibLabel.setEditable(false);
 		clientNibLabel.setBounds(32, 171, 161, 23);
 		makeLoansPanel.add(clientNibLabel);
 		
@@ -160,13 +158,11 @@ public class ManagerGui extends JFrame{
 		
 		JTextArea paymentLabel = new JTextArea();
 		paymentLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		paymentLabel.setEditable(false);
 		paymentLabel.setBounds(460, 171, 161, 23);
 		makeLoansPanel.add(paymentLabel);
 		
 		JTextArea rateLabel = new JTextArea();
 		rateLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		rateLabel.setEditable(false);
 		rateLabel.setBounds(244, 236, 161, 23);
 		makeLoansPanel.add(rateLabel);
 		
@@ -246,7 +242,6 @@ public class ManagerGui extends JFrame{
 		JTextArea clientNibLabel = new JTextArea();
 		clientNibLabel.setBounds(39, 161, 161, 23);
 		closeOrOpenAccountsPanel.add(clientNibLabel);
-		clientNibLabel.setEditable(false);
 		clientNibLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		
 		JLabel clientNiblbl = new JLabel("Client Nib");
@@ -272,7 +267,6 @@ public class ManagerGui extends JFrame{
 		
 		JTextArea accountNameLabel = new JTextArea();
 		accountNameLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		accountNameLabel.setEditable(false);
 		accountNameLabel.setBounds(245, 161, 161, 23);
 		closeOrOpenAccountsPanel.add(accountNameLabel);
 		
@@ -292,13 +286,11 @@ public class ManagerGui extends JFrame{
 		
 		JTextArea closeAclientNibLabel = new JTextArea();
 		closeAclientNibLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		closeAclientNibLabel.setEditable(false);
 		closeAclientNibLabel.setBounds(39, 416, 161, 23);
 		closeOrOpenAccountsPanel.add(closeAclientNibLabel);
 		
 		JTextArea accountNumberLabel = new JTextArea();
 		accountNumberLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		accountNumberLabel.setEditable(false);
 		accountNumberLabel.setBounds(455, 416, 161, 23);
 		closeOrOpenAccountsPanel.add(accountNumberLabel);
 		
@@ -353,6 +345,7 @@ public class ManagerGui extends JFrame{
 					actionListener.createAccount(clientNibLabel.getText(), accountNameLabel.getText(), (String)typeAccountCB.getSelectedItem());
 					clientNibLabel.setText(null);
 					accountNameLabel.setText(null);
+					resetChoise();
 				}
 			}
 		});

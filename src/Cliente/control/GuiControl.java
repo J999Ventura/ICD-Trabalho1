@@ -175,8 +175,8 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	}
 	
 	@Override
-	public void createAccount(String clientID, String accountName, String accountType) {
-		if(managerM.createAccountRequest(clientID, accountName, accountType)){
+	public void createAccount(String nib, String accountName, String accountType) {
+		if(!nib.equals("") && !accountName.equals("") && !accountType.equals("") && managerM.createAccountRequest(nib, accountName, accountType)){
 			JOptionPane.showMessageDialog(frameManager, "Account created");
 		}else{
 			JOptionPane.showMessageDialog(frameManager, "The account was not created!");
@@ -184,8 +184,8 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	}
 
 	@Override
-	public void closeAccount(String clientID, String accountNumber) {
-		if(managerM.closeAccountRequest(clientID, accountNumber)){
+	public void closeAccount(String nib, String accountNumber) {
+		if(!nib.equals("") && !accountNumber.equals("") && managerM.closeAccountRequest(nib, accountNumber)){
 			JOptionPane.showMessageDialog(frameManager, "Account closed");
 		}else{
 			JOptionPane.showMessageDialog(frameManager, "The account was not closed!");
@@ -193,8 +193,8 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	}
 
 	@Override
-	public void createLoan(String clientID, String amount, String payment, String rate) {
-		if(managerM.createLoanRequest(clientID, amount, payment, rate)){
+	public void createLoan(String nib, String amount, String payment, String rate) {
+		if(!nib.equals("") && !amount.equals("") && !payment.equals("") && !rate.equals("") && managerM.createLoanRequest(nib, amount, payment, rate)){
 			JOptionPane.showMessageDialog(frameManager, "Loan created");
 		}else{
 			JOptionPane.showMessageDialog(frameManager, "The loan was not created!");

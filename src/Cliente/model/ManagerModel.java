@@ -20,6 +20,7 @@ public class ManagerModel {
 	public ManagerModel(ClienteSimplesTCP clienteTCP, Cliente user){
 		this.tcp = clienteTCP;
 		this.user = user;
+		pro = new Protocolo();
 	}
 
 	public boolean logout() {
@@ -29,7 +30,11 @@ public class ManagerModel {
 		
 		return getAnswerFromSocket(doc);
 		*/
+		/************ TESTE NA UI SEM SOCKET **********/
+		Document doc = pro.logout(true);
+		System.out.println(Protocolo.getStringFromDocument(doc));
 		return true;
+		/**********************************************/
 	}
 	
 	public boolean createAccountRequest(String nib, String accountName, String accountType){
@@ -39,7 +44,11 @@ public class ManagerModel {
 		
 		return getAnswerFromSocket(doc);
 		*/
-		return false;
+		/************ TESTE NA UI SEM SOCKET **********/
+		Document doc = pro.criarConta(nib, accountName, accountType);
+		System.out.println(Protocolo.getStringFromDocument(doc));
+		return true;
+		/**********************************************/
 	}
 
 	public boolean closeAccountRequest(String nib, String accountNumber) {
@@ -49,17 +58,25 @@ public class ManagerModel {
 		
 		return getAnswerFromSocket(doc);
 		*/
-		return false;
+		/************ TESTE NA UI SEM SOCKET **********/
+		Document doc = pro.fecharConta(nib, accountNumber);
+		System.out.println(Protocolo.getStringFromDocument(doc));
+		return true;
+		/**********************************************/
 	}
 
 	public boolean createLoanRequest(String nib, String amount, String payment, String rate) {
 		/*
-	    Document doc = pro.criarConta(nib, amount, payment, rate);
+	    Document doc = pro.pedirEmprestimo(nib, amount, payment, rate);
 		tcp.writeSocket(doc);
 		
 		return getAnswerFromSocket(doc);
 		*/
-		return false;
+		/************ TESTE NA UI SEM SOCKET **********/
+		Document doc = pro.pedirEmprestimo(nib, amount, payment, rate);
+		System.out.println(Protocolo.getStringFromDocument(doc));
+		return true;
+		/**********************************************/
 	}
 
 	public List<String> getAccountTypes() {

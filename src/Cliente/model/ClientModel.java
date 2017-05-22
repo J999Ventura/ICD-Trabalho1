@@ -38,10 +38,13 @@ public class ClientModel {
 		String readedMSG = tcp.readSocket();
 		
 		doc = pro.convertStringToDocument(readedMSG);
-		boolean isLogin = xmlInt.getLoginAnswer(doc);
+		return xmlInt.getLoginAnswer(doc);
 		*/
-
+		/************ TESTE NA UI SEM SOCKET **********/
+		Document doc = pro.logout(true);
+		System.out.println(Protocolo.getStringFromDocument(doc));
 		return true;
+		/**********************************************/
 	}
 	
 	
@@ -77,8 +80,15 @@ public class ClientModel {
 		String readedMSG = tcp.readSocket();
 		doc = Protocolo.convertStringToDocument(readedMSG);
 		boolean changed = xmlInt.getLoginAnswer(doc);
-		if(changed)*/
-			user.setUserName(newName);				
+		if(changed)
+			user.setUserName(newName);*/
+		/************ TESTE NA UI SEM SOCKET **********/
+		Document doc = pro.changeUserName(newName);
+		System.out.println(Protocolo.getStringFromDocument(doc));
+		boolean changed = true;
+		if(changed)
+			user.setUserName(newName);
+		/**********************************************/
 	}
 
 	
@@ -122,7 +132,7 @@ public class ClientModel {
 
 	public boolean transferMoney(double amount, String nib) {
 		/*
-		Document doc = pro.makeTransfer(nib, makeTransfer);
+		Document doc = pro.makeTransfer(nib, amount);
 		tcp.writeSocket(doc);
 		
 		String readedMSG = tcp.readSocket();
@@ -131,6 +141,14 @@ public class ClientModel {
 		if(changed)
 			return true;
 		*/
+		
+		/************ TESTE NA UI SEM SOCKET **********/
+		Document doc = pro.makeTransfer(nib, amount);
+		System.out.println(Protocolo.getStringFromDocument(doc));
+		boolean changed = true;
+		if(changed)
+			return true;
+		/**********************************************/
 		return false;
 	}
 	
