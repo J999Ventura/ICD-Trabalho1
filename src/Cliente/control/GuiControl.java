@@ -46,31 +46,7 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	}
 	
 	/* ########################## BODY METHODS #########################  */	
-	public void fillClientObj(){
-		Protocolo pro = new Protocolo();
-		xmlInt = new XMLInteration();
-		/*Conta c = new Conta("teste1", "3215648948", 1234578, 1.0, ""+111111, ""+111111);
-		c.setMovimento(new Movimento("mov1", "dsfdsf", "sdfdf", 1.1, TipoMovimentoEnum.DEBITO, "qwe1", "asd1"));
-		Conta c = new Conta("teste1", "3215648948","3215648948","3215648948",
-				1234578, 1.0, ""+111111, TipoContaEnum.CONTAJOVEM);
-		c.setMovimento(new Movimento("mov1", LocalDate.of(2017, 5, 30), LocalDate.of(2017, 5, 30), 1.1, TipoMovimentoEnum.DEBITO, "qwe1", "asd1"));
-		c.setMovimento(new Movimento("mov2", null, null, 2.2, TipoMovimentoEnum.CREDITO, "qwe2", "asd2"));
-		c.setMovimento(new Movimento("mov3", null, null, 3.3, TipoMovimentoEnum.DEBITO, "qwe3", "asd3"));
-		c.setMovimento(new Movimento("mov4", null, null, 4.4, TipoMovimentoEnum.CREDITO, "qwe4", "asd4"));
-		c.setMovimento(new Movimento("mov5", null, null, 5.5, TipoMovimentoEnum.DEBITO, "qwe5", "asd5"));*/
 
-		
-		ArrayList<Emprestimo> e = new ArrayList<Emprestimo>();
-		e.add(new Emprestimo("teste1", 725.0, 5.0, 2.0, 6));
-		e.add(new Emprestimo("teste1", 45.0, 5.0, 3.0, 7));
-
-		//clientM.setAccountList(xmlInt.getAccounts(pro.criarConta(c)));
-		//clientM.setLoansList(xmlInt.getLoans(pro.enviarEmprestimo(e)));
-		//clientM.setAccountList(xmlInt.getAccounts(pro.criarConta(c)));
-		clientM.setLoansList(xmlInt.getLoans(pro.infoEmprestimo(e)));
-	}
-	
-	
 	/* #################################################################  */	
 	
 	
@@ -136,12 +112,13 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 
 	@Override
 	public void onNewUserChange(String newName) {
-		clientM.setNewUserName(newName);
+			clientM.setNewUserName(newName);
+		
 	}
 
 	@Override
-	public void onAmountTransfer(String amount, String account) {
-		if(account == null || account.equals("")){
+	public void onAmountTransfer(String amount, String nib) {
+		if(nib == null || nib.equals("")){
 			JOptionPane.showMessageDialog(frameClient, "No target account found!");
 			return;
 		}
@@ -149,7 +126,7 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 		try{
 			double tAmount = Double.parseDouble(amount);
 			
-			if(clientM.transferMoney(tAmount, account)){
+			if(clientM.transferMoney(tAmount, nib)){
 				JOptionPane.showMessageDialog(frameClient, "Success");
 			}else{
 				JOptionPane.showMessageDialog(frameClient, "It was not possible to make the transfer!");
@@ -193,8 +170,13 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	
 	/* ************* Manager ************ */
 	@Override
-	public void createAccount(String clientID, String accountName, String accountType) {
-		if(managerM.createAccountRequest(clientID, accountName, accountType)){
+	public List<String> onGetAccountTypes() {
+		return managerM.getAccountTypes();
+	}
+	
+	@Override
+	public void createAccount(String nib, String accountName, String accountType) {
+		if(!nib.equals("") && !accountName.equals("") && !accountType.equals("") && managerM.createAccountRequest(nib, accountName, accountType)){
 			JOptionPane.showMessageDialog(frameManager, "Account created");
 		}else{
 			JOptionPane.showMessageDialog(frameManager, "The account was not created!");
@@ -202,8 +184,8 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	}
 
 	@Override
-	public void closeAccount(String clientID, String accountNumber) {
-		if(managerM.closeAccountRequest(clientID, accountNumber)){
+	public void closeAccount(String nib, String accountNumber) {
+		if(!nib.equals("") && !accountNumber.equals("") && managerM.closeAccountRequest(nib, accountNumber)){
 			JOptionPane.showMessageDialog(frameManager, "Account closed");
 		}else{
 			JOptionPane.showMessageDialog(frameManager, "The account was not closed!");
@@ -211,8 +193,8 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	}
 
 	@Override
-	public void createLoan(String clientID, String amount, String payment, String rate) {
-		if(managerM.createLoanRequest(clientID, amount, payment, rate)){
+	public void createLoan(String nib, String amount, String payment, String rate) {
+		if(!nib.equals("") && !amount.equals("") && !payment.equals("") && !rate.equals("") && managerM.createLoanRequest(nib, amount, payment, rate)){
 			JOptionPane.showMessageDialog(frameManager, "Loan created");
 		}else{
 			JOptionPane.showMessageDialog(frameManager, "The loan was not created!");
@@ -239,7 +221,6 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 		
 		centreWindow(frameClient);
 		clientM = new ClientModel(clienteTCP, user);
-		fillClientObj();
 		frameClient.setOnClientEventListener(this);
 		frameClient.setOnCommunEventListener(this);
 		this.frameClient.setVisible(true);

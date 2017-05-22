@@ -1,11 +1,15 @@
 package Cliente.view.manager;
 
+import java.util.List;
+
 public interface OnManagerEventListener {
 
-	void createAccount(String clientID, String accountName, String accountType);
+	void createAccount(String nib, String accountName, String accountType);
 
-	void closeAccount(String clientID, String accountNumber);
+	void closeAccount(String nib, String accountNumber);
 
-	void createLoan(String clientID, String amount, String payment, String rate);
+	void createLoan(String nib, String amount, String payment, String rate);
+
+	List<String> onGetAccountTypes();
 
 }

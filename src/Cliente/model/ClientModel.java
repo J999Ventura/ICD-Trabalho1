@@ -16,15 +16,14 @@ public class ClientModel {
 
 	private Conta currentAccount;
 	private Cliente user;
-	private ArrayList<Conta> accountList;
 	private ArrayList<String> balanceList;
-	private ArrayList<Emprestimo> emprestimos;
 	private ClienteSimplesTCP tcp;
 	private Protocolo pro;
 	private XMLInteration xmlInt;
 	
 	public ClientModel(ClienteSimplesTCP clienteTCP, Cliente user){
 		this.user = user;
+		currentAccount = user.getContas().get(0);
 		this.tcp = clienteTCP;
 		pro = new Protocolo();
 		xmlInt = new XMLInteration();
@@ -32,34 +31,41 @@ public class ClientModel {
 	
 	
 	public boolean logout(){
-		Document doc = pro.logout(true);
+		/*
+	    Document doc = pro.logout(true);
 		tcp.writeSocket(doc);
 		
 		String readedMSG = tcp.readSocket();
+		
 		doc = pro.convertStringToDocument(readedMSG);
-		boolean isLogin = xmlInt.getLoginAnswer(doc);
+		return xmlInt.getLoginAnswer(doc);
+		*/
+		/************ TESTE NA UI SEM SOCKET **********/
+		Document doc = pro.logout(true);
+		System.out.println(Protocolo.getStringFromDocument(doc));
 		return true;
+		/**********************************************/
 	}
 	
 	
-	public void setAccountList(ArrayList<Conta> list){
-		accountList = list;
+	public void setAccountList(List<Conta> list){
+		user.setContas(list);
 		setBalanceList();
 	}
 	
 	private void setBalanceList(){
 		balanceList = new ArrayList<String>();
-		for(Conta conta : accountList){
+		for(Conta conta : user.getContas()){
 			balanceList.add(conta.getSaldoContabilistico()+"");
 		}
 	}
 	
-	public void setLoanList(ArrayList<Emprestimo> list){
-		emprestimos = list;
+	public void setLoanList(List<Emprestimo> list){
+		user.setEmprestimos(list);
 	}
 
 	public ArrayList<Conta> getAccountList() {
-		return accountList;
+		return (ArrayList<Conta>)user.getContas();
 	}
 
 	
@@ -68,21 +74,35 @@ public class ClientModel {
 	}
 
 	public void setNewUserName(String newName) {
-		user.setUserName(newName);	
+		/*Document doc = pro.changeUserName(newName);
+		tcp.writeSocket(doc);
+		
+		String readedMSG = tcp.readSocket();
+		doc = Protocolo.convertStringToDocument(readedMSG);
+		boolean changed = xmlInt.getLoginAnswer(doc);
+		if(changed)
+			user.setUserName(newName);*/
+		/************ TESTE NA UI SEM SOCKET **********/
+		Document doc = pro.changeUserName(newName);
+		System.out.println(Protocolo.getStringFromDocument(doc));
+		boolean changed = true;
+		if(changed)
+			user.setUserName(newName);
+		/**********************************************/
 	}
 
 	
-	public void setLoansList(ArrayList<Emprestimo> list){
-		emprestimos = list;
+	public void setLoansList(List<Emprestimo> list){
+		user.setEmprestimos(list);
 	}
 	
 	public ArrayList<Emprestimo> getAccountsLoansList() {
-		return emprestimos;
+		return (ArrayList<Emprestimo>)user.getEmprestimos();
 	}
 	
 	public ArrayList<String> getAccountBalanceList() {
 		ArrayList<String> contas = new ArrayList<String>();
-		for(Conta conta : accountList){
+		for(Conta conta : user.getContas()){
 			contas.add(conta.getNomeConta() + " : " + conta.getSaldoContabilistico());
 		}
 		return contas;
@@ -99,7 +119,7 @@ public class ClientModel {
 	
 	public ArrayList<Movimento> getAccountMovementsList() {
 		ArrayList<Movimento> movimento= new ArrayList<Movimento>();
-		for(Conta conta : this.accountList){
+		for(Conta conta : user.getContas()){
 			movimento.addAll(conta.getMovimentos());
 		}
 		return movimento;
@@ -110,12 +130,26 @@ public class ClientModel {
 		return currentAccount;
 	}
 
-	public boolean transferMoney(double amount, String account) {
-		System.out.println("" + amount);
-		if(amount > 500000)
-			return false;
+	public boolean transferMoney(double amount, String nib) {
+		/*
+		Document doc = pro.makeTransfer(nib, amount);
+		tcp.writeSocket(doc);
 		
-		return true;
+		String readedMSG = tcp.readSocket();
+		doc = Protocolo.convertStringToDocument(readedMSG);
+		boolean changed = xmlInt.getLoginAnswer(doc);
+		if(changed)
+			return true;
+		*/
+		
+		/************ TESTE NA UI SEM SOCKET **********/
+		Document doc = pro.makeTransfer(nib, amount);
+		System.out.println(Protocolo.getStringFromDocument(doc));
+		boolean changed = true;
+		if(changed)
+			return true;
+		/**********************************************/
+		return false;
 	}
 	
 	

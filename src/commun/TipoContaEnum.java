@@ -6,7 +6,7 @@ public enum TipoContaEnum {
     CONTAPRAZO("Conta a Prazo"),
     CONTAORDENADO("Conta Ordenado"),
     CONTAJOVEM("Conta Jovem"),
-    CONTAPOUPANCA("Conta PoupanÃ§a");
+    CONTAPOUPANCA("Conta Poupança");
 
     private final String tipo;
 

@@ -44,6 +44,81 @@ public class Protocolo {
     /**
      *  Metodos do Cliente
      */
+    
+    public Document criarConta(String nib, String newAccountName, String newAccountType){
+    	if (builder != null) {
+            D = builder.newDocument();
+            protocol_tag = D.createElement("protocolo");
+            D.appendChild(protocol_tag);
+        
+	        Element tipo_pedido = D.createElement("tipopedido");
+	        Element nib_tag = D.createElement("nib");
+	        Element newAccountName_tag = D.createElement("newAccountName");
+	        Element newAccountType_tag = D.createElement("newAccountType");
+	        
+	        tipo_pedido.setTextContent("abrirConta");
+	        nib_tag.setTextContent(nib);
+	        newAccountName_tag.setTextContent(newAccountName);
+	        newAccountType_tag.setTextContent(newAccountType);
+	
+	        protocol_tag.appendChild(tipo_pedido);
+	        protocol_tag.appendChild(nib_tag);
+	        protocol_tag.appendChild(newAccountName_tag);
+	        protocol_tag.appendChild(newAccountType_tag);
+       	}
+
+       return D;
+   	}
+    	
+        public Document fecharConta(String nib, String accountNumber){
+        	if (builder != null) {
+                D = builder.newDocument();
+                protocol_tag = D.createElement("protocolo");
+                D.appendChild(protocol_tag);
+            
+    	        Element tipo_pedido = D.createElement("tipopedido");
+    	        Element nib_tag = D.createElement("nib");
+    	        Element accountNumber_tag = D.createElement("accountNumber");
+    	        
+    	        tipo_pedido.setTextContent("fecharConta");
+    	        nib_tag.setTextContent(nib);
+    	        accountNumber_tag.setTextContent(accountNumber);
+    	
+    	        protocol_tag.appendChild(tipo_pedido);
+    	        protocol_tag.appendChild(nib_tag);
+    	        protocol_tag.appendChild(accountNumber_tag);
+	       	}
+	
+	       return D;
+        }
+        
+        public Document pedirEmprestimo(String nib, String loanAmount, String payment, String rate){
+        	if (builder != null) {
+                D = builder.newDocument();
+                protocol_tag = D.createElement("protocolo");
+                D.appendChild(protocol_tag);
+            
+    	        Element tipo_pedido = D.createElement("tipopedido");
+    	        Element nib_tag = D.createElement("nib");
+    	        Element loanAmount_tag = D.createElement("loanAmount");
+    	        Element payment_tag = D.createElement("payment");
+    	        Element rate_tag = D.createElement("rate");
+    	        
+    	        tipo_pedido.setTextContent("abrirConta");
+    	        nib_tag.setTextContent(nib);
+    	        loanAmount_tag.setTextContent(loanAmount);
+    	        payment_tag.setTextContent(payment);
+    	        rate_tag.setTextContent(rate);
+    	
+    	        protocol_tag.appendChild(tipo_pedido);
+    	        protocol_tag.appendChild(nib_tag);
+    	        protocol_tag.appendChild(loanAmount_tag);
+    	        protocol_tag.appendChild(payment_tag);
+    	        protocol_tag.appendChild(rate_tag);
+           	}
+
+           return D;
+        }
 
     public Document writeLogin(String user, String pass){
     	 
@@ -488,7 +563,7 @@ public class Protocolo {
         return encodedImage;
     }
 
-    private BufferedImage imageToBase64Decode(String encodedImage) {
+    public BufferedImage imageToBase64Decode(String encodedImage) {
 
         byte[] bytes = Base64.getDecoder().decode(encodedImage);
         BufferedImage img = null;

@@ -95,6 +95,14 @@ public class Cliente {
     public List<Emprestimo> getEmprestimos() {
         return emprestimos;
     }
+    
+    public void setEmprestimos(List<Emprestimo> list){
+    	emprestimos = list;
+    }
+    
+    public void setContas(List<Conta> list){
+    	contas = list;
+    }
 
     public List<Conta> getContas() {
         return contas;
