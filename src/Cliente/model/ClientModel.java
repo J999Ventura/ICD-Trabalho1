@@ -23,6 +23,7 @@ public class ClientModel {
 	
 	public ClientModel(ClienteSimplesTCP clienteTCP, Cliente user){
 		this.user = user;
+		currentAccount = user.getContas().get(0);
 		this.tcp = clienteTCP;
 		pro = new Protocolo();
 		xmlInt = new XMLInteration();
