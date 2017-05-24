@@ -24,9 +24,7 @@ public class ControllerCliente {
         String u = "joaofilipevaz";
         String pass = "asdwf23425";
 
-        Protocolo log = new Protocolo();
-
-        Document d = log.writeLogin(u, pass);
+        Document d = Protocolo.writeLogin(u, pass);
 
         clienteTCP.writeSocket(d);
 
@@ -34,16 +32,16 @@ public class ControllerCliente {
             clienteTCP.readSocket();
         //}
 
-        log.removeChilds(d.getDocumentElement());
+        Protocolo.removeChilds(d.getDocumentElement());
 
-        Document d2 = log.queryServidor("getUserInfo");
+        Document d2 = Protocolo.queryServidor("getUserInfo");
 
         clienteTCP.writeSocket(d2);
 
         String dados = clienteTCP.readSocket();
         System.out.println(dados);
         //Document d4 = XMLDoc.parseFile("resposta_dados.xml");
-        Document infoCliente = log.convertStringToDocument(dados);
+        Document infoCliente = Protocolo.convertStringToDocument(dados);
         XMLDoc.writeDocument(infoCliente, "teste.xml");
 
         while(session) {

@@ -144,14 +144,19 @@ public class Protocolo {
         return D;
     }
 
-    public static Document criarConta(Conta conta){
+    public static Document criarConta(Conta conta, boolean info){
         if (builder != null) {
             D = builder.newDocument();
-            protocol_tag = D.createElement("protocolo");
-            D.appendChild(protocol_tag);
 
+            if (!info) {
+                protocol_tag = D.createElement("protocolo");
+                D.appendChild(protocol_tag);
+                Element tipo_pedido = D.createElement("tipopedido");
+                tipo_pedido.setTextContent("tipopedido");
+                protocol_tag.appendChild(tipo_pedido);
 
-            Element tipo_pedido = D.createElement("tipopedido");
+            }
+
             Element conta_tag = D.createElement("conta");
             Element tipoConta_tag = D.createElement("tipoConta");
             Element titular_tag = D.createElement("titular");
@@ -164,7 +169,7 @@ public class Protocolo {
             Element saldoAutorizado_tag = D.createElement("saldoAutorizado");
             Element movimentos_tag = D.createElement("movimentos");
 
-            tipo_pedido.setTextContent("tipopedido");
+            //
             tipoConta_tag.setTextContent(conta.getTipoConta().getTipo());
             titular_tag.setTextContent(conta.getTitular());
             numConta_tag.setTextContent(conta.getNumConta());
@@ -175,8 +180,13 @@ public class Protocolo {
             saldoDisponivel_tag.setTextContent(Double.toString(conta.getSaldoDisponivel()));
             saldoAutorizado_tag.setTextContent(Double.toString(conta.getSaldoAutorizado()));
 
-            protocol_tag.appendChild(tipo_pedido);
-            protocol_tag.appendChild(conta_tag);
+            //
+            if (!info){
+                protocol_tag.appendChild(conta_tag);
+            } else {
+                D.appendChild(conta_tag);
+            }
+
             conta_tag.appendChild(tipoConta_tag);
             conta_tag.appendChild(titular_tag);
             conta_tag.appendChild(numConta_tag);

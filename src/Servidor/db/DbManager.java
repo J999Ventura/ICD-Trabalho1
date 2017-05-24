@@ -74,6 +74,7 @@ public class DbManager {
                             Protocolo.imageToBase64Decode(foto), Protocolo.imageToBase64Decode(assinatura),
                             numCartaoCidadao, numPassaporte, LocalDate.parse(dataDeNascimento));
 
+
                     return Protocolo.infoCliente(novo_cli);
 
                 } else {
