@@ -44,6 +44,7 @@ public class ControllerCliente {
         System.out.println(dados);
         //Document d4 = XMLDoc.parseFile("resposta_dados.xml");
         Document infoCliente = log.convertStringToDocument(dados);
+        XMLDoc.writeDocument(infoCliente, "teste.xml");
 
         while(session) {
             clienteTCP.readSocket();

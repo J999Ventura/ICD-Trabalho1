@@ -3,6 +3,9 @@ package Servidor.db;
 
 import Protocolo.Protocolo;
 import XML.XMLDoc;
+import commun.Cliente;
+import commun.ClienteEmpresarial;
+import commun.ClienteIndividual;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -11,6 +14,8 @@ import sun.dc.pr.PRError;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
+import java.time.LocalDate;
 
 public class DbManager {
 
@@ -38,34 +43,60 @@ public class DbManager {
     }
 
     public static synchronized Document getClientDataFromDB(String user, Document db) {
-        NodeList noscliente = XMLDoc.getXPath("//cliente[userName/text()='" + user + "']/*", db);
-        NodeList nosconta = XMLDoc.getXPath("//cliente[userName/text()='" + user + "']/contas/*", db);
+        NodeList noscliente = XMLDoc.getXPath("//cliente[userName/text()='" + user + "']", db);
+
         if (noscliente != null) {
             try {
                 Document cliente = DocumentBuilderFactory.newInstance()
                         .newDocumentBuilder().newDocument();
                 Element root = cliente.createElement("protocolo");
                 cliente.appendChild(root);
-                //root.appendChild(cliente.adoptNode(noscliente.item(0).cloneNode(true)));
 
-                for (int i = 0; i < noscliente.getLength(); i++) {
-                    //root.appendChild(noscliente.item(i).cloneNode(true));
-                    Node node = noscliente.item(i);
-                    //Node copyNode = cliente.adoptNode(node.cloneNode(true));
-                    Node copyNode = cliente.importNode(node, true);
-                    root.appendChild(copyNode);
+                root.appendChild(cliente.adoptNode(noscliente.item(0).cloneNode(true)));
+
+                if (XMLDoc.getXPathV("//tipoCliente", cliente)
+                        .equals("Cliente Individual")){
+
+                    String userName = XMLDoc.getXPathV("//userName", cliente);
+                    String nomeCliente = XMLDoc.getXPathV("//nomeCliente", cliente);
+                    String idCliente = XMLDoc.getXPathV("//idCliente", cliente);
+                    String nif = XMLDoc.getXPathV("//nif", cliente);
+                    String morada = XMLDoc.getXPathV("//morada", cliente);
+                    String numTelefone = XMLDoc.getXPathV("//numTelefone", cliente);
+                    String foto = XMLDoc.getXPathV("//foto", cliente);
+                    String assinatura = XMLDoc.getXPathV("//assinatura", cliente);
+                    String numCartaoCidadao = XMLDoc.getXPathV("//numCartaoCidadao", cliente);
+                    String numPassaporte = XMLDoc.getXPathV("//numPassaporte", cliente);
+                    String dataDeNascimento = XMLDoc.getXPathV("//dataDeNascimento", cliente);
+
+
+                    Cliente novo_cli = new ClienteIndividual(userName, nomeCliente, idCliente, nif, morada, numTelefone,
+                            Protocolo.imageToBase64Decode(foto), Protocolo.imageToBase64Decode(assinatura),
+                            numCartaoCidadao, numPassaporte, LocalDate.parse(dataDeNascimento));
+
+                    return Protocolo.infoCliente(novo_cli);
+
+                } else {
+
+                    String userName = XMLDoc.getXPathV("//userName/text()", cliente);
+                    String nomeCliente = XMLDoc.getXPathV("//nomeCliente/text()", cliente);
+                    String idCliente = XMLDoc.getXPathV("//idCliente/text()", cliente);
+                    String nif = XMLDoc.getXPathV("//nif/text()", cliente);
+                    String morada = XMLDoc.getXPathV("//morada/text()", cliente);
+                    String numTelefone = XMLDoc.getXPathV("//numTelefone/text()", cliente);
+                    String foto = XMLDoc.getXPathV("//foto/text()", cliente);
+                    String assinatura = XMLDoc.getXPathV("//assinatura/text()", cliente);
+                    String nomeResponsavel = XMLDoc.getXPathV("//nomeResponsavel/text()", cliente);
+                    String cae = XMLDoc.getXPathV("//cae/text()", cliente);
+
+                    Cliente novo_cli_emp = new ClienteEmpresarial(userName, nomeCliente, idCliente, nif, morada, numTelefone,
+                            Protocolo.imageToBase64Decode(foto), Protocolo.imageToBase64Decode(assinatura),
+                            nomeResponsavel, cae);
+
+                    return Protocolo.infoCliente(novo_cli_emp);
+
                 }
 
-                for (int i = 0; i < nosconta.getLength(); i++) {
-                    //root.appendChild(noscliente.item(i).cloneNode(true));
-                    Node node = nosconta.item(i);
-                    //Node copyNode = cliente.adoptNode(node.cloneNode(true));
-                    Node copyNode = cliente.importNode(node, true);
-                    cliente.getLastChild().appendChild(copyNode);
-                }
-                Protocolo.prettyPrint(cliente);
-                XMLDoc.writeDocument(cliente, "resposta_dados.xml");
-                return cliente;
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             }

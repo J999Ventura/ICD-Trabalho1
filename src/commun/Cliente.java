@@ -20,10 +20,12 @@ public class Cliente {
     private List<Emprestimo> emprestimos;
     private TipoClienteEnum tipoCliente;
 
-    public Cliente(String userName, String nomeCliente, String nif, String morada, String numTelefone, Image assinatura, Image foto, TipoClienteEnum tipoCliente) {
+
+
+    public Cliente(String userName, String nomeCliente, String idCliente, String nif, String morada, String numTelefone, Image assinatura, Image foto, TipoClienteEnum tipoCliente) {
 
         //gera um Universal Unique ID para cada cliente
-        this.idCliente = UUID.randomUUID().toString();
+        this.idCliente = idCliente;
         this.userName = userName;
         this.nomeCliente = nomeCliente;
         this.nif = nif;
@@ -83,6 +85,10 @@ public class Cliente {
 	public String getIdCliente() {
         return idCliente;
 	}
+
+    public void setIdCliente() {
+        this.idCliente = UUID.randomUUID().toString();
+    }
 	
 	public String getUserName(){
 		return userName;

@@ -1,4 +1,5 @@
 package Cliente.model;
+import Protocolo.Protocolo;
 import XML.XMLDoc;
 import commun.*;
 import org.w3c.dom.Document;
@@ -6,9 +7,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import Protocolo.Protocolo;
-
-import javax.imageio.ImageIO;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,12 +18,11 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-
-import java.awt.Image;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class XMLInteration {
 
@@ -106,18 +103,19 @@ public class XMLInteration {
     }
 
     public Cliente getClient(Document doc){
-    	Protocolo pro = new Protocolo();
+    	//Protocolo pro = new Protocolo();
     	String clientType = XMLDoc.getXPathV("//cliente/tipoCliente", doc);
-    	Cliente cliente = null;
+    	Cliente cliente;
     	
     	if(clientType.endsWith(TipoClienteEnum.CLIENTEINDIVIDUAL.getTipo())){
     		cliente = new ClienteIndividual(XMLDoc.getXPathV("//cliente/userName",doc),
     				XMLDoc.getXPathV("//cliente/nomeCliente",doc),
     				XMLDoc.getXPathV("//cliente/nif", doc),
+                    XMLDoc.getXPathV("//cliente/idCliente", doc),
     				XMLDoc.getXPathV("//cliente/morada", doc),
     				XMLDoc.getXPathV("//cliente/numTelefone", doc),
-    				(Image)pro.imageToBase64Decode(XMLDoc.getXPathV("//cliente/foto", doc)),
-    				(Image)pro.imageToBase64Decode(XMLDoc.getXPathV("//cliente/assinatura", doc)),
+                    Protocolo.imageToBase64Decode(XMLDoc.getXPathV("//cliente/foto", doc)),
+                    Protocolo.imageToBase64Decode(XMLDoc.getXPathV("//cliente/assinatura", doc)),
     				XMLDoc.getXPathV("//cliente/numCartaoCidadao", doc),
     				XMLDoc.getXPathV("//cliente/numPassaporte", doc),
     				LocalDate.parse(XMLDoc.getXPathV("//cliente/dataDeNascimento", doc)));
@@ -129,10 +127,11 @@ public class XMLInteration {
     		cliente = new ClienteEmpresarial(XMLDoc.getXPathV("//cliente/userName",doc),
     				XMLDoc.getXPathV("//cliente/nomeCliente",doc),
     				XMLDoc.getXPathV("//cliente/nif", doc),
+                    XMLDoc.getXPathV("//cliente/idCliente", doc),
     				XMLDoc.getXPathV("//cliente/morada", doc),
     				XMLDoc.getXPathV("//cliente/numTelefone", doc),
-    				(Image)pro.imageToBase64Decode(XMLDoc.getXPathV("//cliente/foto", doc)),
-    				(Image)pro.imageToBase64Decode(XMLDoc.getXPathV("//cliente/assinatura", doc)),
+                    Protocolo.imageToBase64Decode(XMLDoc.getXPathV("//cliente/foto", doc)),
+                    Protocolo.imageToBase64Decode(XMLDoc.getXPathV("//cliente/assinatura", doc)),
     				XMLDoc.getXPathV("//cliente/nomeResponsavel", doc),
     				XMLDoc.getXPathV("//cliente/cae", doc));
     	}
@@ -141,33 +140,35 @@ public class XMLInteration {
     }
 
     public List<Conta> getAccounts(Document doc){
-        List<Conta> contasList = new ArrayList<Conta>();
+        List<Conta> contasList = new ArrayList<>();
         NodeList contas = XMLDoc.getXPath("//conta", doc);
-        
-        for(int i = 0; i < contas.getLength(); i++){
-            Conta conta = new Conta(XMLDoc.getXPathV("//conta["+(i+1)+"]/numConta", doc),
-                    XMLDoc.getXPathV("//conta["+(i+1)+"]/nib", doc),
-                    XMLDoc.getXPathV("//conta["+(i+1)+"]/iban", doc),
-                    XMLDoc.getXPathV("//conta["+(i+1)+"]/titular", doc),
-                    Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/saldoContabilistico", doc)),
-                    Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/saldoDisponivel", doc)),
-                    XMLDoc.getXPathV("//conta["+(i+1)+"]/nomeConta", doc),
-                    TipoContaEnum.valueOf(XMLDoc.getXPathV("//conta["+(i+1)+"]/tipoConta", doc)));
 
-            List<Movimento> movimentos = new ArrayList<Movimento>();
+        if (contas != null) {
+            for(int i = 0; i < contas.getLength(); i++){
+                Conta conta = new Conta(XMLDoc.getXPathV("//conta["+(i+1)+"]/numConta", doc),
+                        XMLDoc.getXPathV("//conta["+(i+1)+"]/nib", doc),
+                        XMLDoc.getXPathV("//conta["+(i+1)+"]/iban", doc),
+                        XMLDoc.getXPathV("//conta["+(i+1)+"]/titular", doc),
+                        Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/saldoContabilistico", doc)),
+                        Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/saldoDisponivel", doc)),
+                        XMLDoc.getXPathV("//conta["+(i+1)+"]/nomeConta", doc),
+                        TipoContaEnum.valueOf(XMLDoc.getXPathV("//conta["+(i+1)+"]/tipoConta", doc)));
 
-            int list_size = XMLDoc.getXPath("//conta["+(i+1)+"]/movimentos/movimento", doc).getLength();
-            for(int x = 1; x <= list_size; x++){
-                movimentos.add(new Movimento(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/descricao", doc),
-                        LocalDate.parse(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/dataValor", doc)),
-                        LocalDate.parse(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/dataLancamento", doc)),
-                        Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/valor", doc)),
-                        TipoMovimentoEnum.valueOf(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/tipo", doc)),
-                        XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/contaDestino", doc),
-                        XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/contaRemetente", doc)));
+                List<Movimento> movimentos = new ArrayList<Movimento>();
+
+                int list_size = XMLDoc.getXPath("//conta["+(i+1)+"]/movimentos/movimento", doc).getLength();
+                for(int x = 1; x <= list_size; x++){
+                    movimentos.add(new Movimento(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/descricao", doc),
+                            LocalDate.parse(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/dataValor", doc)),
+                            LocalDate.parse(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/dataLancamento", doc)),
+                            Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/valor", doc)),
+                            TipoMovimentoEnum.valueOf(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/tipo", doc)),
+                            XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/contaDestino", doc),
+                            XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/contaRemetente", doc)));
+                }
+                conta.setMovimentos(movimentos);
+                contasList.add(conta);
             }
-            conta.setMovimentos(movimentos);
-            contasList.add(conta);
         }
 
         return contasList;
@@ -192,6 +193,6 @@ public class XMLInteration {
 
     public boolean getLoginAnswer(Document doc) {
     	System.out.println(XMLDoc.getXPathV("//OK",doc));
-        return (XMLDoc.getXPathV("//OK",doc).equals("true"));
+        return (Objects.equals(XMLDoc.getXPathV("//OK", doc), "true"));
     }
 }

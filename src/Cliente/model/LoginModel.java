@@ -22,13 +22,10 @@ public class LoginModel {
 
 	private XMLInteration xmlInt;
 	private Cliente clt;
-	private Protocolo pro;
 	private ClienteSimplesTCP tcp;
 	
 	public LoginModel(ClienteSimplesTCP clienteTCP){
 		tcp = clienteTCP;
-		
-		pro = new Protocolo();
 		xmlInt = new XMLInteration();
 	}
 
@@ -56,17 +53,17 @@ public class LoginModel {
 		*/
 		/********************* para teste na ui sem socket	*************/
 		boolean login = true; 
-		Document doc = pro.writeLogin(user, pass);
+		Document doc = Protocolo.writeLogin(user, pass);
 		System.out.println(Protocolo.getStringFromDocument(doc));
 		
 		boolean isLogin = true;
 		if(isLogin){
-			doc = pro.queryServidor("getUserInfo");
+			doc = Protocolo.queryServidor("getUserInfo");
 			System.out.println(Protocolo.getStringFromDocument(doc));
 			
 			Image assinatura = null;
 	        Image foto = null;
-			clt = new ClienteIndividual("joaofilipevaz","Joao Filipe Sant'Ana Ruivo Neves Vaz",
+			clt = new ClienteIndividual("joaofilipevaz","Joao Filipe Sant'Ana Ruivo Neves Vaz", "",
 	                "207905835", "Avenida de Berlim Lt K", "+351963938893", foto, assinatura,
 	                "123512354","PT654867321354", LocalDate.of(1981, 8, 23));
 			Conta contaaordem = new Conta("contaaordem", "276214522", "PT50321568432513215346", "joaofilipevaz", 103256221,
@@ -86,7 +83,7 @@ public class LoginModel {
 	        contaaordem.setMovimento(mov1);
 	        contaaordem.setMovimento(mov2);
 	        
-	        List<Conta> contas = new ArrayList<Conta>();
+	        List<Conta> contas = new ArrayList<>();
 	        contas.add(contaaordem);
 	        contas.add(contaprazo);
 	        
@@ -104,7 +101,7 @@ public class LoginModel {
 	}
 	
 	public boolean isAdmin(){
-		//return (clt instanceof Funcionario); //o funcionario ainda não é um cliente;
+		//return (clt instanceof Funcionario); //o funcionario ainda nï¿½o ï¿½ um cliente;
 		return false; //para teste
 	}
 	
