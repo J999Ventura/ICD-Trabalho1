@@ -9,11 +9,9 @@ import org.w3c.dom.Document;
 
 import Cliente.control.ClienteSimplesTCP;
 import Protocolo.Protocolo;
-import XML.XMLDoc;
 import commun.Cliente;
 import commun.ClienteIndividual;
 import commun.Conta;
-import commun.Funcionario;
 import commun.Movimento;
 import commun.TipoContaEnum;
 import commun.TipoMovimentoEnum;
@@ -87,7 +85,7 @@ public class LoginModel {
 	        contas.add(contaaordem);
 	        contas.add(contaprazo);
 	        
-	        clt.setContas(contas); //apenas para teste sem sockets;
+	        clt.addConta(contas); //apenas para teste sem sockets;
 
 			login = true;
 		}

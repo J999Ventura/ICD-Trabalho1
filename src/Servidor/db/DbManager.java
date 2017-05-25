@@ -3,9 +3,7 @@ package Servidor.db;
 
 import Protocolo.Protocolo;
 import XML.XMLDoc;
-import commun.Cliente;
-import commun.ClienteEmpresarial;
-import commun.ClienteIndividual;
+import commun.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -56,8 +54,7 @@ public class DbManager {
 
                 root.appendChild(cliente.adoptNode(noscliente.item(0).cloneNode(true)));
 
-                if (XMLDoc.getXPathV("//tipoCliente", cliente)
-                        .equals("Cliente Individual")){
+                if (Objects.equals(XMLDoc.getXPathV("//tipoCliente", cliente), "Cliente Individual")){
 
                     String userName = XMLDoc.getXPathV("//userName", cliente);
                     String nomeCliente = XMLDoc.getXPathV("//nomeCliente", cliente);
@@ -77,9 +74,6 @@ public class DbManager {
 
 
 
-                    //Double numContas = Double.parseDouble(XMLDoc.getXPathV("count(//cliente[userName/text() = '" +
-                     //       user + "']/contas/*)", cliente));
-
                     NodeList contas = cliente.getElementsByTagName("contas");
                     System.out.println("Total of elements : " + contas.getLength());
 
@@ -93,19 +87,41 @@ public class DbManager {
                             //System.out.println(nosconta.item(z).getTextContent());
                         }
 
-                        String tipoConta = XMLDoc.getXPathV("//userName", cliente);
-                        String titular = XMLDoc.getXPathV("//nomeCliente", cliente);
-                        String numConta = XMLDoc.getXPathV("//idCliente", cliente);
-                        String nomeConta = XMLDoc.getXPathV("//nif", cliente);
-                        String nib = XMLDoc.getXPathV("//morada", cliente);
-                        String iban = XMLDoc.getXPathV("//numTelefone", cliente);
-                        String saldoContabilistico = XMLDoc.getXPathV("//foto", cliente);
-                        String saldoDisponivel = XMLDoc.getXPathV("//assinatura", cliente);
-                        String saldoAutorizado = XMLDoc.getXPathV("//numCartaoCidadao", cliente);
+                        String tipoConta = listaNomesNos.get(0);
+                        String titular = listaNomesNos.get(1);
+                        String numConta = listaNomesNos.get(2);
+                        String nomeConta = listaNomesNos.get(3);
+                        String nib = listaNomesNos.get(4);
+                        String iban = listaNomesNos.get(5);
+                        Double saldoContabilistico = Double.parseDouble(listaNomesNos.get(6));
+                        Double saldoDisponivel = Double.parseDouble(listaNomesNos.get(7));
+                        Double saldoAutorizado = Double.parseDouble(listaNomesNos.get(8));
 
+                        Conta nova_conta = null;
+                        listaNomesNos.clear();
+
+                        if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta a Ordem")) {
+                            novo_cli.addConta(nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAORDEM));
+                        } else if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta a Prazo")){
+                            novo_cli.addConta(nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPRAZO));
+                        } else if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta Jovem")){
+                            novo_cli.addConta(nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAJOVEM));
+                        } else if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta Ordenado")){
+                            novo_cli.addConta(nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAORDENADO));
+                        } else if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta Poupança")){
+                            novo_cli.addConta(nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPOUPANCA));
+                        }
+
+                        //Protocolo.infoConta(nova_conta, false);
                     }
 
-                    //Protocolo.criarConta();
+
+
 
 
                     return Protocolo.infoCliente(novo_cli);

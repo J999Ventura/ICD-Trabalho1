@@ -39,7 +39,7 @@ public class ManagerModel {
 	
 	public boolean createAccountRequest(String nib, String accountName, String accountType){
 		/*
-	    Document doc = pro.criarConta(nib, accountName, accountType);
+	    Document doc = pro.infoConta(nib, accountName, accountType);
 		tcp.writeSocket(doc);
 		
 		return getAnswerFromSocket(doc);

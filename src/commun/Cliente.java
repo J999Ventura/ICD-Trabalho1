@@ -106,12 +106,12 @@ public class Cliente {
     	emprestimos = list;
     }
     
-    public void setContas(List<Conta> list){
-    	contas = list;
+    public void addConta(Conta conta){
+    	this.contas.add(conta);
     }
 
     public List<Conta> getContas() {
-        return contas;
+        return this.contas;
     }
 
     public TipoClienteEnum getTipoCliente() {
