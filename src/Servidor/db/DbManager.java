@@ -101,20 +101,20 @@ public class DbManager {
                         listaNomesNos.clear();
 
                         if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta a Ordem")) {
-                            novo_cli.addConta(nova_conta = new Conta(numConta, nib, iban, titular,
-                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAORDEM));
+                            nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAORDEM);
                         } else if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta a Prazo")){
-                            novo_cli.addConta(nova_conta = new Conta(numConta, nib, iban, titular,
-                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPRAZO));
+                            nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPRAZO);
                         } else if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta Jovem")){
-                            novo_cli.addConta(nova_conta = new Conta(numConta, nib, iban, titular,
-                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAJOVEM));
+                            nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAJOVEM);
                         } else if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta Ordenado")){
-                            novo_cli.addConta(nova_conta = new Conta(numConta, nib, iban, titular,
-                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAORDENADO));
+                            nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAORDENADO);
                         } else if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta Poupança")){
-                            novo_cli.addConta(nova_conta = new Conta(numConta, nib, iban, titular,
-                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPOUPANCA));
+                            nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPOUPANCA);
                         }
 
                         NodeList movimentos = cliente.getElementsByTagName("movimentos");
@@ -140,13 +140,13 @@ public class DbManager {
                                 nova_conta.addMovimento(new Movimento(descricao, dataValor, dataLancamento, valor,
                                         TipoMovimentoEnum.CREDITO, contaDestino, contaRemetente));
 
-
                             } else {
                                 nova_conta.addMovimento(new Movimento(descricao, dataValor, dataLancamento, valor,
                                         TipoMovimentoEnum.DEBITO, contaDestino, contaRemetente));
                             }
 
                         }
+                        novo_cli.addConta(nova_conta);
 
                     }
 
