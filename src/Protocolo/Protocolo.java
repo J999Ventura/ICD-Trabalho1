@@ -144,11 +144,11 @@ public class Protocolo {
         return D;
     }
 
-    public static Document criarConta(Conta conta, boolean info){
+    public static Document criarConta(Conta conta, boolean query){
         if (builder != null) {
             D = builder.newDocument();
 
-            if (!info) {
+            if (query) {
                 protocol_tag = D.createElement("protocolo");
                 D.appendChild(protocol_tag);
                 Element tipo_pedido = D.createElement("tipopedido");
@@ -181,7 +181,7 @@ public class Protocolo {
             saldoAutorizado_tag.setTextContent(Double.toString(conta.getSaldoAutorizado()));
 
             //
-            if (!info){
+            if (query){
                 protocol_tag.appendChild(conta_tag);
             } else {
                 D.appendChild(conta_tag);
@@ -705,10 +705,10 @@ public class Protocolo {
         contaaordem.setMovimento(mov1);
         contaaordem.setMovimento(mov2);
 
-        d = log.criarConta(contaaordem);
+        d = Protocolo.criarConta(contaaordem, true);
         XMLDoc.writeDocument(d, "conta.xml");
 
-        d = log.criarConta(contaprazo);
+        d = log.criarConta(contaprazo, true);
         XMLDoc.writeDocument(d, "conta.xml");
     }
 

@@ -16,6 +16,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.*;
+import java.util.List;
 
 public class DbManager {
 
@@ -69,10 +71,41 @@ public class DbManager {
                     String numPassaporte = XMLDoc.getXPathV("//numPassaporte", cliente);
                     String dataDeNascimento = XMLDoc.getXPathV("//dataDeNascimento", cliente);
 
-
                     Cliente novo_cli = new ClienteIndividual(userName, nomeCliente, idCliente, nif, morada, numTelefone,
                             Protocolo.imageToBase64Decode(foto), Protocolo.imageToBase64Decode(assinatura),
                             numCartaoCidadao, numPassaporte, LocalDate.parse(dataDeNascimento));
+
+
+
+                    //Double numContas = Double.parseDouble(XMLDoc.getXPathV("count(//cliente[userName/text() = '" +
+                     //       user + "']/contas/*)", cliente));
+
+                    NodeList contas = cliente.getElementsByTagName("contas");
+                    System.out.println("Total of elements : " + contas.getLength());
+
+                    List<String> listaNomesNos = new ArrayList<>();
+
+                    for (int i = 1; i <= contas.getLength(); i++){
+                        NodeList nosconta = XMLDoc.getXPath("//cliente[userName/text() = '" + user +
+                                "']/contas/conta["+ i +"]/*", cliente);
+                        for (int z = 0; z < nosconta.getLength()-1; z++){
+                            listaNomesNos.add(nosconta.item(z).getTextContent());
+                            //System.out.println(nosconta.item(z).getTextContent());
+                        }
+
+                        String tipoConta = XMLDoc.getXPathV("//userName", cliente);
+                        String titular = XMLDoc.getXPathV("//nomeCliente", cliente);
+                        String numConta = XMLDoc.getXPathV("//idCliente", cliente);
+                        String nomeConta = XMLDoc.getXPathV("//nif", cliente);
+                        String nib = XMLDoc.getXPathV("//morada", cliente);
+                        String iban = XMLDoc.getXPathV("//numTelefone", cliente);
+                        String saldoContabilistico = XMLDoc.getXPathV("//foto", cliente);
+                        String saldoDisponivel = XMLDoc.getXPathV("//assinatura", cliente);
+                        String saldoAutorizado = XMLDoc.getXPathV("//numCartaoCidadao", cliente);
+
+                    }
+
+                    //Protocolo.criarConta();
 
 
                     return Protocolo.infoCliente(novo_cli);

@@ -16,7 +16,7 @@ public class ControllerCliente {
     }
 
     public static void main(String[] args) {
-
+        new Protocolo();
         ClienteSimplesTCP clienteTCP = new ClienteSimplesTCP();
         clienteTCP.openSocket(DEFAULT_HOSTNAME, DEFAULT_PORT);
 
