@@ -49,7 +49,7 @@ public class ClientModel {
 	
 	
 	public void setAccountList(List<Conta> list){
-		user.addConta(list);
+		user.addContas(list);
 		setBalanceList();
 	}
 	

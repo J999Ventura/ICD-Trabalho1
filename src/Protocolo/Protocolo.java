@@ -20,8 +20,8 @@ import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Base64;
+import java.util.*;
+import java.util.List;
 
 
 public class Protocolo {
@@ -403,6 +403,13 @@ public class Protocolo {
                     cliente_tag.appendChild(infoConta(cliente.getContas().get(i), false));
                 }
             }
+
+            if (!cliente.getEmprestimos().isEmpty()){
+
+                for (int i = 0; i <= cliente.getEmprestimos().size(); i++){
+                    cliente_tag.appendChild(infoEmprestimo(cliente.getEmprestimos()));
+                }
+            }
         }
 
         return D;
@@ -499,7 +506,7 @@ public class Protocolo {
 
 
 
-    public static Document infoEmprestimo(ArrayList<Emprestimo> list){
+    public static Document infoEmprestimo(List<Emprestimo> list){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");

@@ -120,7 +120,7 @@ public class XMLInteration {
     				XMLDoc.getXPathV("//cliente/numPassaporte", doc),
     				LocalDate.parse(XMLDoc.getXPathV("//cliente/dataDeNascimento", doc)));
     		
-    		cliente.addConta(getAccounts(doc));
+    		cliente.addContas(getAccounts(doc));
     		cliente.setEmprestimos(getLoans(doc));
     		
     	}else{

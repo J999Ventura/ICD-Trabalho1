@@ -85,7 +85,7 @@ public class LoginModel {
 	        contas.add(contaaordem);
 	        contas.add(contaprazo);
 	        
-	        clt.addConta(contas); //apenas para teste sem sockets;
+	        clt.addContas(contas); //apenas para teste sem sockets;
 
 			login = true;
 		}

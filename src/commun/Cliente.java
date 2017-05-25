@@ -99,7 +99,7 @@ public class Cliente {
 	}
 
     public List<Emprestimo> getEmprestimos() {
-        return emprestimos;
+        return this.emprestimos;
     }
     
     public void setEmprestimos(List<Emprestimo> list){
@@ -108,6 +108,10 @@ public class Cliente {
     
     public void addConta(Conta conta){
     	this.contas.add(conta);
+    }
+
+    public void addContas(List<Conta> contas){
+        this.contas = contas;
     }
 
     public List<Conta> getContas() {

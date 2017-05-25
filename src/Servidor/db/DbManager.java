@@ -79,9 +79,9 @@ public class DbManager {
 
                     List<String> listaNomesNos = new ArrayList<>();
 
-                    for (int i = 1; i <= contas.getLength(); i++){
+                    for (int i = 0; i < contas.getLength(); i++){
                         NodeList nosconta = XMLDoc.getXPath("//cliente[userName/text() = '" + user +
-                                "']/contas/conta["+ i +"]/*", cliente);
+                                "']/contas/conta["+ i+1 +"]/*", cliente);
                         for (int z = 0; z < nosconta.getLength()-1; z++){
                             listaNomesNos.add(nosconta.item(z).getTextContent());
                             //System.out.println(nosconta.item(z).getTextContent());
@@ -117,12 +117,38 @@ public class DbManager {
                                     saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPOUPANCA));
                         }
 
-                        //Protocolo.infoConta(nova_conta, false);
+                        NodeList movimentos = cliente.getElementsByTagName("movimentos");
+                        System.out.println("Total of elements : " + movimentos.getLength());
+
+                        for (int t = 0; t < movimentos.getLength(); t++) {
+                            NodeList nosMovimento = XMLDoc.getXPath("//cliente[userName/text() = '" + user +
+                                    "']/contas/conta[iban/text() = '"+iban+"']/movimentos/movimento[" + t + 1 + "]/*", cliente);
+                            for (int z = 0; z < nosMovimento.getLength(); z++) {
+                                listaNomesNos.add(nosMovimento.item(z).getTextContent());
+                            }
+
+                            LocalDate dataValor = LocalDate.parse(listaNomesNos.get(0));
+                            LocalDate dataLancamento = LocalDate.parse(listaNomesNos.get(1));
+                            String descricao = listaNomesNos.get(2);
+                            double valor = Double.parseDouble(listaNomesNos.get(3));
+                            String tipomovimento = listaNomesNos.get(4);
+                            String contaRemetente = listaNomesNos.get(5);
+                            String contaDestino = listaNomesNos.get(6);
+
+                            if (tipomovimento.equals(TipoMovimentoEnum.CREDITO.getTipo())) {
+
+                                nova_conta.addMovimento(new Movimento(descricao, dataValor, dataLancamento, valor,
+                                        TipoMovimentoEnum.CREDITO, contaDestino, contaRemetente));
+
+
+                            } else {
+                                nova_conta.addMovimento(new Movimento(descricao, dataValor, dataLancamento, valor,
+                                        TipoMovimentoEnum.DEBITO, contaDestino, contaRemetente));
+                            }
+
+                        }
+
                     }
-
-
-
-
 
                     return Protocolo.infoCliente(novo_cli);
 

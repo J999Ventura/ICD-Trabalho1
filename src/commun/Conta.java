@@ -110,6 +110,10 @@ public class Conta {
     public void setMovimentos(ArrayList<Movimento> movimentos) {
         this.movimentos = movimentos;
     }
+
+    public void addMovimento(Movimento mov) {
+        this.movimentos.add(mov);
+    }
     
     public void setMovimento(Movimento movimento) {
         this.movimentos.add(movimento);
