@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<conta>
+<tipoConta>Conta a Ordem</tipoConta>
+<titular>joaofilipevaz</titular>
+<numConta>contaaordem</numConta>
+<nomeConta>321568432513215346</nomeConta>
+<nib>276214522</nib>
+<iban>PT50321568432513215346</iban>
+<saldoContabilistico>1.03256221E8</saldoContabilistico>
+<saldoDisponivel>0.0</saldoDisponivel>
+<saldoAutorizado>0.0</saldoAutorizado>
+<movimentos>
+<movimento>
+<dataValor>2017-06-14</dataValor>
+<dataLancamento>2017-06-14</dataLancamento>
+<descricao>pag propinas isel</descricao>
+<valor>160.0</valor>
+<tipomovimento>debito</tipomovimento>
+<contaRemetente>PT50321568432513215368453</contaRemetente>
+<contaDestino>PT50321568432513215346</contaDestino>
+</movimento>
+<movimento>
+<dataValor>2017-06-14</dataValor>
+<dataLancamento>2017-06-14</dataLancamento>
+<descricao>pag propinas isel</descricao>
+<valor>160.0</valor>
+<tipomovimento>debito</tipomovimento>
+<contaRemetente>PT50321568432513215368453</contaRemetente>
+<contaDestino>PT50321568432513215346</contaDestino>
+</movimento>
+</movimentos>
+</conta>

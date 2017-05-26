@@ -5,6 +5,7 @@ import commun.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
@@ -399,8 +400,20 @@ public class Protocolo {
 
             if (!cliente.getContas().isEmpty()){
 
-                for (int i = 0; i <= cliente.getContas().size(); i++){
-                    cliente_tag.appendChild(infoConta(cliente.getContas().get(i), false));
+                for (int i = 0; i < cliente.getContas().size(); i++){
+
+                    Node conta = builder.newDocument().importNode(infoConta(cliente.getContas().get(i), false).getDocumentElement(), true);
+
+                    conta_tag.appendChild(conta);
+/*
+                    NodeList listaNosConta = infoConta(cliente.getContas().get(i), false).getChildNodes();
+                    for (int r = 0; r <= listaNosConta.getLength(); r++){
+
+
+                        Element teste =
+                        cliente_tag.appendChild(listaNosConta.item(r));
+                    }
+*/
                 }
             }
 
@@ -411,6 +424,8 @@ public class Protocolo {
                 }
             }
         }
+
+        XMLDoc.writeDocument(D, "teste.xml");
 
         return D;
     }
