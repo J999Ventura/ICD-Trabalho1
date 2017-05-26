@@ -73,7 +73,6 @@ public class DbManager {
                             numCartaoCidadao, numPassaporte, LocalDate.parse(dataDeNascimento));
 
 
-
                     NodeList contas = cliente.getElementsByTagName("contas");
                     System.out.println("Total of elements : " + contas.getLength());
 

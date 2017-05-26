@@ -27,9 +27,9 @@ import java.util.List;
 
 public class Protocolo {
 
-    private static Document D = null; // representa a arvore DOM com o login
-    private static Element protocol_tag;
-    private static DocumentBuilder builder;
+    private Document D = null; // representa a arvore DOM com o login
+    private Element protocol_tag;
+    private DocumentBuilder builder;
 
     public Protocolo() {
         DocumentBuilderFactory factory;
@@ -47,7 +47,7 @@ public class Protocolo {
      *  Metodos do Cliente
      */
 
-    public static Document criarConta(String nib, String newAccountName, String newAccountType){
+    public Document criarConta(String nib, String newAccountName, String newAccountType){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -72,7 +72,7 @@ public class Protocolo {
         return D;
     }
 
-    public static Document fecharConta(String nib, String accountNumber){
+    public Document fecharConta(String nib, String accountNumber){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -94,7 +94,7 @@ public class Protocolo {
         return D;
     }
 
-    public static Document pedirEmprestimo(String nib, String loanAmount, String payment, String rate){
+    public Document pedirEmprestimo(String nib, String loanAmount, String payment, String rate){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -122,7 +122,7 @@ public class Protocolo {
         return D;
     }
 
-    public static Document writeLogin(String user, String pass){
+    public Document writeLogin(String user, String pass){
 
         if (builder != null) {
             D = builder.newDocument();
@@ -147,7 +147,7 @@ public class Protocolo {
 
 
 
-    public static Document fecharConta(String numConta){
+    public Document fecharConta(String numConta){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -165,7 +165,7 @@ public class Protocolo {
         return D;
     }
 
-    public static Document atribuirEmprestimo(String user, String pass){
+    public Document atribuirEmprestimo(String user, String pass){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -186,7 +186,7 @@ public class Protocolo {
         return D;
     }
 
-    public static Document queryServidor(String pedido){
+    public Document queryServidor(String pedido){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -200,7 +200,7 @@ public class Protocolo {
         return D;
     }
 
-    public static Document makeTransfer(String nib, double value){
+    public Document makeTransfer(String nib, double value){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -220,7 +220,7 @@ public class Protocolo {
         return D;
     }
 
-    public static Document changeUserName(String name){
+    public Document changeUserName(String name){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -241,7 +241,7 @@ public class Protocolo {
      */
 
 
-    public static Document respostaServidor(boolean validation){
+    public Document respostaServidor(boolean validation){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -256,7 +256,7 @@ public class Protocolo {
         return D;
     }
 
-    public static Document logout(boolean validation){
+    public Document logout(boolean validation){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -402,7 +402,12 @@ public class Protocolo {
 
                 for (int i = 0; i < cliente.getContas().size(); i++){
 
-                    Node conta = builder.newDocument().importNode(infoConta(cliente.getContas().get(i), false).getDocumentElement(), true);
+                    //Node conta = D.importNode(infoConta(cliente.getContas().get(i), false).getDocumentElement(), true);
+                    Node conta = infoConta(cliente.getContas().get(i), false).getDocumentElement().cloneNode(true);
+                    D.adoptNode(conta);
+
+                    // Make the new node an actual item in the target document
+                    //D.getDocumentElement().appendChild(conta);
 
                     conta_tag.appendChild(conta);
 /*
