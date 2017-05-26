@@ -686,19 +686,19 @@ public class Protocolo {
         String u = "joaofilipevaz";
         String pass = "asdwf23425";
 
-        Protocolo log = new Protocolo();
+        Protocolo proto = new Protocolo();
 
-        Document d = log.writeLogin(u, pass);
+        Document d = proto.writeLogin(u, pass);
         XMLDoc.writeDocument(d, "teste.xml");
 
         removeChilds(d.getDocumentElement());
 
-        d = log.respostaServidor(true);
+        d = proto.respostaServidor(true);
         XMLDoc.writeDocument(d, "resposta.xml");
 
         removeChilds(d.getDocumentElement());
 
-        d = log.queryServidor("1");
+        d = proto.queryServidor("1");
         XMLDoc.writeDocument(d, "queryServidor.xml");
 
         removeChilds(d.getDocumentElement());
@@ -719,7 +719,7 @@ public class Protocolo {
                 "504825035", "Praceta do Cerrado da Bica 1º Esq", "2153321456", foto, assinatura,
                 "Antonio Fagundes", "654322");
 
-        d = log.infoCliente(clt);
+        d = proto.infoCliente(clt);
         XMLDoc.writeDocument(d, "cliente.xml");
 
         removeChilds(d.getDocumentElement());
@@ -740,10 +740,10 @@ public class Protocolo {
         contaaordem.setMovimento(mov1);
         contaaordem.setMovimento(mov2);
 
-        d = log.infoConta(contaaordem, true);
+        d = proto.infoConta(contaaordem, true);
         XMLDoc.writeDocument(d, "conta.xml");
 
-        d = log.infoConta(contaprazo, true);
+        d = proto.infoConta(contaprazo, true);
         XMLDoc.writeDocument(d, "conta.xml");
     }
 

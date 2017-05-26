@@ -6,28 +6,28 @@ import XML.XMLDoc;
 import commun.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import sun.dc.pr.PRError;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.awt.*;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DbManager {
 
-    public static synchronized void writeToDB(Document d, String filename) {
+    private Protocolo proto = new Protocolo();
+
+    public synchronized void writeToDB(Document d, String filename) {
         XMLDoc.writeDocument(d, filename);
     }
 
-    public static synchronized Document readFromDB(String filename) {
+    public synchronized Document readFromDB(String filename) {
         return XMLDoc.parseFile(filename);
     }
 
-    public static synchronized boolean validateLogin(String user, String pass, Document db) {
+    public synchronized boolean validateLogin(String user, String pass, Document db) {
 
         String userInDB = XMLDoc.getXPathV("//user/username[text() = '" + user + "']", db);
         if (userInDB != null) {
@@ -42,7 +42,7 @@ public class DbManager {
         return false;
     }
 
-    public static synchronized Document getClientDataFromDB(String user, Document db) {
+    public synchronized Document getClientDataFromDB(String user, Document db) {
         NodeList noscliente = XMLDoc.getXPath("//cliente[userName/text()='" + user + "']", db);
 
         if (noscliente != null) {
@@ -149,7 +149,7 @@ public class DbManager {
 
                     }
 
-                    return Protocolo.infoCliente(novo_cli);
+                    return proto.infoCliente(novo_cli);
 
                 } else {
 
@@ -168,7 +168,7 @@ public class DbManager {
                             Protocolo.imageToBase64Decode(foto), Protocolo.imageToBase64Decode(assinatura),
                             nomeResponsavel, cae);
 
-                    return Protocolo.infoCliente(novo_cli_emp);
+                    return proto.infoCliente(novo_cli_emp);
 
                 }
 
