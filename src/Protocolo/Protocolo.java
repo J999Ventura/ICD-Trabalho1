@@ -5,7 +5,6 @@ import commun.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
@@ -273,7 +272,7 @@ public class Protocolo {
         return D;
     }
 
-    public static Document nameChanged(boolean validation){
+    public Document nameChanged(boolean validation){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -290,7 +289,7 @@ public class Protocolo {
         return D;
     }
 
-    public static Document transferMade(boolean validation){
+    public Document transferMade(boolean validation){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -307,7 +306,7 @@ public class Protocolo {
         return D;
     }
 
-    public static Document pedirCliente(String user){
+    public Document pedirCliente(String user){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -325,7 +324,7 @@ public class Protocolo {
     }
 
 
-    public static Document infoCliente(Cliente cliente){
+    public Document infoCliente(Cliente cliente){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -435,7 +434,7 @@ public class Protocolo {
         return D;
     }
 
-    public static Document infoConta(Conta conta, boolean query){
+    public Document infoConta(Conta conta, boolean query){
         if (builder != null) {
             D = builder.newDocument();
 
@@ -526,7 +525,7 @@ public class Protocolo {
 
 
 
-    public static Document infoEmprestimo(List<Emprestimo> list){
+    public Document infoEmprestimo(List<Emprestimo> list){
         if (builder != null) {
             D = builder.newDocument();
             protocol_tag = D.createElement("protocolo");
@@ -574,7 +573,7 @@ public class Protocolo {
      */
 
 
-    private static String md5Hash(String encode){
+    private synchronized static String md5Hash(String encode){
 
         try {
             byte[] bytesOfMessage = encode.getBytes("UTF-8");
@@ -591,7 +590,7 @@ public class Protocolo {
     }
 
 
-    private static String imageToBase64Encode(Image img) {
+    private synchronized static String imageToBase64Encode(Image img) {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         String encodedImage = null;
@@ -611,7 +610,7 @@ public class Protocolo {
         return encodedImage;
     }
 
-    public static BufferedImage imageToBase64Decode(String encodedImage) {
+    public synchronized static BufferedImage imageToBase64Decode(String encodedImage) {
 
         byte[] bytes = Base64.getDecoder().decode(encodedImage);
         BufferedImage img = null;
@@ -625,14 +624,14 @@ public class Protocolo {
         return img;
     }
 
-    public static void removeChilds(Node node) {
+    public synchronized static void removeChilds(Node node) {
         while (node.hasChildNodes()) {
             node.removeChild(node.getFirstChild());
         }
     }
 
     //method to convert Document to String
-    public static String getStringFromDocument(Document doc)
+    public synchronized static String getStringFromDocument(Document doc)
     {
         try
         {
@@ -651,11 +650,11 @@ public class Protocolo {
         }
     }
 
-    public static Document convertStringToDocument(String xmlStr) {
+    public synchronized static Document convertStringToDocument(String xmlStr) {
         try
         {
-            Document doc = builder.parse( new InputSource( new StringReader( xmlStr ) ) );
-            return doc;
+            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            return builder.parse( new InputSource( new StringReader( xmlStr ) ) );
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -663,7 +662,7 @@ public class Protocolo {
     }
 
 
-    public static final String prettyPrint(Document xml) {
+    public synchronized static String prettyPrint(Document xml) {
         try {
             Transformer tf = TransformerFactory.newInstance().newTransformer();
             tf.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "NO");
@@ -741,7 +740,7 @@ public class Protocolo {
         contaaordem.setMovimento(mov1);
         contaaordem.setMovimento(mov2);
 
-        d = Protocolo.infoConta(contaaordem, true);
+        d = log.infoConta(contaaordem, true);
         XMLDoc.writeDocument(d, "conta.xml");
 
         d = log.infoConta(contaprazo, true);
