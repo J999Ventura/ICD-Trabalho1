@@ -340,7 +340,7 @@ public class Protocolo {
             Element foto_tag = D.createElement("foto");
             Element assinatura_tag = D.createElement("assinatura");
             Element tipoCliente_tag = D.createElement("tipoCliente");
-            Element conta_tag = D.createElement("contas");
+            Element contas_tag = D.createElement("contas");
             Element emprestimo_tag = D.createElement("emprestimos");
 
             userName_tag.setTextContent(cliente.getUserName());
@@ -377,7 +377,7 @@ public class Protocolo {
                 cliente_tag.appendChild(numPassaporte_tag);
                 cliente_tag.appendChild(dataDeNascimento_tag);
                 cliente_tag.appendChild(tipoCliente_tag);
-                cliente_tag.appendChild(conta_tag);
+                cliente_tag.appendChild(contas_tag);
                 cliente_tag.appendChild(emprestimo_tag);
 
             } else if (cliente instanceof ClienteEmpresarial) {
@@ -392,7 +392,7 @@ public class Protocolo {
                 cliente_tag.appendChild(nomeResponsavel_tag);
                 cliente_tag.appendChild(cae_tag);
                 cliente_tag.appendChild(tipoCliente_tag);
-                cliente_tag.appendChild(conta_tag);
+                cliente_tag.appendChild(contas_tag);
                 cliente_tag.appendChild(emprestimo_tag);
 
             }
@@ -401,14 +401,92 @@ public class Protocolo {
 
                 for (int i = 0; i < cliente.getContas().size(); i++){
 
+                    Conta conta = cliente.getContas().get(i);
+
+                    Element conta_tag = D.createElement("conta");
+                    Element tipoConta_tag = D.createElement("tipoConta");
+                    Element titular_tag = D.createElement("titular");
+                    Element numConta_tag = D.createElement("numConta");
+                    Element nomeConta_tag = D.createElement("nomeConta");
+                    Element nib_tag = D.createElement("nib");
+                    Element iban_tag = D.createElement("iban");
+                    Element saldoContabilistico_tag = D.createElement("saldoContabilistico");
+                    Element saldoDisponivel_tag = D.createElement("saldoDisponivel");
+                    Element saldoAutorizado_tag = D.createElement("saldoAutorizado");
+                    Element movimentos_tag = D.createElement("movimentos");
+
+                    //
+                    tipoConta_tag.setTextContent(conta.getTipoConta().getTipo());
+                    titular_tag.setTextContent(conta.getTitular());
+                    numConta_tag.setTextContent(conta.getNumConta());
+                    nomeConta_tag.setTextContent(conta.getNomeConta());
+                    nib_tag.setTextContent(conta.getNib());
+                    iban_tag.setTextContent(conta.getIban());
+                    saldoContabilistico_tag.setTextContent(Double.toString(conta.getSaldoContabilistico()));
+                    saldoDisponivel_tag.setTextContent(Double.toString(conta.getSaldoDisponivel()));
+                    saldoAutorizado_tag.setTextContent(Double.toString(conta.getSaldoAutorizado()));
+
+                    contas_tag.appendChild(conta_tag);
+                    conta_tag.appendChild(tipoConta_tag);
+                    conta_tag.appendChild(titular_tag);
+                    conta_tag.appendChild(numConta_tag);
+                    conta_tag.appendChild(nomeConta_tag);
+                    conta_tag.appendChild(nib_tag);
+                    conta_tag.appendChild(iban_tag);
+                    conta_tag.appendChild(saldoContabilistico_tag);
+                    conta_tag.appendChild(saldoDisponivel_tag);
+                    conta_tag.appendChild(saldoAutorizado_tag);
+                    conta_tag.appendChild(movimentos_tag);
+
+
+                    if (conta.getMovimentos() != null) {
+                        for (int m = 0; m < conta.getMovimentos().size(); m++) {
+
+                            Movimento mov = conta.getMovimentos().get(m);
+
+                            Element movimento_tag = D.createElement("movimento");
+                            Element descricao_tag = D.createElement("descricao");
+                            Element dataValor_tag = D.createElement("dataValor");
+                            Element dataLancamento_tag = D.createElement("dataLancamento");
+                            Element valor_tag = D.createElement("valor");
+                            Element tipoMovimento_tag = D.createElement("tipomovimento");
+                            Element contaRemetente_tag = D.createElement("contaRemetente");
+                            Element contaDestino_tag = D.createElement("contaDestino");
+
+                            descricao_tag.setTextContent(mov.getDescricao());
+                            dataValor_tag.setTextContent(mov.getDataValor().toString());
+                            dataLancamento_tag.setTextContent(mov.getDataLancamento().toString());
+                            valor_tag.setTextContent(Double.toString(mov.getValor()));
+                            tipoMovimento_tag.setTextContent(mov.getTipoMovimento().getTipo());
+                            contaDestino_tag.setTextContent(mov.getContaDestino());
+                            contaRemetente_tag.setTextContent(mov.getContaRemetente());
+
+                            movimentos_tag.appendChild(movimento_tag);
+                            movimento_tag.appendChild(dataValor_tag);
+                            movimento_tag.appendChild(dataLancamento_tag);
+                            movimento_tag.appendChild(descricao_tag);
+                            movimento_tag.appendChild(valor_tag);
+                            movimento_tag.appendChild(tipoMovimento_tag);
+                            movimento_tag.appendChild(contaRemetente_tag);
+                            movimento_tag.appendChild(contaDestino_tag);
+                        }
+                    }
+
+
+                    //Document infoConta = infoConta(cliente.getContas().get(i), false);
+                    //Node conta = infoConta.getFirstChild().cloneNode(true);
+                    //D.adoptNode(conta);
+                    //D.importNode(conta, true);
+                    //D.appendChild(conta);
+
                     //Node conta = D.importNode(infoConta(cliente.getContas().get(i), false).getDocumentElement(), true);
-                    Node conta = infoConta(cliente.getContas().get(i), false).getDocumentElement().cloneNode(true);
-                    D.adoptNode(conta);
+                    //Node conta = infoConta(cliente.getContas().get(i), false).getDocumentElement().cloneNode(true);
+                    //D.adoptNode(conta);
 
                     // Make the new node an actual item in the target document
-                    //D.getDocumentElement().appendChild(conta);
+                    //cliente_tag.appendChild(conta);
 
-                    conta_tag.appendChild(conta);
+                    //conta_tag.appendChild(conta);
 /*
                     NodeList listaNosConta = infoConta(cliente.getContas().get(i), false).getChildNodes();
                     for (int r = 0; r <= listaNosConta.getLength(); r++){
@@ -444,7 +522,6 @@ public class Protocolo {
                 Element tipo_pedido = D.createElement("tipopedido");
                 tipo_pedido.setTextContent("tipopedido");
                 protocol_tag.appendChild(tipo_pedido);
-
             }
 
             Element conta_tag = D.createElement("conta");
