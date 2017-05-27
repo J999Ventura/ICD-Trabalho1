@@ -21,7 +21,6 @@ public class DbManager {
 
     public DbManager() {
         db = readFromDB("src/servidor/db/db.xml");
-        //this.proto = proto;
     }
 
     private Protocolo proto = new Protocolo();
@@ -30,7 +29,7 @@ public class DbManager {
         XMLDoc.writeDocument(d, filename);
     }
 
-    public synchronized Document readFromDB(String filename) {
+    private synchronized Document readFromDB(String filename) {
         return XMLDoc.parseFile(filename);
     }
 

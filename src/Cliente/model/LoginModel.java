@@ -21,10 +21,12 @@ public class LoginModel {
 	private XMLInteration xmlInt;
 	private Cliente clt;
 	private ClienteSimplesTCP tcp;
+	private Protocolo pro;
 	
 	public LoginModel(ClienteSimplesTCP clienteTCP){
 		tcp = clienteTCP;
 		xmlInt = new XMLInteration();
+		pro = new Protocolo();
 	}
 
 	
@@ -51,12 +53,12 @@ public class LoginModel {
 		*/
 		/********************* para teste na ui sem socket	*************/
 		boolean login = true; 
-		Document doc = Protocolo.writeLogin(user, pass);
+		Document doc = pro.writeLogin(user, pass);
 		System.out.println(Protocolo.getStringFromDocument(doc));
 		
 		boolean isLogin = true;
 		if(isLogin){
-			doc = Protocolo.queryServidor("getUserInfo");
+			doc = pro.queryServidor("getUserInfo");
 			System.out.println(Protocolo.getStringFromDocument(doc));
 			
 			Image assinatura = null;

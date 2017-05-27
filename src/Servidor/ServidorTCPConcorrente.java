@@ -11,11 +11,11 @@ public final class ServidorTCPConcorrente implements Runnable {
 
     private ServerSocket serverSocket;
     private int serverPort;
-    protected boolean isActive;
-    protected Thread runningThread = null;
+    private boolean isActive;
+    private Thread runningThread = null;
     private DbManager dbManager;
 
-    public ServidorTCPConcorrente(int port, DbManager dbManager) {
+    ServidorTCPConcorrente(int port, DbManager dbManager) {
         this.serverSocket = null;
         this.serverPort = port;
         this.isActive = true;
@@ -75,7 +75,7 @@ class HandleConnectionThread extends Thread {
     private Socket connection;
     private BufferedReader is;
     private PrintWriter os;
-    public boolean session;
+    private boolean session;
     private DbManager dbManager;
     private GestorComunicacao gestorCom;
 
@@ -129,7 +129,7 @@ class HandleConnectionThread extends Thread {
         return null;
     }
 
-    public void writeSocket(String s){
+    private void writeSocket(String s){
         os.println(s);
         System.out.println("Servidor Enviou --> " + s);
     }
