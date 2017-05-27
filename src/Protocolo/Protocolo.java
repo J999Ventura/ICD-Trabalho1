@@ -482,7 +482,7 @@ public class Protocolo {
             }
         }
 
-        XMLDoc.writeDocument(D, "teste.xml");
+        XMLDoc.writeDocument(D, "infoCliente.xml");
 
         return D;
     }
