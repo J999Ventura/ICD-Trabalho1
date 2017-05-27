@@ -50,6 +50,7 @@ public class DbManager {
 
     public synchronized Document getClientDataFromDB(String user) {
         NodeList noscliente = XMLDoc.getXPath("//cliente[userName/text()='" + user + "']", db);
+        System.out.println("A obter dados do utilizador : " + user);
 
         if (noscliente != null) {
             try {
@@ -79,15 +80,15 @@ public class DbManager {
                             numCartaoCidadao, numPassaporte, LocalDate.parse(dataDeNascimento));
 
 
-                    NodeList contas = cliente.getElementsByTagName("contas");
-                    System.out.println("Total of elements : " + contas.getLength());
+                    NodeList contas = XMLDoc.getXPath("//contas/*", cliente);
+                    System.out.println("Total de contas : " + contas.getLength());
 
                     List<String> listaNomesNos = new ArrayList<>();
 
-                    for (int i = 0; i < contas.getLength(); i++){
+                    for (int i = 1; i < contas.getLength()+1; i++){
                         NodeList nosconta = XMLDoc.getXPath("//cliente[userName/text() = '" + user +
-                                "']/contas/conta["+ i+1 +"]/*", cliente);
-                        for (int z = 0; z < nosconta.getLength()-1; z++){
+                                "']/contas/conta["+ i +"]/*", cliente);
+                        for (int z = 0; z < nosconta.getLength(); z++){
                             listaNomesNos.add(nosconta.item(z).getTextContent());
                             //System.out.println(nosconta.item(z).getTextContent());
                         }
@@ -122,12 +123,12 @@ public class DbManager {
                                     saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPOUPANCA);
                         }
 
-                        NodeList movimentos = cliente.getElementsByTagName("movimentos");
-                        System.out.println("Total of elements : " + movimentos.getLength());
+                        NodeList movimentos = XMLDoc.getXPath("//conta[numConta/text() = '" + numConta + "']/movimentos/*", cliente);
+                        System.out.println("Total de Movimentos da conta " + numConta + " : " + movimentos.getLength());
 
-                        for (int t = 0; t < movimentos.getLength(); t++) {
+                        for (int t = 1; t < movimentos.getLength()+1; t++) {
                             NodeList nosMovimento = XMLDoc.getXPath("//cliente[userName/text() = '" + user +
-                                    "']/contas/conta[iban/text() = '"+iban+"']/movimentos/movimento[" + t + 1 + "]/*", cliente);
+                                    "']/contas/conta[numConta/text() = '"+numConta+"']/movimentos/movimento[" + t + "]/*", cliente);
                             for (int z = 0; z < nosMovimento.getLength(); z++) {
                                 listaNomesNos.add(nosMovimento.item(z).getTextContent());
                             }
@@ -139,6 +140,8 @@ public class DbManager {
                             String tipomovimento = listaNomesNos.get(4);
                             String contaRemetente = listaNomesNos.get(5);
                             String contaDestino = listaNomesNos.get(6);
+
+                            listaNomesNos.clear();
 
                             if (tipomovimento.equals(TipoMovimentoEnum.CREDITO.getTipo())) {
 

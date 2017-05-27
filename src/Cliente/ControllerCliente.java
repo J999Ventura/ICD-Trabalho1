@@ -2,7 +2,6 @@ package Cliente;
 
 import Cliente.control.ClienteSimplesTCP;
 import Protocolo.Protocolo;
-import XML.XMLDoc;
 import org.w3c.dom.Document;
 
 public class ControllerCliente {

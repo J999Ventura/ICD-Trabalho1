@@ -471,31 +471,6 @@ public class Protocolo {
                             movimento_tag.appendChild(contaDestino_tag);
                         }
                     }
-
-
-                    //Document infoConta = infoConta(cliente.getContas().get(i), false);
-                    //Node conta = infoConta.getFirstChild().cloneNode(true);
-                    //D.adoptNode(conta);
-                    //D.importNode(conta, true);
-                    //D.appendChild(conta);
-
-                    //Node conta = D.importNode(infoConta(cliente.getContas().get(i), false).getDocumentElement(), true);
-                    //Node conta = infoConta(cliente.getContas().get(i), false).getDocumentElement().cloneNode(true);
-                    //D.adoptNode(conta);
-
-                    // Make the new node an actual item in the target document
-                    //cliente_tag.appendChild(conta);
-
-                    //conta_tag.appendChild(conta);
-/*
-                    NodeList listaNosConta = infoConta(cliente.getContas().get(i), false).getChildNodes();
-                    for (int r = 0; r <= listaNosConta.getLength(); r++){
-
-
-                        Element teste =
-                        cliente_tag.appendChild(listaNosConta.item(r));
-                    }
-*/
                 }
             }
 
