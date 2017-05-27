@@ -17,6 +17,13 @@ import java.util.Objects;
 
 public class DbManager {
 
+    private static Document db;
+
+    public DbManager() {
+        db = readFromDB("src/servidor/db/db.xml");
+        //this.proto = proto;
+    }
+
     private Protocolo proto = new Protocolo();
 
     public synchronized void writeToDB(Document d, String filename) {
@@ -27,7 +34,7 @@ public class DbManager {
         return XMLDoc.parseFile(filename);
     }
 
-    public synchronized boolean validateLogin(String user, String pass, Document db) {
+    public synchronized boolean validateLogin(String user, String pass) {
 
         String userInDB = XMLDoc.getXPathV("//user/username[text() = '" + user + "']", db);
         if (userInDB != null) {
@@ -42,7 +49,7 @@ public class DbManager {
         return false;
     }
 
-    public synchronized Document getClientDataFromDB(String user, Document db) {
+    public synchronized Document getClientDataFromDB(String user) {
         NodeList noscliente = XMLDoc.getXPath("//cliente[userName/text()='" + user + "']", db);
 
         if (noscliente != null) {

@@ -16,7 +16,7 @@ public class ControllerCliente {
     }
 
     public static void main(String[] args) {
-        new Protocolo();
+        Protocolo proto = new Protocolo();
         ClienteSimplesTCP clienteTCP = new ClienteSimplesTCP();
         clienteTCP.openSocket(DEFAULT_HOSTNAME, DEFAULT_PORT);
 
@@ -24,7 +24,7 @@ public class ControllerCliente {
         String u = "joaofilipevaz";
         String pass = "asdwf23425";
 
-        Document d = Protocolo.writeLogin(u, pass);
+        Document d = proto.writeLogin(u, pass);
 
         clienteTCP.writeSocket(d);
 
@@ -34,7 +34,7 @@ public class ControllerCliente {
 
         Protocolo.removeChilds(d.getDocumentElement());
 
-        Document d2 = Protocolo.queryServidor("getUserInfo");
+        Document d2 = proto.queryServidor("getUserInfo");
 
         clienteTCP.writeSocket(d2);
 

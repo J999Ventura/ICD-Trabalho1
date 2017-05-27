@@ -1,5 +1,7 @@
 package Servidor;
 
+import Servidor.db.DbManager;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,11 +13,13 @@ public final class ServidorTCPConcorrente implements Runnable {
     private int serverPort;
     protected boolean isActive;
     protected Thread runningThread = null;
+    private DbManager dbManager;
 
-    public ServidorTCPConcorrente(int port) {
+    public ServidorTCPConcorrente(int port, DbManager dbManager) {
         this.serverSocket = null;
         this.serverPort = port;
         this.isActive = true;
+        this.dbManager = dbManager;
     }
 
     private void openServerSocket() {
@@ -44,7 +48,7 @@ public final class ServidorTCPConcorrente implements Runnable {
                 System.err.println("Excepção no servidor: " + e);
             }
 
-            Thread th = new HandleConnectionThread(clientSocket);
+            Thread th = new HandleConnectionThread(clientSocket, this.dbManager);
             th.start();
         }
         System.out.println("Servidor Parado");
@@ -72,20 +76,28 @@ class HandleConnectionThread extends Thread {
     private BufferedReader is;
     private PrintWriter os;
     public boolean session;
+    private DbManager dbManager;
+    private GestorComunicacao gestorCom;
 
-    HandleConnectionThread(Socket connection){
+    HandleConnectionThread(Socket connection, DbManager dbManager){
         this.connection = connection;
         this.is = null;
         this.os = null;
         this.session = true;
+        this.dbManager = dbManager;
+        this.gestorCom = new GestorComunicacao();
     }
 
     public void run() {
         openSocket();
         while (session) {
-            writeSocket(GestorComunicacao.gestorComunicacao(readSocket()));
+            String reply = gestorCom.trataPedido(readSocket(), this.dbManager);
+            if (reply.equals("logout")){
+                closeSocket();
+            } else{
+                writeSocket(reply);
+            }
         }
-        closeSocket();
     } // end run
 
     private void openSocket(){
@@ -117,21 +129,14 @@ class HandleConnectionThread extends Thread {
         return null;
     }
 
-    private boolean isConnected() {
-        return this.session;
-    }
-
-    protected void end() {
-        this.session = false;
-    }
-
     public void writeSocket(String s){
         os.println(s);
         System.out.println("Servidor Enviou --> " + s);
     }
 
-
     private void closeSocket(){
+
+        this.session = false;
 
         // Fechar os streams e o socket
         try {
