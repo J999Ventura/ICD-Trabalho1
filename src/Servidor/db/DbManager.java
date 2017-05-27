@@ -49,6 +49,7 @@ public class DbManager {
     }
 
     public synchronized Document getClientDataFromDB(String user) {
+        Cliente novo_cli = null;
         NodeList noscliente = XMLDoc.getXPath("//cliente[userName/text()='" + user + "']", db);
         System.out.println("A obter dados do utilizador : " + user);
 
@@ -75,90 +76,9 @@ public class DbManager {
                     String numPassaporte = XMLDoc.getXPathV("//numPassaporte", cliente);
                     String dataDeNascimento = XMLDoc.getXPathV("//dataDeNascimento", cliente);
 
-                    Cliente novo_cli = new ClienteIndividual(userName, nomeCliente, idCliente, nif, morada, numTelefone,
+                    novo_cli = new ClienteIndividual(userName, nomeCliente, idCliente, nif, morada, numTelefone,
                             Protocolo.imageToBase64Decode(foto), Protocolo.imageToBase64Decode(assinatura),
                             numCartaoCidadao, numPassaporte, LocalDate.parse(dataDeNascimento));
-
-
-                    NodeList contas = XMLDoc.getXPath("//contas/*", cliente);
-                    System.out.println("Total de contas : " + contas.getLength());
-
-                    List<String> listaNomesNos = new ArrayList<>();
-
-                    for (int i = 1; i < contas.getLength()+1; i++){
-                        NodeList nosconta = XMLDoc.getXPath("//cliente[userName/text() = '" + user +
-                                "']/contas/conta["+ i +"]/*", cliente);
-                        for (int z = 0; z < nosconta.getLength(); z++){
-                            listaNomesNos.add(nosconta.item(z).getTextContent());
-                            //System.out.println(nosconta.item(z).getTextContent());
-                        }
-
-                        String tipoConta = listaNomesNos.get(0);
-                        String titular = listaNomesNos.get(1);
-                        String numConta = listaNomesNos.get(2);
-                        String nomeConta = listaNomesNos.get(3);
-                        String nib = listaNomesNos.get(4);
-                        String iban = listaNomesNos.get(5);
-                        Double saldoContabilistico = Double.parseDouble(listaNomesNos.get(6));
-                        Double saldoDisponivel = Double.parseDouble(listaNomesNos.get(7));
-                        Double saldoAutorizado = Double.parseDouble(listaNomesNos.get(8));
-
-                        Conta nova_conta = null;
-                        listaNomesNos.clear();
-
-                        if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta a Ordem")) {
-                            nova_conta = new Conta(numConta, nib, iban, titular,
-                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAORDEM);
-                        } else if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta a Prazo")){
-                            nova_conta = new Conta(numConta, nib, iban, titular,
-                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPRAZO);
-                        } else if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta Jovem")){
-                            nova_conta = new Conta(numConta, nib, iban, titular,
-                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAJOVEM);
-                        } else if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta Ordenado")){
-                            nova_conta = new Conta(numConta, nib, iban, titular,
-                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAORDENADO);
-                        } else if (Objects.equals(XMLDoc.getXPathV("//conta[numConta/text() = '"+ numConta+"']/tipoConta", cliente), "Conta Poupança")){
-                            nova_conta = new Conta(numConta, nib, iban, titular,
-                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPOUPANCA);
-                        }
-
-                        NodeList movimentos = XMLDoc.getXPath("//conta[numConta/text() = '" + numConta + "']/movimentos/*", cliente);
-                        System.out.println("Total de Movimentos da conta " + numConta + " : " + movimentos.getLength());
-
-                        for (int t = 1; t < movimentos.getLength()+1; t++) {
-                            NodeList nosMovimento = XMLDoc.getXPath("//cliente[userName/text() = '" + user +
-                                    "']/contas/conta[numConta/text() = '"+numConta+"']/movimentos/movimento[" + t + "]/*", cliente);
-                            for (int z = 0; z < nosMovimento.getLength(); z++) {
-                                listaNomesNos.add(nosMovimento.item(z).getTextContent());
-                            }
-
-                            LocalDate dataValor = LocalDate.parse(listaNomesNos.get(0));
-                            LocalDate dataLancamento = LocalDate.parse(listaNomesNos.get(1));
-                            String descricao = listaNomesNos.get(2);
-                            double valor = Double.parseDouble(listaNomesNos.get(3));
-                            String tipomovimento = listaNomesNos.get(4);
-                            String contaRemetente = listaNomesNos.get(5);
-                            String contaDestino = listaNomesNos.get(6);
-
-                            listaNomesNos.clear();
-
-                            if (tipomovimento.equals(TipoMovimentoEnum.CREDITO.getTipo())) {
-
-                                nova_conta.addMovimento(new Movimento(descricao, dataValor, dataLancamento, valor,
-                                        TipoMovimentoEnum.CREDITO, contaDestino, contaRemetente));
-
-                            } else {
-                                nova_conta.addMovimento(new Movimento(descricao, dataValor, dataLancamento, valor,
-                                        TipoMovimentoEnum.DEBITO, contaDestino, contaRemetente));
-                            }
-
-                        }
-                        novo_cli.addConta(nova_conta);
-
-                    }
-
-                    return proto.infoCliente(novo_cli);
 
                 } else {
 
@@ -173,18 +93,102 @@ public class DbManager {
                     String nomeResponsavel = XMLDoc.getXPathV("//nomeResponsavel/text()", cliente);
                     String cae = XMLDoc.getXPathV("//cae/text()", cliente);
 
-                    Cliente novo_cli_emp = new ClienteEmpresarial(userName, nomeCliente, idCliente, nif, morada, numTelefone,
+                    novo_cli = new ClienteEmpresarial(userName, nomeCliente, idCliente, nif, morada, numTelefone,
                             Protocolo.imageToBase64Decode(foto), Protocolo.imageToBase64Decode(assinatura),
                             nomeResponsavel, cae);
 
-                    return proto.infoCliente(novo_cli_emp);
+                }
 
+
+                NodeList contas = XMLDoc.getXPath("//contas/*", cliente);
+                if (contas != null){
+
+                    System.out.println("Total de contas : " + contas.getLength());
+
+                    List<String> listaNomesNos = new ArrayList<>();
+
+                    for (int i = 1; i < contas.getLength()+1; i++){
+                        NodeList nosconta = XMLDoc.getXPath("//cliente[userName/text() = '" + user +
+                                "']/contas/conta["+ i +"]/*", cliente);
+                        if (nosconta != null) {
+                            for (int z = 0; z < nosconta.getLength(); z++){
+                                listaNomesNos.add(nosconta.item(z).getTextContent());
+                                //System.out.println(nosconta.item(z).getTextContent());
+                            }
+                        }
+
+                        String tipoConta = listaNomesNos.get(0);
+                        String titular = listaNomesNos.get(1);
+                        String numConta = listaNomesNos.get(2);
+                        String nomeConta = listaNomesNos.get(3);
+                        String nib = listaNomesNos.get(4);
+                        String iban = listaNomesNos.get(5);
+                        Double saldoContabilistico = Double.parseDouble(listaNomesNos.get(6));
+                        Double saldoDisponivel = Double.parseDouble(listaNomesNos.get(7));
+                        //Double saldoAutorizado = Double.parseDouble(listaNomesNos.get(8));
+
+                        Conta nova_conta = null;
+                        listaNomesNos.clear();
+
+                        if (tipoConta.equals(TipoContaEnum.CONTAORDEM.getTipo())) {
+                            nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAORDEM);
+                        } else if (tipoConta.equals(TipoContaEnum.CONTAPRAZO.getTipo())){
+                            nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPRAZO);
+                        } else if (tipoConta.equals(TipoContaEnum.CONTAJOVEM.getTipo())){
+                            nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAJOVEM);
+                        } else if (tipoConta.equals(TipoContaEnum.CONTAORDENADO.getTipo())){
+                            nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAORDENADO);
+                        } else {
+                            nova_conta = new Conta(numConta, nib, iban, titular,
+                                    saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPOUPANCA);
+                        }
+
+                        NodeList movimentos = XMLDoc.getXPath("//conta[numConta/text() = '" + numConta + "']/movimentos/*", cliente);
+                        if (movimentos != null) {
+                            System.out.println("Total de Movimentos da conta " + numConta + " : " + movimentos.getLength());
+
+                            for (int t = 1; t < movimentos.getLength()+1; t++) {
+                                NodeList nosMovimento = XMLDoc.getXPath("//cliente[userName/text() = '" + user +
+                                        "']/contas/conta[numConta/text() = '"+numConta+"']/movimentos/movimento[" + t + "]/*", cliente);
+                                if (nosMovimento != null) {
+                                    for (int z = 0; z < nosMovimento.getLength(); z++) {
+                                        listaNomesNos.add(nosMovimento.item(z).getTextContent());
+                                    }
+                                }
+
+                                LocalDate dataValor = LocalDate.parse(listaNomesNos.get(0));
+                                LocalDate dataLancamento = LocalDate.parse(listaNomesNos.get(1));
+                                String descricao = listaNomesNos.get(2);
+                                double valor = Double.parseDouble(listaNomesNos.get(3));
+                                String tipomovimento = listaNomesNos.get(4);
+                                String contaRemetente = listaNomesNos.get(5);
+                                String contaDestino = listaNomesNos.get(6);
+
+                                listaNomesNos.clear();
+
+                                if (tipomovimento.equals(TipoMovimentoEnum.CREDITO.getTipo())) {
+
+                                    nova_conta.addMovimento(new Movimento(descricao, dataValor, dataLancamento, valor,
+                                            TipoMovimentoEnum.CREDITO, contaDestino, contaRemetente));
+
+                                } else {
+                                    nova_conta.addMovimento(new Movimento(descricao, dataValor, dataLancamento, valor,
+                                            TipoMovimentoEnum.DEBITO, contaDestino, contaRemetente));
+                                }
+                            }
+                        }
+                        novo_cli.addConta(nova_conta);
+                    }
                 }
 
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             }
         }
-        return null;
+        return proto.infoCliente(novo_cli);
     }
 }
