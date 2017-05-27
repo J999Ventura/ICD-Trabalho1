@@ -127,7 +127,7 @@ public class DbManager {
                         Double saldoDisponivel = Double.parseDouble(listaNomesNos.get(7));
                         //Double saldoAutorizado = Double.parseDouble(listaNomesNos.get(8));
 
-                        Conta nova_conta = null;
+                        Conta nova_conta;
                         listaNomesNos.clear();
 
                         if (tipoConta.equals(TipoContaEnum.CONTAORDEM.getTipo())) {
@@ -191,4 +191,7 @@ public class DbManager {
         }
         return proto.infoCliente(novo_cli);
     }
+
+
+
 }
