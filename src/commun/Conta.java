@@ -11,7 +11,7 @@ public class Conta {
     private String titular;
     private double saldoContabilistico;
     private double saldoDisponivel;
-    //private double saldoAutorizado;
+    private double saldoAutorizado;
     private List<Movimento> movimentos;
     private String nomeConta;
     private TipoContaEnum tipoConta;
@@ -70,6 +70,10 @@ public class Conta {
 
     public double getSaldoDisponivel() {
         return saldoDisponivel;
+    }
+
+    public double getSaldoAutorizado() {
+        return saldoAutorizado;
     }
 
     public String getNumConta() {

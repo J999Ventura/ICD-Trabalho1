@@ -2,9 +2,6 @@ package Cliente.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.w3c.dom.Document;
-
 import Cliente.control.ClienteSimplesTCP;
 import Protocolo.Protocolo;
 import commun.Cliente;
@@ -31,20 +28,18 @@ public class ClientModel {
 	
 	
 	public boolean logout(){
+
+		tcp.writeSocket(pro.queryServidor("logout"));
+
+		return xmlInt.getLoginAnswer(Protocolo.convertStringToDocument(tcp.readSocket()));
+
+		/* *********** TESTE NA UI SEM SOCKET **********/
 		/*
-	    Document doc = pro.logout(true);
-		tcp.writeSocket(doc);
-		
-		String readedMSG = tcp.readSocket();
-		
-		doc = pro.convertStringToDocument(readedMSG);
-		return xmlInt.getLoginAnswer(doc);
-		*/
-		/************ TESTE NA UI SEM SOCKET **********/
 		Document doc = pro.logout(true);
 		System.out.println(Protocolo.getStringFromDocument(doc));
 		return true;
-		/**********************************************/
+
+		/* *********************************************/
 	}
 	
 	
@@ -74,15 +69,15 @@ public class ClientModel {
 	}
 
 	public void setNewUserName(String newName) {
-		/*Document doc = pro.changeUserName(newName);
-		tcp.writeSocket(doc);
-		
-		String readedMSG = tcp.readSocket();
-		doc = Protocolo.convertStringToDocument(readedMSG);
-		boolean changed = xmlInt.getLoginAnswer(doc);
+
+		tcp.writeSocket(pro.changeUserName(newName));
+
+		boolean changed = xmlInt.getLoginAnswer(Protocolo.convertStringToDocument(tcp.readSocket()));
 		if(changed)
-			user.setUserName(newName);*/
-		/************ TESTE NA UI SEM SOCKET **********/
+			user.setUserName(newName);
+
+		/* *********** TESTE NA UI SEM SOCKET **********/
+		/*
 		Document doc = pro.changeUserName(newName);
 		System.out.println(Protocolo.getStringFromDocument(doc));
 		boolean changed = true;
@@ -131,18 +126,16 @@ public class ClientModel {
 	}
 
 	public boolean transferMoney(double amount, String nib) {
-		/*
-		Document doc = pro.makeTransfer(nib, amount);
-		tcp.writeSocket(doc);
-		
-		String readedMSG = tcp.readSocket();
-		doc = Protocolo.convertStringToDocument(readedMSG);
-		boolean changed = xmlInt.getLoginAnswer(doc);
+
+		tcp.writeSocket(pro.makeTransfer(nib, amount));
+
+		boolean changed = xmlInt.getLoginAnswer(Protocolo.convertStringToDocument(tcp.readSocket()));
 		if(changed)
 			return true;
-		*/
+
 		
-		/************ TESTE NA UI SEM SOCKET **********/
+		/* *********** TESTE NA UI SEM SOCKET **********/
+		/*
 		Document doc = pro.makeTransfer(nib, amount);
 		System.out.println(Protocolo.getStringFromDocument(doc));
 		boolean changed = true;
