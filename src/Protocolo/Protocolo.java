@@ -741,20 +741,20 @@ public class Protocolo {
         Protocolo proto = new Protocolo();
 
         Document d = proto.writeLogin(u, pass);
-        XMLDoc.writeDocument(d, "/Protocolo/xml_xsd_valid/login.xml");
+        XMLDoc.writeDocument(d, "src/Protocolo/xml_xsd_valid/login.xml");
 
         removeChilds(d.getDocumentElement());
 
         d = proto.respostaServidor(true);
-        XMLDoc.writeDocument(d, "/Protocolo/xml_xsd_valid/login_reply_T.xml");
+        XMLDoc.writeDocument(d, "src/Protocolo/xml_xsd_valid/login_reply_T.xml");
 
         d = proto.respostaServidor(false);
-        XMLDoc.writeDocument(d, "/Protocolo/xml_xsd_valid/login_reply_F.xml");
+        XMLDoc.writeDocument(d, "src/Protocolo/xml_xsd_valid/login_reply_F.xml");
 
         removeChilds(d.getDocumentElement());
 
         d = proto.queryServidor("getUserInfo");
-        XMLDoc.writeDocument(d, "/Protocolo/xml_xsd_valid/queryServidor.xml");
+        XMLDoc.writeDocument(d, "src/Protocolo/xml_xsd_valid/queryServidor.xml");
 
         removeChilds(d.getDocumentElement());
         Image assinatura = null;
@@ -775,7 +775,7 @@ public class Protocolo {
                 "Antonio Fagundes", "654322");
 
         d = proto.infoCliente(clt);
-        XMLDoc.writeDocument(d, "/Protocolo/xml_xsd_valid/cliente.xml");
+        XMLDoc.writeDocument(d, "src/Protocolo/xml_xsd_valid/cliente.xml");
 
         removeChilds(d.getDocumentElement());
         Conta contaaordem = new Conta("13456795136","joaofilipevaz", 0.0,
@@ -799,10 +799,10 @@ public class Protocolo {
         contaaordem.setMovimento(mov2);
 
         d = proto.infoConta(contaaordem, true);
-        XMLDoc.writeDocument(d, "/Protocolo/xml_xsd_valid/conta1.xml");
+        XMLDoc.writeDocument(d, "src/Protocolo/xml_xsd_valid/conta1.xml");
 
         d = proto.infoConta(contaprazo, true);
-        XMLDoc.writeDocument(d, "/Protocolo/xml_xsd_valid/conta2.xml");
+        XMLDoc.writeDocument(d, "src/Protocolo/xml_xsd_valid/conta2.xml");
     }
 
 

@@ -47,10 +47,6 @@ public class Conta {
         return iban;
     }
 
-    public void setIban(String iban) {
-        this.iban = iban;
-    }
-
     public TipoContaEnum getTipoConta() {
         return tipoConta;
     }
@@ -120,7 +116,7 @@ public class Conta {
         this.movimentos.add(movimento);
     }
 
-    public String geraAlgControlo(String nib){
+    private String geraAlgControlo(String nib){
         //Para aferir quais os dígitos de controlo no IBAN basta fazer a junção do código do banco com o número de conta
         // desse banco, e obter um número com 21 algarismos colocando os dois últimos algarismos a zero.
         // Depois há-que fazer o resto da divisão inteira desse número por 97.
