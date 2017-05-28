@@ -181,7 +181,7 @@ public class XMLInteration {
                     LocalDate dataLancamento = LocalDate.parse(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/dataLancamento", doc));
                     String descricao = XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/descricao", doc);
                     double valor = Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/valor", doc));
-                    String tipomovimento = XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/tipo", doc);
+                    String tipomovimento = XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/tipomovimento", doc);
                     String contaRemetente = XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/contaRemetente", doc);
                     String contaDestino = XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/contaDestino", doc);
 
