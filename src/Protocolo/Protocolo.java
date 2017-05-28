@@ -6,7 +6,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
 import javax.imageio.ImageIO;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -252,7 +255,13 @@ public class Protocolo {
 
             protocol_tag.appendChild(ok_tag);
         }
-        return D;
+        try {
+            XMLDoc.validDoc(D, "src/Protocolo/xml_xsd_valid/serverReply.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            return D;
+        } catch (SAXException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Document logout(boolean validation){
