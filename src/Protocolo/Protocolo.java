@@ -263,7 +263,7 @@ public class Protocolo {
             return null;
         }
     }
-/*
+
     public Document logout(boolean validation){
         if (builder != null) {
             D = builder.newDocument();
@@ -280,7 +280,7 @@ public class Protocolo {
         }
         return D;
     }
-*/
+
     public Document nameChanged(boolean validation){
         if (builder != null) {
             D = builder.newDocument();
