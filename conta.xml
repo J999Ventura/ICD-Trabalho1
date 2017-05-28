@@ -1,44 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <protocolo>
-<conta>
-<tipoConta>Conta a Ordem</tipoConta>
-<titular>joaofilipevaz</titular>
-<numConta>contaaordem</numConta>
-<nomeConta>321568432513215346</nomeConta>
-<nib>276214522</nib>
-<iban>PT50321568432513215346</iban>
-<saldoContabilistico>1.03256221E8</saldoContabilistico>
-<saldoDisponivel>0.0</saldoDisponivel>
-<saldoAutorizado>0.0</saldoAutorizado>
-<movimentos>
-<movimento>
-<dataValor>2017-06-14</dataValor>
-<dataLancamento>2017-06-14</dataLancamento>
-<descricao>pag propinas isel</descricao>
-<valor>160.0</valor>
-<tipomovimento>debito</tipomovimento>
-<contaRemetente>PT50321568432513215368453</contaRemetente>
-<contaDestino>PT50321568432513215346</contaDestino>
-</movimento>
-<movimento>
-<dataValor>2017-05-30</dataValor>
-<dataLancamento>2017-05-30</dataLancamento>
-<descricao>ordenado</descricao>
-<valor>1000.0</valor>
-<tipomovimento>credito</tipomovimento>
-<contaRemetente>PT50321568432513215346</contaRemetente>
-<contaDestino>PT50321568432513215368453</contaDestino>
-</movimento>
-</movimentos>
-</conta>
+<tipopedido>tipopedido</tipopedido>
 <conta>
 <tipoConta>Conta a Prazo</tipoConta>
 <titular>joaofilipevaz</titular>
-<numConta>contaaordem</numConta>
+<numConta>98645313728</numConta>
 <nomeConta>321568432513215346</nomeConta>
-<nib>276214522</nib>
-<iban>PT50321568432513215346</iban>
-<saldoContabilistico>1.03256221E8</saldoContabilistico>
+<nib>006900009864531372838</nib>
+<iban>PT50006900009864531372838</iban>
+<saldoContabilistico>0.0</saldoContabilistico>
 <saldoDisponivel>0.0</saldoDisponivel>
 <saldoAutorizado>0.0</saldoAutorizado>
 <movimentos/>

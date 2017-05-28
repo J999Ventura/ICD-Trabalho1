@@ -3,10 +3,11 @@ package commun;
 
 public class Banco {
 
-    public String nomeBanco;
-    public final String SWIFT = "BICISLR";
-    public final String codigoPais = "PT50";
-    public final String codigoBanco = "0069";
-    public String sedeSocial;
+    public static String nomeBanco;
+    public static final String SWIFT = "BICISLR";
+    public static final String codigoPais = "PT50";
+    public static final String codigoBanco = "0069";
+    public static final String codigoSucursal = "0000";
+    public static String sedeSocial;
     
 }

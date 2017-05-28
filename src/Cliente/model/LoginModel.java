@@ -66,10 +66,10 @@ public class LoginModel {
 			clt = new ClienteIndividual("joaofilipevaz","Joao Filipe Sant'Ana Ruivo Neves Vaz", "",
 	                "207905835", "Avenida de Berlim Lt K", "+351963938893", foto, assinatura,
 	                "123512354","PT654867321354", LocalDate.of(1981, 8, 23));
-			Conta contaaordem = new Conta("contaaordem", "276214522", "PT50321568432513215346", "joaofilipevaz", 103256221,
+			Conta contaaordem = new Conta("contaaordem", "joaofilipevaz", 103256221,
 	                0.0, "321568432513215346", TipoContaEnum.CONTAORDEM);
 
-	        Conta contaprazo = new Conta("contaaordem", "276214522", "PT50321568432513215346", "joaofilipevaz", 103256221,
+	        Conta contaprazo = new Conta("contaaordem", "joaofilipevaz", 103256221,
 	                0.0, "321568432513215346", TipoContaEnum.CONTAPRAZO);
 
 	        Movimento mov1 = new Movimento("pag propinas isel", LocalDate.of(2017, 6, 14),

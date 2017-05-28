@@ -131,19 +131,19 @@ public class DbManager {
                         listaNomesNos.clear();
 
                         if (tipoConta.equals(TipoContaEnum.CONTAORDEM.getTipo())) {
-                            nova_conta = new Conta(numConta, nib, iban, titular,
+                            nova_conta = new Conta(numConta, titular,
                                     saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAORDEM);
                         } else if (tipoConta.equals(TipoContaEnum.CONTAPRAZO.getTipo())){
-                            nova_conta = new Conta(numConta, nib, iban, titular,
+                            nova_conta = new Conta(numConta, titular,
                                     saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPRAZO);
                         } else if (tipoConta.equals(TipoContaEnum.CONTAJOVEM.getTipo())){
-                            nova_conta = new Conta(numConta, nib, iban, titular,
+                            nova_conta = new Conta(numConta, titular,
                                     saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAJOVEM);
                         } else if (tipoConta.equals(TipoContaEnum.CONTAORDENADO.getTipo())){
-                            nova_conta = new Conta(numConta, nib, iban, titular,
+                            nova_conta = new Conta(numConta, titular,
                                     saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAORDENADO);
                         } else {
-                            nova_conta = new Conta(numConta, nib, iban, titular,
+                            nova_conta = new Conta(numConta, titular,
                                     saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPOUPANCA);
                         }
 

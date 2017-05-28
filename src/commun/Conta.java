@@ -17,11 +17,12 @@ public class Conta {
     private TipoContaEnum tipoConta;
 
 
-    public Conta(String numConta, String nib, String iban, String titular, double saldoContabilistico, double saldoDisponivel,
+    public Conta(String numConta, String titular, double saldoContabilistico, double saldoDisponivel,
                   String nomeConta, TipoContaEnum tipoConta) {
         this.numConta = numConta;
-        this.nib = nib;
-        this.iban = iban;
+        String nib_inicial = Banco.codigoBanco + Banco.codigoSucursal + numConta;
+        this.nib = nib_inicial + geraAlgControlo(nib_inicial + "00");
+        this.iban = Banco.codigoPais + nib;
         this.titular = titular;
         this.saldoContabilistico = saldoContabilistico;
         this.saldoDisponivel = saldoDisponivel;
@@ -117,5 +118,13 @@ public class Conta {
     
     public void setMovimento(Movimento movimento) {
         this.movimentos.add(movimento);
+    }
+
+    public String geraAlgControlo(String nib){
+        //Para aferir quais os dígitos de controlo no IBAN basta fazer a junção do código do banco com o número de conta
+        // desse banco, e obter um número com 21 algarismos colocando os dois últimos algarismos a zero.
+        // Depois há-que fazer o resto da divisão inteira desse número por 97.
+        // Finalmente subtrai-se 98 ao número obtido, obtendo-se assim os números de controlo.
+        return String.valueOf(98-(Long.parseLong(nib) % 97));
     }
 }

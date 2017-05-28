@@ -146,8 +146,8 @@ public class XMLInteration {
         if (contas != null) {
             for(int i = 0; i < contas.getLength(); i++){
                 Conta conta = new Conta(XMLDoc.getXPathV("//conta["+(i+1)+"]/numConta", doc),
-                        XMLDoc.getXPathV("//conta["+(i+1)+"]/nib", doc),
-                        XMLDoc.getXPathV("//conta["+(i+1)+"]/iban", doc),
+                        //XMLDoc.getXPathV("//conta["+(i+1)+"]/nib", doc),
+                        //XMLDoc.getXPathV("//conta["+(i+1)+"]/iban", doc),
                         XMLDoc.getXPathV("//conta["+(i+1)+"]/titular", doc),
                         Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/saldoContabilistico", doc)),
                         Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/saldoDisponivel", doc)),

@@ -775,11 +775,14 @@ public class Protocolo {
         XMLDoc.writeDocument(d, "cliente.xml");
 
         removeChilds(d.getDocumentElement());
-        Conta contaaordem = new Conta("contaaordem", "276214522", "PT50321568432513215346", "joaofilipevaz", 103256221,
+        Conta contaaordem = new Conta("13456795136","joaofilipevaz", 0.0,
                 0.0, "321568432513215346", TipoContaEnum.CONTAORDEM);
 
-        Conta contaprazo = new Conta("contaaordem", "276214522", "PT50321568432513215346", "joaofilipevaz", 103256221,
+        Conta contaprazo = new Conta("98645313728", "joaofilipevaz", 0.0,
                 0.0, "321568432513215346", TipoContaEnum.CONTAPRAZO);
+
+        System.out.println(contaaordem.getNib());
+        System.out.println(contaprazo.getNib());
 
         Movimento mov1 = new Movimento("pag propinas isel", LocalDate.of(2017, 6, 14),
                 LocalDate.of(2017, 6, 14), 160.0, TipoMovimentoEnum.DEBITO ,
