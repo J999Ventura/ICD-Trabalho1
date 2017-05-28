@@ -11,7 +11,7 @@ public class Conta {
     private String titular;
     private double saldoContabilistico;
     private double saldoDisponivel;
-    private double saldoAutorizado;
+    //private double saldoAutorizado;
     private List<Movimento> movimentos;
     private String nomeConta;
     private TipoContaEnum tipoConta;
@@ -52,7 +52,6 @@ public class Conta {
     }
 
     public void setMovimentos(List<Movimento> movimentos) {
-
         this.movimentos = movimentos;
     }
 
@@ -64,24 +63,13 @@ public class Conta {
         return saldoContabilistico;
     }
 
-    public void setSaldoContabilistico(double saldoContabilistico) {
-        this.saldoContabilistico = saldoContabilistico;
+    public void addValor(double valor) {
+        this.saldoContabilistico += valor;
+        this.saldoDisponivel += valor;
     }
 
     public double getSaldoDisponivel() {
         return saldoDisponivel;
-    }
-
-    public void setSaldoDisponivel(double saldoDisponivel) {
-        this.saldoDisponivel = saldoDisponivel;
-    }
-
-    public double getSaldoAutorizado() {
-        return saldoAutorizado;
-    }
-
-    public void setSaldoAutorizado(double saldoAutorizado) {
-        this.saldoAutorizado = saldoAutorizado;
     }
 
     public String getNumConta() {
@@ -110,6 +98,7 @@ public class Conta {
 
     public void addMovimento(Movimento mov) {
         this.movimentos.add(mov);
+        this.addValor(mov.getValor());
     }
     
     public void setMovimento(Movimento movimento) {
