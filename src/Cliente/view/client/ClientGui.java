@@ -15,6 +15,7 @@ import java.awt.CardLayout;
 import java.util.List;
 import javax.swing.border.LineBorder;
 import Cliente.OnCommunEventListener;
+import Protocolo.Protocolo;
 import commun.Cliente;
 import commun.Conta;
 import commun.Emprestimo;
@@ -65,6 +66,7 @@ public class ClientGui extends JFrame{
 	private JLabel accountNameLabel;
 	private JLabel nibLabel;
 	private JLabel ibanLabel;
+	private Protocolo pro;
 	
 	public ClientGui(Cliente user) {
 		createMenuPanel();
@@ -897,6 +899,7 @@ public class ClientGui extends JFrame{
 		logoutBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(communActionListener != null){
+					pro.queryServidor("logout");
 					communActionListener.onLogoutOrCloseApp();
 					
 				}

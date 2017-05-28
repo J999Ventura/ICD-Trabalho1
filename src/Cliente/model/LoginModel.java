@@ -1,21 +1,10 @@
 package Cliente.model;
 
-import java.awt.Image;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import XML.XMLDoc;
-import org.w3c.dom.Document;
-
 import Cliente.control.ClienteSimplesTCP;
 import Protocolo.Protocolo;
+import XML.XMLDoc;
 import commun.Cliente;
-import commun.ClienteIndividual;
-import commun.Conta;
-import commun.Movimento;
-import commun.TipoContaEnum;
-import commun.TipoMovimentoEnum;
+import org.w3c.dom.Document;
 
 public class LoginModel {
 
@@ -29,7 +18,6 @@ public class LoginModel {
 		xmlInt = new XMLInteration();
 		pro = new Protocolo();
 	}
-
 	
 	public boolean validateLogin(String user, String pass){
 		boolean login = false;
@@ -54,7 +42,7 @@ public class LoginModel {
 			login = true;
 		}
 
-		/********************* para teste na ui sem socket	*************/
+		/* ****************** para teste na ui sem socket	************ */
 		/*
 		boolean login = true; 
 		Document doc = pro.writeLogin(user, pass);

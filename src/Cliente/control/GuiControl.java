@@ -1,16 +1,5 @@
 package Cliente.control;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
-import org.w3c.dom.Document;
-
 import Cliente.OnCommunEventListener;
 import Cliente.model.ClientModel;
 import Cliente.model.LoginModel;
@@ -23,7 +12,15 @@ import Cliente.view.login.OnLoginEventListener;
 import Cliente.view.manager.ManagerGui;
 import Cliente.view.manager.OnManagerEventListener;
 import Protocolo.Protocolo;
-import commun.*;
+import commun.Cliente;
+import commun.Conta;
+import commun.Emprestimo;
+import commun.Movimento;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class GuiControl implements OnLoginEventListener, OnClientEventListener, OnCommunEventListener, OnManagerEventListener{
@@ -39,6 +36,7 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	private ManagerModel managerM;
 	private boolean isAdminGui;
 	private ClienteSimplesTCP clienteTCP;
+	private Protocolo pro;
 	
 	public GuiControl(ClienteSimplesTCP clienteTCP ){
 		this.clienteTCP = clienteTCP;
@@ -85,10 +83,12 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	public void onCloseApp() {
 		if(isAdminGui && managerM.logout()){
 			this.frameManager.dispose();//close client window;
+			clienteTCP.writeSocket(pro.queryServidor("logout"));
 			clienteTCP.closeSocket();
 		}else{
 			if(!isAdminGui && clientM.logout()){
 				this.frameClient.dispose();//close client window;
+				clienteTCP.writeSocket(pro.queryServidor("logout"));
 				clienteTCP.closeSocket();
 			}else{
 				JOptionPane.showMessageDialog(frameLogin, "The app couldn't make the logout! Please try again.");
