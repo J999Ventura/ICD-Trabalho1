@@ -741,12 +741,15 @@ public class Protocolo {
         Protocolo proto = new Protocolo();
 
         Document d = proto.writeLogin(u, pass);
-        XMLDoc.writeDocument(d, "teste.xml");
+        XMLDoc.writeDocument(d, "login.xml");
 
         removeChilds(d.getDocumentElement());
 
         d = proto.respostaServidor(true);
-        XMLDoc.writeDocument(d, "resposta.xml");
+        XMLDoc.writeDocument(d, "login_reply_T.xml");
+
+        d = proto.respostaServidor(false);
+        XMLDoc.writeDocument(d, "login_reply_F.xml");
 
         removeChilds(d.getDocumentElement());
 
