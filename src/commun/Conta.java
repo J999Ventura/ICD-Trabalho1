@@ -68,6 +68,11 @@ public class Conta {
         this.saldoDisponivel += valor;
     }
 
+    public void subValor(double valor) {
+        this.saldoContabilistico -= valor;
+        this.saldoDisponivel -= valor;
+    }
+
     public double getSaldoDisponivel() {
         return saldoDisponivel;
     }
@@ -102,7 +107,11 @@ public class Conta {
 
     public void addMovimento(Movimento mov) {
         this.movimentos.add(mov);
-        this.addValor(mov.getValor());
+        if (mov.getTipoMovimento().equals(TipoMovimentoEnum.CREDITO)){
+            addValor(mov.getValor());
+        } else {
+            subValor(mov.getValor());
+        }
     }
     
     public void setMovimento(Movimento movimento) {
