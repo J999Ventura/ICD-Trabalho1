@@ -255,6 +255,7 @@ public class Protocolo {
 
             protocol_tag.appendChild(ok_tag);
         }
+        /*
         try {
             XMLDoc.validDoc(D, "src/Protocolo/xml_xsd_valid/serverReply.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI);
             return D;
@@ -262,6 +263,8 @@ public class Protocolo {
             e.printStackTrace();
             return null;
         }
+        */
+        return D;
     }
 
     public Document logout(boolean validation){
@@ -490,6 +493,7 @@ public class Protocolo {
                 }
             }
         }
+        /*
         try {
             XMLDoc.validDoc(D, "src/Protocolo/xml_xsd_valid/.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI);
             return D;
@@ -497,6 +501,8 @@ public class Protocolo {
             e.printStackTrace();
             return null;
         }
+        */
+        return D;
     }
 
     public Document infoConta(Conta conta, boolean query){
