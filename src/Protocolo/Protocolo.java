@@ -263,7 +263,7 @@ public class Protocolo {
             return null;
         }
     }
-
+/*
     public Document logout(boolean validation){
         if (builder != null) {
             D = builder.newDocument();
@@ -280,7 +280,7 @@ public class Protocolo {
         }
         return D;
     }
-
+*/
     public Document nameChanged(boolean validation){
         if (builder != null) {
             D = builder.newDocument();
@@ -490,8 +490,13 @@ public class Protocolo {
                 }
             }
         }
-
-        return D;
+        try {
+            XMLDoc.validDoc(D, "src/Protocolo/xml_xsd_valid/.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            return D;
+        } catch (SAXException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Document infoConta(Conta conta, boolean query){

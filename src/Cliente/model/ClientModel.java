@@ -41,7 +41,7 @@ public class ClientModel {
 		return xmlInt.getLoginAnswer(doc);
 		*/
 		/************ TESTE NA UI SEM SOCKET **********/
-		Document doc = pro.logout(true);
+		Document doc = pro.queryServidor("logout");
 		System.out.println(Protocolo.getStringFromDocument(doc));
 		return true;
 		/**********************************************/
