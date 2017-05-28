@@ -24,13 +24,14 @@ public class ManagerModel {
 	}
 
 	public boolean logout() {
-		/*
-	    Document doc = pro.logout(true);
+
+	    Document doc = pro.queryServidor("logout");
 		tcp.writeSocket(doc);
 		
 		return getAnswerFromSocket(doc);
-		*/
-		/************ TESTE NA UI SEM SOCKET **********/
+
+		/* *********** TESTE NA UI SEM SOCKET **********/
+		/*
 		Document doc = pro.logout(true);
 		System.out.println(Protocolo.getStringFromDocument(doc));
 		return true;
@@ -39,26 +40,27 @@ public class ManagerModel {
 	
 	public boolean createAccountRequest(String nib, String accountName, String accountType){
 		/*
-	    Document doc = pro.infoConta(nib, accountName, accountType);
+	    Document doc = pro.infoConta(conta, true);
 		tcp.writeSocket(doc);
 		
 		return getAnswerFromSocket(doc);
 		*/
-		/************ TESTE NA UI SEM SOCKET **********/
+		/* *********** TESTE NA UI SEM SOCKET **********/
 		Document doc = pro.criarConta(nib, accountName, accountType);
 		System.out.println(Protocolo.getStringFromDocument(doc));
 		return true;
-		/**********************************************/
+		/* *********************************************/
 	}
 
 	public boolean closeAccountRequest(String nib, String accountNumber) {
-		/*
+
 	    Document doc = pro.fecharConta(nib, accountNumber);
 		tcp.writeSocket(doc);
 		
 		return getAnswerFromSocket(doc);
-		*/
-		/************ TESTE NA UI SEM SOCKET **********/
+
+		/* *********** TESTE NA UI SEM SOCKET **********/
+		/*
 		Document doc = pro.fecharConta(nib, accountNumber);
 		System.out.println(Protocolo.getStringFromDocument(doc));
 		return true;
@@ -66,17 +68,19 @@ public class ManagerModel {
 	}
 
 	public boolean createLoanRequest(String nib, String amount, String payment, String rate) {
-		/*
+
 	    Document doc = pro.pedirEmprestimo(nib, amount, payment, rate);
 		tcp.writeSocket(doc);
 		
 		return getAnswerFromSocket(doc);
-		*/
-		/************ TESTE NA UI SEM SOCKET **********/
+
+		/* *********** TESTE NA UI SEM SOCKET **********/
+		/*
 		Document doc = pro.pedirEmprestimo(nib, amount, payment, rate);
 		System.out.println(Protocolo.getStringFromDocument(doc));
 		return true;
-		/**********************************************/
+
+		/* *********************************************/
 	}
 
 	public List<String> getAccountTypes() {
@@ -91,7 +95,7 @@ public class ManagerModel {
 	
 	private boolean getAnswerFromSocket(Document doc){
 		String readedMSG = tcp.readSocket();
-		doc = pro.convertStringToDocument(readedMSG);
+		doc = Protocolo.convertStringToDocument(readedMSG);
 		return xmlInt.getLoginAnswer(doc);
 	}
 
