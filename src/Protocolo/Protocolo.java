@@ -482,8 +482,6 @@ public class Protocolo {
             }
         }
 
-        XMLDoc.writeDocument(D, "infoCliente.xml");
-
         return D;
     }
 

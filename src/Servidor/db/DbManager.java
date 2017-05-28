@@ -7,7 +7,9 @@ import commun.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.time.LocalDate;
@@ -18,12 +20,19 @@ import java.util.Objects;
 public class DbManager {
 
     private static Document db;
+    private boolean dbIntegrityCheck;
+    private Protocolo proto = new Protocolo();
 
     public DbManager() {
-        db = readFromDB("src/servidor/db/db.xml");
-    }
+        try {
+            db = readFromDB("src/servidor/db/db.xml");
+            dbIntegrityCheck = XMLDoc.validDoc(db, "db.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI); {
+            }
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
 
-    private Protocolo proto = new Protocolo();
+    }
 
     public synchronized void writeToDB(Document d, String filename) {
         XMLDoc.writeDocument(d, filename);
@@ -191,7 +200,5 @@ public class DbManager {
         }
         return proto.infoCliente(novo_cli);
     }
-
-
 
 }
