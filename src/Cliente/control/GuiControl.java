@@ -68,10 +68,12 @@ public class GuiControl implements OnLoginEventListener, OnClientEventListener, 
 	public void onLogoutOrCloseApp(){
 			if(isAdminGui && managerM.logout()){
 				this.frameManager.dispose();//close client window;
+				//clienteTCP.writeSocket(pro.queryServidor("logout"));
 				createLoginGui();
 			}else{
 				if(!isAdminGui && clientM.logout()){
 					this.frameClient.dispose();//close client window;
+					//clienteTCP.writeSocket(pro.queryServidor("logout"));
 					createLoginGui();
 				}else{
 					JOptionPane.showMessageDialog(frameLogin, "The app couldn't make the logout! Please try again.");
