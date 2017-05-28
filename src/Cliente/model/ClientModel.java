@@ -27,9 +27,11 @@ public class ClientModel {
 	}
 	
 	
-	public void logout(){
+	public boolean logout(){
 
 		tcp.writeSocket(pro.queryServidor("logout"));
+
+		return true;
 
 		//return xmlInt.getLoginAnswer(Protocolo.convertStringToDocument(tcp.readSocket()));
 
