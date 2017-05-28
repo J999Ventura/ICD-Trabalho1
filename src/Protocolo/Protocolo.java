@@ -776,10 +776,10 @@ public class Protocolo {
 
         removeChilds(d.getDocumentElement());
         Conta contaaordem = new Conta("13456795136","joaofilipevaz", 0.0,
-                0.0, "321568432513215346", TipoContaEnum.CONTAORDEM);
+                0.0, "Conta Principal", TipoContaEnum.CONTAORDEM);
 
         Conta contaprazo = new Conta("98645313728", "joaofilipevaz", 0.0,
-                0.0, "321568432513215346", TipoContaEnum.CONTAPRAZO);
+                0.0, "Conta poup", TipoContaEnum.CONTAPRAZO);
 
         System.out.println(contaaordem.getNib());
         System.out.println(contaprazo.getNib());
@@ -796,10 +796,10 @@ public class Protocolo {
         contaaordem.setMovimento(mov2);
 
         d = proto.infoConta(contaaordem, true);
-        XMLDoc.writeDocument(d, "conta.xml");
+        XMLDoc.writeDocument(d, "conta1.xml");
 
         d = proto.infoConta(contaprazo, true);
-        XMLDoc.writeDocument(d, "conta.xml");
+        XMLDoc.writeDocument(d, "conta2.xml");
     }
 
 
