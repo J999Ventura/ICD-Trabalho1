@@ -102,12 +102,12 @@ public class XMLInteration {
         }
     }
 
-    public Cliente getClient(Document doc){
+    Cliente getClient(Document doc){
     	//Protocolo pro = new Protocolo();
     	String clientType = XMLDoc.getXPathV("//cliente/tipoCliente", doc);
     	Cliente cliente;
     	
-    	if(clientType.endsWith(TipoClienteEnum.CLIENTEINDIVIDUAL.getTipo())){
+    	if(Objects.equals(clientType, TipoClienteEnum.CLIENTEINDIVIDUAL.getTipo())){
     		cliente = new ClienteIndividual(XMLDoc.getXPathV("//cliente/userName",doc),
     				XMLDoc.getXPathV("//cliente/nomeCliente",doc),
     				XMLDoc.getXPathV("//cliente/nif", doc),
@@ -139,32 +139,61 @@ public class XMLInteration {
 		return cliente;
     }
 
-    public List<Conta> getAccounts(Document doc){
+    private List<Conta> getAccounts(Document doc){
         List<Conta> contasList = new ArrayList<>();
         NodeList contas = XMLDoc.getXPath("//conta", doc);
 
         if (contas != null) {
             for(int i = 0; i < contas.getLength(); i++){
-                Conta conta = new Conta(XMLDoc.getXPathV("//conta["+(i+1)+"]/numConta", doc),
-                        //XMLDoc.getXPathV("//conta["+(i+1)+"]/nib", doc),
-                        //XMLDoc.getXPathV("//conta["+(i+1)+"]/iban", doc),
-                        XMLDoc.getXPathV("//conta["+(i+1)+"]/titular", doc),
-                        Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/saldoContabilistico", doc)),
-                        Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/saldoDisponivel", doc)),
-                        XMLDoc.getXPathV("//conta["+(i+1)+"]/nomeConta", doc),
-                        TipoContaEnum.valueOf(XMLDoc.getXPathV("//conta["+(i+1)+"]/tipoConta", doc)));
+                Conta conta;
+
+                String tipoConta = XMLDoc.getXPathV("//conta["+(i+1)+"]/tipoConta", doc);
+                String titular = XMLDoc.getXPathV("//conta["+(i+1)+"]/titular", doc);
+                String numConta = XMLDoc.getXPathV("//conta["+(i+1)+"]/numConta", doc);
+                String nomeConta = XMLDoc.getXPathV("//conta["+(i+1)+"]/nomeConta", doc);
+                Double saldoContabilistico =  Double.parseDouble(XMLDoc.getXPathV(
+                        "//conta["+(i+1)+"]/saldoContabilistico", doc));
+                Double saldoDisponivel = Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/saldoDisponivel", doc));
+
+                if (tipoConta.equals(TipoContaEnum.CONTAORDEM.getTipo())) {
+                    conta = new Conta(numConta, titular,
+                            saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAORDEM);
+                } else if (tipoConta.equals(TipoContaEnum.CONTAPRAZO.getTipo())){
+                    conta = new Conta(numConta, titular,
+                            saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPRAZO);
+                } else if (tipoConta.equals(TipoContaEnum.CONTAJOVEM.getTipo())){
+                    conta = new Conta(numConta, titular,
+                            saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAJOVEM);
+                } else if (tipoConta.equals(TipoContaEnum.CONTAORDENADO.getTipo())){
+                    conta = new Conta(numConta, titular,
+                            saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAORDENADO);
+                } else {
+                    conta = new Conta(numConta, titular,
+                            saldoContabilistico, saldoDisponivel, nomeConta, TipoContaEnum.CONTAPOUPANCA);
+                }
 
                 List<Movimento> movimentos = new ArrayList<Movimento>();
 
                 int list_size = XMLDoc.getXPath("//conta["+(i+1)+"]/movimentos/movimento", doc).getLength();
                 for(int x = 1; x <= list_size; x++){
-                    movimentos.add(new Movimento(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/descricao", doc),
-                            LocalDate.parse(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/dataValor", doc)),
-                            LocalDate.parse(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/dataLancamento", doc)),
-                            Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/valor", doc)),
-                            TipoMovimentoEnum.valueOf(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/tipo", doc)),
-                            XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/contaDestino", doc),
-                            XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/contaRemetente", doc)));
+
+                    LocalDate dataValor = LocalDate.parse(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/dataValor", doc));
+                    LocalDate dataLancamento = LocalDate.parse(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/dataLancamento", doc));
+                    String descricao = XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/descricao", doc);
+                    double valor = Double.parseDouble(XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/valor", doc));
+                    String tipomovimento = XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/tipo", doc);
+                    String contaRemetente = XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/contaRemetente", doc);
+                    String contaDestino = XMLDoc.getXPathV("//conta["+(i+1)+"]/movimentos/movimento["+x+"]/contaDestino", doc);
+
+                    if (tipomovimento.equals(TipoMovimentoEnum.CREDITO.getTipo())) {
+
+                        movimentos.add(new Movimento(descricao, dataValor, dataLancamento, valor,
+                                TipoMovimentoEnum.CREDITO, contaDestino, contaRemetente));
+
+                    } else {
+                        movimentos.add(new Movimento(descricao, dataValor, dataLancamento, valor,
+                                TipoMovimentoEnum.DEBITO, contaDestino, contaRemetente));
+                    }
                 }
                 conta.setMovimentos(movimentos);
                 contasList.add(conta);
