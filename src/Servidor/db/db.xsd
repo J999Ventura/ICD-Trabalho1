@@ -3,7 +3,7 @@
            xmlns="https://www.isel.pt"
            elementFormDefault="qualified"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="database" type="databaseType"/>
+  <xs:element type="databaseType" name="database" />
   <xs:complexType name="autorized_usersType">
     <xs:sequence>
       <xs:element type="userType" name="user" maxOccurs="unbounded" minOccurs="0"/>

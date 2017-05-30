@@ -25,15 +25,14 @@ public class DbManager {
 
     public DbManager() {
         db = readFromDB("src/Servidor/db/db.xml");
-        /*
+/*
         try {
             db = readFromDB("src/Servidor/db/db.xml");
-            dbIntegrityCheck = XMLDoc.validDoc(db, "src/Servidor/db/db.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI); {
-            }
+            dbIntegrityCheck = XMLDoc.validDoc(db, "src/Servidor/db/db.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI);
         } catch (SAXException e) {
             e.printStackTrace();
         }
-        */
+*/
     }
 
     public synchronized void writeToDB(Document d, String filename) {

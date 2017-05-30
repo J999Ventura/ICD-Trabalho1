@@ -199,7 +199,17 @@ public class Protocolo {
             tipo_pedido.setTextContent(pedido);
             protocol_tag.appendChild(tipo_pedido);
         }
-        return D;
+
+        try {
+            XMLDoc.validDoc(D, "src/Protocolo/xml_xsd_valid/query.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            System.out.println("is valid");
+            return D;
+        } catch (SAXException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        //return D;
     }
 
     public Document makeTransfer(String nib, double value){
@@ -255,16 +265,17 @@ public class Protocolo {
 
             protocol_tag.appendChild(ok_tag);
         }
-        /*
+
         try {
             XMLDoc.validDoc(D, "src/Protocolo/xml_xsd_valid/serverReply.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            System.out.println("is valid");
             return D;
         } catch (SAXException e) {
             e.printStackTrace();
             return null;
         }
-        */
-        return D;
+
+        //return D;
     }
 /*
     public Document logout(boolean validation){
