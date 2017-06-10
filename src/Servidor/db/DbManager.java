@@ -80,7 +80,7 @@ public class DbManager {
                     String nif = XMLDoc.getXPathV("//nif", cliente);
                     String morada = XMLDoc.getXPathV("//morada", cliente);
                     String numTelefone = XMLDoc.getXPathV("//numTelefone", cliente);
-                    String foto = XMLDoc.getXPathV("//foto", cliente);
+                    String foto = "";//XMLDoc.getXPathV("//foto", cliente);
                     String assinatura = XMLDoc.getXPathV("//assinatura", cliente);
                     String numCartaoCidadao = XMLDoc.getXPathV("//numCartaoCidadao", cliente);
                     String numPassaporte = XMLDoc.getXPathV("//numPassaporte", cliente);

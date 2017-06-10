@@ -372,7 +372,7 @@ public class Protocolo {
             nif_tag.setTextContent(cliente.getNif());
             morada_tag.setTextContent(cliente.getMorada());
             numTelefone_tag.setTextContent(cliente.getNumTelefone());
-            foto_tag.setTextContent(imageToBase64Encode(cliente.getFoto()));
+            foto_tag.setTextContent("");//imageToBase64Encode(cliente.getFoto()));
             assinatura_tag.setTextContent(imageToBase64Encode(cliente.getAssinatura()));
 
             protocol_tag.appendChild(cliente_tag);

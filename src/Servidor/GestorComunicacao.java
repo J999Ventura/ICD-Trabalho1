@@ -41,6 +41,7 @@ class GestorComunicacao {
                 case "getUserInfo":
                     if (autorizado) {
                         String resposta = Protocolo.getStringFromDocument(dbManager.getClientDataFromDB(user));
+
                         if (resposta != null) {
                             return resposta;
                         } else {
